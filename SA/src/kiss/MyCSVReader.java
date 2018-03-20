@@ -22,30 +22,45 @@ public class MyCSVReader implements CSVReader{
         String cell = "";
         String allData = "";
         int heightCounter = 0;
-        int arrayHeight = 0;
-        int widthCounter = 0;
-        int arrayWidth = 0;
+        int widthCounter = 0; 
+        
         for (int letter = reader.read(); reader.read() < 0; letter = reader.read()) {
-            if ((char)letter == '\n')
-                arrayHeight++;
-            if ((char)letter == ',')
-                arrayWidth++;
             allData = allData + (char)letter;
         }
         
-        final String[][] csvText = new String[arrayWidth][arrayHeight];
-        
         char[] dataArray = allData.toCharArray(); // new String[allData.length()];
+        
+        final String[][] csvText = build2DArray(dataArray);
         
         for (Character c: dataArray) {
             if (c != ',' && c != '\n') {
                 cell += c;
             } else if (c == ',') {
-                
+                csvText[heightCounter][widthCounter] = cell;
+                widthCounter++;
             } else if (c == '\n') {
-                
+                heightCounter++;
+                widthCounter = 0;
             }
         }
+        return csvText;
+    }
+    
+    private String[][] build2DArray(char[] dataArray) throws IOException {
+        int arrayHeight = 0;
+        int arrayWidth = 0;
+        int maxWidth = 0;
+        
+        for (Character c: dataArray) {
+            if (c == ',') {
+                arrayWidth++;
+                maxWidth = Math.max(maxWidth, arrayWidth);
+            } else if (c == '\n') {
+                arrayHeight++;
+            }
+        }
+        
+        final String[][] csvText = new String[arrayHeight][arrayWidth];
         return csvText;
     }
     
