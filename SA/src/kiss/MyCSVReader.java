@@ -19,14 +19,21 @@ public class MyCSVReader implements CSVReader{
      */
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
-        final String[][] csvText = new String[1][1];
         String cell = "";
         String allData = "";
-        int lengthCounter = 0;
+        int heightCounter = 0;
+        int arrayHeight = 0;
         int widthCounter = 0;
+        int arrayWidth = 0;
         for (int letter = reader.read(); reader.read() < 0; letter = reader.read()) {
+            if ((char)letter == '\n')
+                arrayHeight++;
+            if ((char)letter == ',')
+                arrayWidth++;
             allData = allData + (char)letter;
         }
+        
+        final String[][] csvText = new String[arrayWidth][arrayHeight];
         
         char[] dataArray = allData.toCharArray(); // new String[allData.length()];
         
