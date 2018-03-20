@@ -18,10 +18,27 @@ public class MyCSVReader implements CSVReader{
      * @throws IllegalArgumentException 
      */
     @Override
-    public String[][] read(Reader reader) throws IOException, IllegalArgumentException {
-        reader.read();
-        
+    public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         final String[][] csvText = new String[1][1];
+        String cell = "";
+        String allData = "";
+        int lengthCounter = 0;
+        int widthCounter = 0;
+        for (int letter = reader.read(); reader.read() < 0; letter = reader.read()) {
+            allData = allData + (char)letter;
+        }
+        
+        char[] dataArray = allData.toCharArray(); // new String[allData.length()];
+        
+        for (Character c: dataArray) {
+            if (c != ',' && c != '\n') {
+                cell += c;
+            } else if (c == ',') {
+                
+            } else if (c == '\n') {
+                
+            }
+        }
         return csvText;
     }
     
