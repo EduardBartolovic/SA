@@ -16,12 +16,12 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-    final public static String FILE1 = "./CSVTestFile1";
-    final public static String FILE2 = "./CSVTestFile2";
-    final public static String FILE3 = "./CSVTestFile3";
-    final public static String FILE4 = "./CSVTestFile4";
-    final public static String FILE5 = "./CSVTestFile5";
-    final public static String FILE6 = "./CSVTestFile6";
+    final public static String FILE1 = "./CSVTestFile1.txt";
+    final public static String FILE2 = "./CSVTestFile2.txt";
+    final public static String FILE3 = "./CSVTestFile3.txt";
+    final public static String FILE4 = "./CSVTestFile4.txt";
+    final public static String FILE5 = "./CSVTestFile5.txt";
+    final public static String FILE6 = "./CSVTestFile6.txt";
     
     
     public MyCSVReaderTest() {
@@ -112,7 +112,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000,expected = Exception.class)
+    @Test(timeout = 1000,expected = IllegalArgumentException.class)
     public void testReadEmptyError4() throws Exception {
         final Reader reader = new FileReader(FILE4);
         final MyCSVReader sut = new MyCSVReader();
