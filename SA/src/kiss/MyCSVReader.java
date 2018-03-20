@@ -19,6 +19,8 @@ public class MyCSVReader implements CSVReader{
      */
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {
+        reader.read();
+        
         final String[][] csvText = new String[1][1];
         return csvText;
     }
