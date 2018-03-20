@@ -16,12 +16,20 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
+    final public static String FILE1 = "./CSVTestFile1";
+    final public static String FILE2 = "./CSVTestFile2";
+    final public static String FILE3 = "./CSVTestFile3";
+    final public static String FILE4 = "./CSVTestFile4";
+    final public static String FILE5 = "./CSVTestFile5";
+    final public static String FILE6 = "./CSVTestFile6";
+    
+    
     public MyCSVReaderTest() {
     }
 
     @Test(timeout = 1000)
     public void testReadsimple1() throws Exception {
-        final Reader reader = new FileReader("./CSVTestFile1");
+        final Reader reader = new FileReader(FILE1);
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         
@@ -32,7 +40,7 @@ public class MyCSVReaderTest {
     
     @Test(timeout = 1000)
     public void testRead2simpleTwoLines() throws Exception {
-        final Reader reader = new FileReader("./CSVTestFile2");
+        final Reader reader = new FileReader(FILE2);
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         
@@ -44,7 +52,7 @@ public class MyCSVReaderTest {
     
     @Test(timeout = 1000)
     public void testRead3simple50Lines() throws Exception {
-        final Reader reader = new FileReader("./CSVTestFile3");
+        final Reader reader = new FileReader(FILE3);
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         
@@ -103,5 +111,13 @@ public class MyCSVReaderTest {
         
         Assert.assertArrayEquals(expResult, result);
     }
+    
+    @Test(timeout = 1000,expected = Exception.class)
+    public void testReadEmptyError4() throws Exception {
+        final Reader reader = new FileReader(FILE4);
+        final MyCSVReader sut = new MyCSVReader();
+        sut.read(reader);
+    }
+    
     
 }
