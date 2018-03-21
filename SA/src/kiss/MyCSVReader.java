@@ -24,7 +24,7 @@ public class MyCSVReader implements CSVReader{
         int heightCounter = 0;
         int widthCounter = 0; 
         
-        for (int letter = reader.read(); reader.read() < 0; letter = reader.read()) {
+        for (int letter = reader.read(); reader.read() > 0; letter = reader.read()) {
             allData = allData + (char)letter;
         }
         
