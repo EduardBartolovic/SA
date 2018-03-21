@@ -20,6 +20,7 @@ public class MyCSVReaderTest {
     public static final String FILE4 = LOCATION+"CSVTestFile4.txt";
     public static final String FILE5 = LOCATION+"CSVTestFile5.txt";
     public static final String FILE6 = LOCATION+"CSVTestFile6.txt";
+    public static final String FILE7 = LOCATION+"CSVTestFile7.txt";
         
     public MyCSVReaderTest() {
     }
@@ -129,7 +130,7 @@ public class MyCSVReaderTest {
     
     @Test(timeout = 1000)
     public void testReadEntwerteEntwerter6() throws Exception {
-        final Reader reader = new FileReader(FILE5);
+        final Reader reader = new FileReader(FILE6);
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         
@@ -137,5 +138,19 @@ public class MyCSVReaderTest {
        
         Assert.assertArrayEquals(expResult, result);
     }
+    
+    //++++++++++++++++++++++++++++++++++++++++++++++++++anschauen wegen , zwischen 5 und 6
+    @Test(timeout = 1000)
+    public void testReadEntwerteEnter7() throws Exception {
+        final Reader reader = new FileReader(FILE7);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{new String[]{"1","2","3","4","56","7","8","9"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    //+++++++++++++++++++++++++++++++++++++++++
+    
     
 }

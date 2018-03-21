@@ -6,10 +6,7 @@ import java.io.Reader;
 
 
 public class MyCSVReader implements CSVReader{
-    
-    public int height = 0;
-    public int width = 0;
-    public char[] dataArray;
+
 
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
@@ -28,8 +25,22 @@ public class MyCSVReader implements CSVReader{
         int heightCounter = 0;
         
         for (int letter = reader.read(); letter > 0; letter = reader.read()) {
-            allData += (char)letter;
+            
+            if(letter == '\\'){
+                final int nextLetter = reader.read();
+                
+                if(nextLetter == '\r'){
+                    reader.read(); // for \n
+                }else{
+                    allData += '\\'+nextLetter;
+                }
+            }else{
+                allData += (char)letter;
+            }
+            
         }
+        
+        
         
         final char[] dataArray = allData.toCharArray(); 
         
@@ -52,16 +63,17 @@ public class MyCSVReader implements CSVReader{
     private String[][] build2DArray(char[] dataArray) throws IOException {
         int arrayHeight = 0;
         
-        this.dataArray = dataArray;
         
-        for (Character c: dataArray) {
-            if (c == '\n') {
+
+        for (Character letter : dataArray) {
+            
+            if (letter == '\n') {
                 arrayHeight++;
             }
+            
         }
         
         final String[][] csvText = new String[arrayHeight][1];
-        height = arrayHeight;
         return csvText;
     }
     
@@ -92,4 +104,7 @@ public class MyCSVReader implements CSVReader{
         }
         return retArr;
     }
+    
+   
 }
+
