@@ -7,7 +7,6 @@ import java.io.Reader;
 
 public class MyCSVReader implements CSVReader{
 
-
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
      * von einem Reader und gibt die Zeilen und Spalten in einem neuen,
@@ -20,76 +19,64 @@ public class MyCSVReader implements CSVReader{
      */
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
-        String cell = "";
-        String allData = "";
-        int heightCounter = 0;
-        int letter = reader.read();
         
-        if(letter < 0)
+        int heightCounter = 0; // var to save number of lines
+        String allData = "";   // whole file will be saved to this string
+        int letter = reader.read(); 
+        
+        if(letter < 0)  //check if file is empty
             throw new IllegalArgumentException("text should not be empty");
         
-        while( letter > 0) {
-            
+        //read the whole file
+        while( letter > 0) {    
             if(letter == '\\'){
-                final int nextLetter = reader.read();
-                
-                if(nextLetter == '\r'){
+                final int nextLetter = reader.read(); 
+                if(nextLetter == '\r'){ //ignore Enter when previsly element is a backslash
                     reader.read(); // for \n
-                
                 }else{
                     allData += '\\';
                     allData += (char)nextLetter;
                 }
             }else{
+                if(letter == '\n')  // to count the number of lines
+                    heightCounter++;
+                
                 allData += (char)letter;
             }
-            
             letter = reader.read();
         }
         
-        if(allData.charAt(allData.length()-1) != '\n')
+        if(allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
             throw new IllegalArgumentException("File ends not with \\r\\n ");
         
         final char[] dataArray = allData.toCharArray(); 
         
-        final String[][] csvText = build2DArray(dataArray);
         
-        for (Character c: dataArray) {
-            if (c == '\n') {
-                csvText[heightCounter] = toStringArray(cell);
-             
-                heightCounter++;
-                cell = "";
-            } else if (c != '\n') {
-                cell += c;
+        final String[][] csvText = new String[heightCounter][];//allokate array which will be returned
+        
+        //filling up the array
+        int lineCounter = 0;
+        String line = "";
+        for (Character character: dataArray) {
+            if (character == '\n') {
+                csvText[lineCounter] = toStringArray(line);
+                lineCounter++;
+                line = "";
+            } else if (character != '\n') {
+                line += character;
             }
         }
         
         return csvText;
     }
     
-    private String[][] build2DArray(char[] dataArray) throws IOException {
-        int arrayHeight = 0;
-        
-        
-
-        for (Character letter : dataArray) {
-            
-            if (letter == '\n') {
-                arrayHeight++;
-            }
-            
-        }
-        
-        final String[][] csvText = new String[arrayHeight][1];
-        return csvText;
-    }
-    
+    /**
+     * splitting word by ,
+     * @param line
+     * @return line
+     */
     private String[] toStringArray(String line) {
-        int cellCounter = 1;
-        int counter = 0;
-        String word = "";
-        
+        int cellCounter = 1;        
         
         boolean flagForBackSlash = false;
         for (int i = 0; i < line.length(); i++){
@@ -106,7 +93,8 @@ public class MyCSVReader implements CSVReader{
         }
         
         final String[] retArr = new String[cellCounter];
-        
+        int counter = 0;
+        String word = "";
         for (int i = 0; i < line.length(); i++){
  
             final char letter = line.charAt(i);
@@ -132,7 +120,6 @@ public class MyCSVReader implements CSVReader{
                     word += line.charAt(i);
                 }
             }
-            
             
         }
         return retArr;
