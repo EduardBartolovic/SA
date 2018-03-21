@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package kiss;
 
 import java.io.FileReader;
@@ -119,5 +114,26 @@ public class MyCSVReaderTest {
         sut.read(reader);
     }
     
+    @Test(timeout = 1000)
+    public void testReadEntwerteKomma5() throws Exception {
+        final Reader reader = new FileReader(FILE5);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{new String[]{"1","23","4","5","6","78","9"}};
+        
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testReadEntwerteEntwerter6() throws Exception {
+        final Reader reader = new FileReader(FILE5);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{new String[]{"1","\\","3","4","5","6","7","8","9"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
     
 }
