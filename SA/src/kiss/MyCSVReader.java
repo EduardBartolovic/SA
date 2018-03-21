@@ -26,25 +26,19 @@ public class MyCSVReader implements CSVReader{
         String cell = "";
         String allData = "";
         int heightCounter = 0;
-//        int widthCounter = 0; 
         
         for (int letter = reader.read(); letter > 0; letter = reader.read()) {
             allData += (char)letter;
         }
         
-        char[] dataArray = allData.toCharArray(); // new String[allData.length()];
+        final char[] dataArray = allData.toCharArray(); 
         
         final String[][] csvText = build2DArray(dataArray);
         
         for (Character c: dataArray) {
             if (c == '\n') {
                 csvText[heightCounter] = toStringArray(cell);
-                
-                for (String s: toStringArray(cell))
-                    System.out.print(s);
-                
-                System.out.println("");
-                
+             
                 heightCounter++;
                 cell = "";
             } else if (c != '\n') {
@@ -57,8 +51,6 @@ public class MyCSVReader implements CSVReader{
     
     private String[][] build2DArray(char[] dataArray) throws IOException {
         int arrayHeight = 0;
-//        int arrayWidth = 0;
-//        int maxWidth = 0;
         
         this.dataArray = dataArray;
         
@@ -70,12 +62,10 @@ public class MyCSVReader implements CSVReader{
         
         final String[][] csvText = new String[arrayHeight][1];
         height = arrayHeight;
-//        width = maxWidth;
         return csvText;
     }
     
     private String[] toStringArray(String line) {
-        String[] retArr;
         int cellCounter = 1;
         int counter = 0;
         String word = "";
@@ -86,10 +76,13 @@ public class MyCSVReader implements CSVReader{
             }
         }
         
-        retArr = new String[cellCounter];
+        final String[] retArr = new String[cellCounter];
         
         for (int i = 0; i < line.length(); i++){
-            if (line.charAt(i) == ',') {
+ 
+            final char letter = line.charAt(i);
+            
+            if (letter == ',' || letter == '\r') {
                 retArr[counter] = word;
                 counter++;
                 word = "";
@@ -97,10 +90,6 @@ public class MyCSVReader implements CSVReader{
                 word += line.charAt(i);
             }
         }
-        
-//        word = word.substring(word.length() - 2);
-        retArr[counter] = word;
-//        
         return retArr;
     }
 }
