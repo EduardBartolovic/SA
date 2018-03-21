@@ -23,24 +23,32 @@ public class MyCSVReader implements CSVReader{
         String cell = "";
         String allData = "";
         int heightCounter = 0;
+        int letter = reader.read();
         
-        for (int letter = reader.read(); letter > 0; letter = reader.read()) {
+        if(letter < 0)
+            throw new IllegalArgumentException("text should not be empty");
+        
+        while( letter > 0) {
             
             if(letter == '\\'){
                 final int nextLetter = reader.read();
                 
                 if(nextLetter == '\r'){
                     reader.read(); // for \n
+                
                 }else{
-                    allData += '\\'+nextLetter;
+                    allData += '\\';
+                    allData += (char)nextLetter;
                 }
             }else{
                 allData += (char)letter;
             }
             
+            letter = reader.read();
         }
         
-        
+        if(allData.charAt(allData.length()-1) != '\n')
+            throw new IllegalArgumentException("File ends not with \\r\\n ");
         
         final char[] dataArray = allData.toCharArray(); 
         
@@ -82,10 +90,19 @@ public class MyCSVReader implements CSVReader{
         int counter = 0;
         String word = "";
         
+        
+        boolean flagForBackSlash = false;
         for (int i = 0; i < line.length(); i++){
-            if (line.charAt(i) == ',') {
+            final char letter = line.charAt(i);
+            
+            if(letter == ',' && !flagForBackSlash){
                 cellCounter++;
+            }else if(letter == '\\'){
+                flagForBackSlash = !flagForBackSlash;
+            }else{
+                flagForBackSlash = false;
             }
+            
         }
         
         final String[] retArr = new String[cellCounter];
@@ -94,13 +111,29 @@ public class MyCSVReader implements CSVReader{
  
             final char letter = line.charAt(i);
             
-            if (letter == ',' || letter == '\r') {
-                retArr[counter] = word;
-                counter++;
-                word = "";
-            } else {
-                word += line.charAt(i);
+            if(letter == '\\'){
+                i++;
+                char nextLetter = line.charAt(i);
+                if(nextLetter == ','){
+                    word += ',';
+                }else if(nextLetter == '\\'){
+                    word += '\\';
+                }else{
+                    word += '\\';
+                    word += nextLetter;
+                }
+                
+            }else{
+                if (letter == ',' || letter == '\r') {
+                    retArr[counter] = word;
+                    counter++;
+                    word = "";
+                } else {
+                    word += line.charAt(i);
+                }
             }
+            
+            
         }
         return retArr;
     }

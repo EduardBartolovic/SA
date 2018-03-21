@@ -21,6 +21,7 @@ public class MyCSVReaderTest {
     public static final String FILE5 = LOCATION+"CSVTestFile5.txt";
     public static final String FILE6 = LOCATION+"CSVTestFile6.txt";
     public static final String FILE7 = LOCATION+"CSVTestFile7.txt";
+    public static final String FILE8 = LOCATION+"CSVTestFile8.txt";
         
     public MyCSVReaderTest() {
     }
@@ -117,13 +118,13 @@ public class MyCSVReaderTest {
         sut.read(reader);
     }
     
-    @Test(timeout = 1000)
+    @Test//(timeout = 1000)
     public void testReadEntwerteKomma5() throws Exception {
         final Reader reader = new FileReader(FILE5);
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         
-        final String[][] expResult = new String[][]{new String[]{"1","23","4","5","6","78","9"}};
+        final String[][] expResult = new String[][]{new String[]{"1","2,3","4","5","6","7,8","9"}};
         
         Assert.assertArrayEquals(expResult, result);
     }
@@ -147,6 +148,17 @@ public class MyCSVReaderTest {
         final String[][] result = sut.read(reader);
         
         final String[][] expResult = new String[][]{new String[]{"1","2","3","4","56","7","8","9"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testReadDoppelEntwerter8() throws Exception {
+        final Reader reader = new FileReader(FILE8);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{new String[]{"1","2","3","4","5\\"},new String[]{"6","7","8","9"}};
        
         Assert.assertArrayEquals(expResult, result);
     }
