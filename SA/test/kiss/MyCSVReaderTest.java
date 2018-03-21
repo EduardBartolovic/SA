@@ -11,8 +11,9 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
 //    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -26,6 +27,11 @@ public class MyCSVReaderTest {
     public static final String FILE10 = LOCATION+"CSVTestFile10.txt";
     public static final String FILE11 = LOCATION+"CSVTestFile11.txt";
     public static final String FILE12 = LOCATION+"CSVTestFile12.txt";
+    public static final String FILE13 = LOCATION+"CSVTestFile13.txt";
+    public static final String FILE14 = LOCATION+"CSVTestFile14.txt";
+    public static final String FILE15 = LOCATION+"CSVTestFile15.txt";
+    public static final String FILE16 = LOCATION+"CSVTestFile16.txt";
+    public static final String FILE17 = LOCATION+"CSVTestFile17.txt";
         
     public MyCSVReaderTest() {
     }
@@ -210,7 +216,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-        @Test(timeout = 1000)
+    @Test(timeout = 1000)
     public void testReadVerschiedeneEntwerter12() throws Exception {
         final Reader reader = new FileReader(FILE12);
         final MyCSVReader sut = new MyCSVReader();
@@ -219,6 +225,45 @@ public class MyCSVReaderTest {
         final String[][] expResult = new String[][]{
             new String[]{"dies","ist","ein","test,mit","\\verschiedenen\\"},
             new String[]{"Entwertern\\."}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000,expected = IllegalArgumentException.class)
+    public void testReadEnterfehltamEnde13() throws Exception {
+        final Reader reader = new FileReader(FILE13);
+        final MyCSVReader sut = new MyCSVReader();
+        sut.read(reader);
+    }
+    
+    @Test(timeout = 1000,expected = IllegalArgumentException.class)
+    public void testReadBackSlashamEnde14() throws Exception {
+        final Reader reader = new FileReader(FILE14);
+        final MyCSVReader sut = new MyCSVReader();
+        sut.read(reader);
+    }
+    
+    @Test(timeout = 1000)
+    public void testReadLeer15() throws Exception {
+        final Reader reader = new FileReader(FILE15);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"","","","",""}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testReadLeermitEnter16() throws Exception {
+        final Reader reader = new FileReader(FILE16);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"","","","",""},
+            new String[]{"","","","",""}};
        
         Assert.assertArrayEquals(expResult, result);
     }
