@@ -6,6 +6,10 @@ import java.io.Reader;
 
 
 public class MyCSVReader implements CSVReader{
+    
+    public int height = 0;
+    public int width = 0;
+    public char[] dataArray;
 
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
@@ -24,11 +28,16 @@ public class MyCSVReader implements CSVReader{
         int heightCounter = 0;
         int widthCounter = 0; 
         
-        for (int letter = reader.read(); reader.read() > 0; letter = reader.read()) {
-            allData = allData + (char)letter;
+        for (int letter = reader.read(); letter > 0; letter = reader.read()) {
+            allData += (char)letter;
         }
         
         char[] dataArray = allData.toCharArray(); // new String[allData.length()];
+//        char[] dataArray = new char[allData.length()];
+        
+//        for (int i = 0; i < allData.length(); i++) {
+//            dataArray[i] = allData.charAt(i);
+//        }
         
         final String[][] csvText = build2DArray(dataArray);
         
@@ -38,7 +47,7 @@ public class MyCSVReader implements CSVReader{
             } else if (c == ',') {
                 csvText[heightCounter][widthCounter] = cell;
                 widthCounter++;
-            } else if (c == '\n') {
+            } else if (c == (char)10) {
                 heightCounter++;
                 widthCounter = 0;
             }
@@ -51,16 +60,21 @@ public class MyCSVReader implements CSVReader{
         int arrayWidth = 0;
         int maxWidth = 0;
         
+        this.dataArray = dataArray;
+        
         for (Character c: dataArray) {
-            if (c == ',') {
+            if (c == (char)44) {
                 arrayWidth++;
                 maxWidth = Math.max(maxWidth, arrayWidth);
-            } else if (c == '\n') {
+            } else if (c == (char)10) {
                 arrayHeight++;
+                arrayWidth = 0;
             }
         }
         
         final String[][] csvText = new String[arrayHeight][arrayWidth];
+        height = arrayHeight;
+        width = maxWidth;
         return csvText;
     }
     
