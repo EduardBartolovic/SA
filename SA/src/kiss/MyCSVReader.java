@@ -26,56 +26,81 @@ public class MyCSVReader implements CSVReader{
         String cell = "";
         String allData = "";
         int heightCounter = 0;
-        int widthCounter = 0; 
+//        int widthCounter = 0; 
         
         for (int letter = reader.read(); letter > 0; letter = reader.read()) {
             allData += (char)letter;
         }
         
         char[] dataArray = allData.toCharArray(); // new String[allData.length()];
-//        char[] dataArray = new char[allData.length()];
-        
-//        for (int i = 0; i < allData.length(); i++) {
-//            dataArray[i] = allData.charAt(i);
-//        }
         
         final String[][] csvText = build2DArray(dataArray);
         
         for (Character c: dataArray) {
-            if (c != ',' && c != '\n') {
-                cell += c;
-            } else if (c == ',') {
-                csvText[heightCounter][widthCounter] = cell;
-                widthCounter++;
-            } else if (c == (char)10) {
+            if (c == '\n') {
+                csvText[heightCounter] = toStringArray(cell);
+                
+                for (String s: toStringArray(cell))
+                    System.out.print(s);
+                
+                System.out.println("");
+                
                 heightCounter++;
-                widthCounter = 0;
+                cell = "";
+            } else if (c != '\n') {
+                cell += c;
             }
         }
+        
         return csvText;
     }
     
     private String[][] build2DArray(char[] dataArray) throws IOException {
         int arrayHeight = 0;
-        int arrayWidth = 0;
-        int maxWidth = 0;
+//        int arrayWidth = 0;
+//        int maxWidth = 0;
         
         this.dataArray = dataArray;
         
         for (Character c: dataArray) {
-            if (c == (char)44) {
-                arrayWidth++;
-                maxWidth = Math.max(maxWidth, arrayWidth);
-            } else if (c == (char)10) {
+            if (c == '\n') {
                 arrayHeight++;
-                arrayWidth = 0;
             }
         }
         
-        final String[][] csvText = new String[arrayHeight][arrayWidth];
+        final String[][] csvText = new String[arrayHeight][1];
         height = arrayHeight;
-        width = maxWidth;
+//        width = maxWidth;
         return csvText;
     }
     
+    private String[] toStringArray(String line) {
+        String[] retArr;
+        int cellCounter = 1;
+        int counter = 0;
+        String word = "";
+        
+        for (int i = 0; i < line.length(); i++){
+            if (line.charAt(i) == ',') {
+                cellCounter++;
+            }
+        }
+        
+        retArr = new String[cellCounter];
+        
+        for (int i = 0; i < line.length(); i++){
+            if (line.charAt(i) == ',') {
+                retArr[counter] = word;
+                counter++;
+                word = "";
+            } else {
+                word += line.charAt(i);
+            }
+        }
+        
+//        word = word.substring(word.length() - 2);
+        retArr[counter] = word;
+//        
+        return retArr;
+    }
 }

@@ -11,14 +11,15 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-    final public static String FILE1 = "./CSVTestFile1.txt";
-    final public static String FILE2 = "./CSVTestFile2.txt";
-    final public static String FILE3 = "./CSVTestFile3.txt";
-    final public static String FILE4 = "./CSVTestFile4.txt";
-    final public static String FILE5 = "./CSVTestFile5.txt";
-    final public static String FILE6 = "./CSVTestFile6.txt";
+    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
-    
+    public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
+    public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
+    public static final String FILE3 = LOCATION+"CSVTestFile3.txt";
+    public static final String FILE4 = LOCATION+"CSVTestFile4.txt";
+    public static final String FILE5 = LOCATION+"CSVTestFile5.txt";
+    public static final String FILE6 = LOCATION+"CSVTestFile6.txt";
+        
     public MyCSVReaderTest() {
     }
 
@@ -33,7 +34,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000)
+    @Test/*(timeout = 1000)*/
     public void testRead2simpleTwoLines() throws Exception {
         final Reader reader = new FileReader(FILE2);
         final MyCSVReader sut = new MyCSVReader();
