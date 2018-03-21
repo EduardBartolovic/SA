@@ -11,8 +11,8 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-    //public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -22,6 +22,10 @@ public class MyCSVReaderTest {
     public static final String FILE6 = LOCATION+"CSVTestFile6.txt";
     public static final String FILE7 = LOCATION+"CSVTestFile7.txt";
     public static final String FILE8 = LOCATION+"CSVTestFile8.txt";
+    public static final String FILE9 = LOCATION+"CSVTestFile9.txt";
+    public static final String FILE10 = LOCATION+"CSVTestFile10.txt";
+    public static final String FILE11 = LOCATION+"CSVTestFile11.txt";
+    public static final String FILE12 = LOCATION+"CSVTestFile12.txt";
         
     public MyCSVReaderTest() {
     }
@@ -164,5 +168,58 @@ public class MyCSVReaderTest {
     }
     //+++++++++++++++++++++++++++++++++++++++++
     
+    @Test(timeout = 1000)
+    public void testReadDoppelEntwerter9() throws Exception {
+        final Reader reader = new FileReader(FILE9);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"12","34"},
+            new String[]{"12","34","56"},
+            new String[]{"12","34","56","78"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
     
+    @Test(timeout = 1000)
+    public void testReadleinEndEntwerter10() throws Exception {
+        final Reader reader = new FileReader(FILE10);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"12","3456","78"},
+            new String[]{"90"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testReadKommaEntwerter11() throws Exception {
+        final Reader reader = new FileReader(FILE11);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"hallo","dies","ist","ein"},
+            new String[]{"text","in","csv"},
+            new String[]{"format",",mit"},
+            new String[]{"kommasetzung"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+        @Test(timeout = 1000)
+    public void testReadVerschiedeneEntwerter12() throws Exception {
+        final Reader reader = new FileReader(FILE12);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"dies","ist","ein","test,mit","\\verschiedenen\\"},
+            new String[]{"Entwertern\\."}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
 }
