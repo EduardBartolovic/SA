@@ -2,6 +2,7 @@ package kiss;
 
 import java.io.FileReader;
 import java.io.Reader;
+import java.util.Arrays;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -12,8 +13,8 @@ import org.junit.Test;
 public class MyCSVReaderTest {
     
 //    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-//    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -278,6 +279,19 @@ public class MyCSVReaderTest {
         final String[][] expResult = new String[][]{
             new String[]{",",",",",",",",","}};
        
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testReadTripleBackSlashueberall18() throws Exception {
+        final Reader reader = new FileReader(FILE18);
+        final MyCSVReader sut = new MyCSVReader();
+        final String[][] result = sut.read(reader);
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"\\,\\" , "\\"}};
+       
+        System.out.println(Arrays.deepToString(result));
         Assert.assertArrayEquals(expResult, result);
     }
 }
