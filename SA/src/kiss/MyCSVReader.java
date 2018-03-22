@@ -62,7 +62,7 @@ public class MyCSVReader implements CSVReader{
                 csvText[lineCounter] = toStringArray(line);
                 lineCounter++;
                 line = "";
-            } else if (character != '\n') {
+            } else {
                 line += character;
             }
         }
@@ -79,8 +79,8 @@ public class MyCSVReader implements CSVReader{
         int cellCounter = 1;        
         
         boolean flagForBackSlash = false;
-        for (int i = 0; i < line.length(); i++){
-            final char letter = line.charAt(i);
+        for (int counter = 0; counter < line.length(); counter++){
+            final char letter = line.charAt(counter);
             
             if(letter == ',' && !flagForBackSlash){
                 cellCounter++;
@@ -93,15 +93,16 @@ public class MyCSVReader implements CSVReader{
         }
         
         final String[] retArr = new String[cellCounter];
-        int counter = 0;
+        cellCounter = 0;
         String word = "";
-        for (int i = 0; i < line.length(); i++){
+        for (int counter = 0; counter < line.length(); counter++){
  
-            final char letter = line.charAt(i);
+            final char letter = line.charAt(counter);
             
             if(letter == '\\'){
-                i++;
-                char nextLetter = line.charAt(i);
+                counter++;           // to see whats the next letter after the\
+                char nextLetter = line.charAt(counter);
+                
                 if(nextLetter == ','){
                     word += ',';
                 }else if(nextLetter == '\\'){
@@ -111,14 +112,14 @@ public class MyCSVReader implements CSVReader{
                     word += nextLetter;
                 }
                 
-            }else{
-                if (letter == ',' || letter == '\r') {
-                    retArr[counter] = word;
-                    counter++;
-                    word = "";
-                } else {
-                    word += line.charAt(i);
-                }
+            }else if(letter == ',' || letter == '\r') {
+                
+                retArr[cellCounter] = word; // save the word into a cell
+                cellCounter++;      //move to the next word
+                word = "";          //reset the old word
+                
+            } else {
+                word += line.charAt(counter);
             }
             
         }
