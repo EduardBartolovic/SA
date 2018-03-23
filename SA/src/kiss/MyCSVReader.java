@@ -51,14 +51,23 @@ public class MyCSVReader implements CSVReader{
         
         final char[] dataArray = allData.toCharArray(); 
         
+        // Build the full 2d array 
+        final String[][] csvText = fillLines(dataArray, heightCounter);
         
-        final String[][] csvText = new String[heightCounter][];//allokate array which will be returned
-        
-        //filling up the array
+        return csvText;
+    }
+    
+    private String[][] fillLines(char[] dataArray, int heightCounter) {
         int lineCounter = 0;
+        
+        // allokate a big enough outer array
+        final String[][] csvText = new String[heightCounter][1];
+        
         String line = "";
         for (Character character: dataArray) {
             if (character == '\n') {
+                // override the former 'line' with the accual line 
+                // we read from the reader
                 csvText[lineCounter] = toStringArray(line);
                 lineCounter++;
                 line = "";
