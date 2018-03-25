@@ -46,7 +46,7 @@ public class MyCSVReader implements CSVReader{
             letter = reader.read();
         }
         
-        if(allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
+        if(allData.charAt(allData.length()-2) != '\r' && allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
             throw new IllegalArgumentException("File ends not with \\r\\n ");
         
         final char[] dataArray = allData.toCharArray(); 

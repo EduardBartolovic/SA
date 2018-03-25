@@ -1,7 +1,9 @@
 package kiss;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,9 +13,9 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+ //   public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
 //    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-//    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -304,4 +306,72 @@ public class MyCSVReaderTest {
         
         Assert.assertArrayEquals(expResult, result);
     }
+    
+    
+    //Tests from Michi
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testEmptyCSVFile20() throws IOException {
+        final String sut = "";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testNoNewLineAtEnd21() throws IOException {
+        final String sut = "bla";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testNoNewLineAtEnd22() throws IOException {
+        final String sut = "bla,bla";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testNoNewLineAtEnd23() throws IOException {
+        final String sut = "bla,bla\nbla";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testNoNewLineAtEnd24() throws IOException {
+        final String sut = "bla\\\r\n"; //"bla\\\n";+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testOnlyEscapedAtEnd25() throws IOException {
+        final String sut = "\\";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testOnlyEscapedAtEnd26() throws IOException {
+        final String sut = "bla\\";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testOnlyEscapedAtEnd27() throws IOException {
+        final String sut = "bla,bla\\";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testOnlyEscapedAtEnd28() throws IOException {
+        final String sut = "bla,bla\nbla\\";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+
+    @Test(timeout = 100, expected = IllegalArgumentException.class)
+    public void testOnlyEscapedAtEnd29() throws IOException {
+        final String sut = "bla\n\\";
+        new MyCSVReader().read(new StringReader(sut));
+    }
+    
+    //End from Tests of Michi
+    
+    
+    
+    
 }
