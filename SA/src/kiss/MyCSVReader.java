@@ -28,13 +28,11 @@ public class MyCSVReader implements CSVReader{
             throw new IllegalArgumentException("text should not be empty");
         
         //read the whole file
-        while( letter > 0) {    
-            if(letter == '\\'){
-                final int nextLetter = reader.read(); 
-                if(nextLetter != '\n'){ //ignore \n when previsly element is a backslash
-                    allData += '\\';
-                    allData += (char)nextLetter;
-                }
+        while( letter > 0) {  
+            
+            if(letter == '\\'){               
+                allData += '\\';
+                allData += (char)reader.read();
             }else{
                 if(letter == '\n')  // to count the number of lines
                     heightCounter++;
@@ -44,7 +42,7 @@ public class MyCSVReader implements CSVReader{
             letter = reader.read();
         }
         
-        if(allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
+        if( allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
             throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
@@ -70,8 +68,16 @@ public class MyCSVReader implements CSVReader{
         final String[][] csvText = new String[heightCounter][1];
         
         String line = "";
-        for (Character character: dataArray) {
-            if (character == '\n') {
+        for (int counter = 0; counter < dataArray.length ; counter++) {
+            char character = dataArray[counter];
+            
+            if(character == '\\'){
+                counter++;
+                char nextCharacter = dataArray[counter];
+                line += character;
+                line += nextCharacter;
+                
+            }else if (character == '\n') {
                 // override the former 'line' with the accual line 
                 // we read from the reader
                 csvText[lineCounter] = toStringArray(line);
@@ -122,6 +128,8 @@ public class MyCSVReader implements CSVReader{
                 
                 if(nextLetter == ','){
                     word += ',';
+                }else if(nextLetter == '\n'){
+                    word += '\n';
                 }else if(nextLetter == '\\'){
                     word += '\\';
                 }else{

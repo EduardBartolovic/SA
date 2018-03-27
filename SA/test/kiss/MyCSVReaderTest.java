@@ -14,8 +14,8 @@ import org.junit.Test;
 public class MyCSVReaderTest {
     
  //   public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
- //   public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+ //   public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -161,7 +161,7 @@ public class MyCSVReaderTest {
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         
-        final String[][] expResult = new String[][]{new String[]{"1","2","3","4","56","7","8","9"}};
+        final String[][] expResult = new String[][]{new String[]{"1","2","3","4","5\n6","7","8","9"}};
        
         Assert.assertArrayEquals(expResult, result);
     }
@@ -199,7 +199,7 @@ public class MyCSVReaderTest {
         final String[][] result = sut.read(reader);
         
         final String[][] expResult = new String[][]{
-            new String[]{"12","3456","78"},
+            new String[]{"12","34\n56","78"},
             new String[]{"90"}};
        
         Assert.assertArrayEquals(expResult, result);
@@ -227,7 +227,7 @@ public class MyCSVReaderTest {
         final String[][] result = sut.read(reader);
         
         final String[][] expResult = new String[][]{
-            new String[]{"dies","ist","ein","test,mit","\\verschiedenen\\"},
+            new String[]{"dies","ist","ein","test,\nmit","\\verschiedenen\\"},
             new String[]{"Entwertern."}};
        
         Assert.assertArrayEquals(expResult, result);
@@ -302,7 +302,7 @@ public class MyCSVReaderTest {
         final MyCSVReader sut = new MyCSVReader();
         final String[][] result = sut.read(reader);
         final String[][] expResult = new String[][]{
-            new String[]{"\\,\\f"}};
+            new String[]{"\\,\\\nf"}};
         
         Assert.assertArrayEquals(expResult, result);
     }
