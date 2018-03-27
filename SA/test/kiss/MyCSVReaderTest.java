@@ -14,8 +14,8 @@ import org.junit.Test;
 public class MyCSVReaderTest {
     
  //   public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-//    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+ //   public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -335,7 +335,7 @@ public class MyCSVReaderTest {
 
     @Test(timeout = 100, expected = IllegalArgumentException.class)
     public void testNoNewLineAtEnd24() throws IOException {
-        final String sut = "bla\\\r\n"; //"bla\\\n";+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        final String sut = "bla\\\n";
         new MyCSVReader().read(new StringReader(sut));
     }
 
@@ -371,7 +371,28 @@ public class MyCSVReaderTest {
     
     //End from Tests of Michi
     
+    @Test(timeout = 1000)
+    public void testStuff30() throws IOException {
+        final String sut = "Hello, World!\n AnyBody, out there?\n";
+        final String[][] result = new MyCSVReader().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"Hello" , " World!"},
+            new String[]{" AnyBody" , " out there?"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
     
+    @Test//(timeout = 1000)
+    public void testStuff31() throws IOException {
+        final String sut = "a\n";
+        final String[][] result = new MyCSVReader().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"a"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
     
     
 }

@@ -31,9 +31,7 @@ public class MyCSVReader implements CSVReader{
         while( letter > 0) {    
             if(letter == '\\'){
                 final int nextLetter = reader.read(); 
-                if(nextLetter == '\r'){ //ignore Enter when previsly element is a backslash
-                    reader.read(); // for \n
-                }else{
+                if(nextLetter != '\n'){ //ignore \n when previsly element is a backslash
                     allData += '\\';
                     allData += (char)nextLetter;
                 }
@@ -46,8 +44,8 @@ public class MyCSVReader implements CSVReader{
             letter = reader.read();
         }
         
-        if(allData.charAt(allData.length()-2) != '\r' && allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
-            throw new IllegalArgumentException("File ends not with \\r\\n ");
+        if(allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
+            throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
         
@@ -131,7 +129,7 @@ public class MyCSVReader implements CSVReader{
                     word += nextLetter;
                 }
                 
-            }else if(letter == ',' || letter == '\r') {
+            }else if(letter == ',') {
                 
                 retArr[cellCounter] = word; // save the word into a cell
                 cellCounter++;      //move to the next word
@@ -142,6 +140,7 @@ public class MyCSVReader implements CSVReader{
             }
             
         }
+        retArr[cellCounter] = word; // save the word into a cell
         return retArr;
     }
     
