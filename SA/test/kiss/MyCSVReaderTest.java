@@ -63,7 +63,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000)
+    @Test(timeout = 100)
     public void testRead3simple50Lines() throws Exception {
         final Reader reader = new FileReader(FILE3);
         final MyCSVReader sut = new MyCSVReader();

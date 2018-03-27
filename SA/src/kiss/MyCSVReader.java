@@ -1,6 +1,7 @@
 package kiss;
 
 import edu.hm.cs.rs.arch18.a01_kiss.CSVReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
@@ -20,9 +21,11 @@ public class MyCSVReader implements CSVReader{
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         
+        final Reader bufReader = new BufferedReader(reader);
+          
         int heightCounter = 0; // var to save number of lines
         String allData = "";   // whole file will be saved to this string
-        int letter = reader.read(); 
+        int letter = bufReader.read(); 
         
         if(letter < 0)  //check if file is empty
             throw new IllegalArgumentException("text should not be empty");
@@ -32,20 +35,21 @@ public class MyCSVReader implements CSVReader{
             
             if(letter == '\\'){               
                 allData += '\\';
-                allData += (char)reader.read();
+                allData += (char)bufReader.read();
             }else{
                 if(letter == '\n')  // to count the number of lines
                     heightCounter++;
                 
                 allData += (char)letter;
             }
-            letter = reader.read();
+            letter = bufReader.read();
         }
         
         if( allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
             throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
+        
         
         // Build the full 2d array 
         final String[][] csvText = fillLines(dataArray, heightCounter);
@@ -69,11 +73,11 @@ public class MyCSVReader implements CSVReader{
         
         String line = "";
         for (int counter = 0; counter < dataArray.length ; counter++) {
-            char character = dataArray[counter];
+            final char character = dataArray[counter];
             
             if(character == '\\'){
                 counter++;
-                char nextCharacter = dataArray[counter];
+                final char nextCharacter = dataArray[counter];
                 line += character;
                 line += nextCharacter;
                 
@@ -124,7 +128,7 @@ public class MyCSVReader implements CSVReader{
             
             if(letter == '\\'){
                 counter++;           // to see whats the next letter after the\
-                char nextLetter = line.charAt(counter);
+                final char nextLetter = line.charAt(counter);
                 
                 if(nextLetter == ','){
                     word += ',';
