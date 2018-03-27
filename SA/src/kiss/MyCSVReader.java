@@ -148,6 +148,7 @@ public class MyCSVReader implements CSVReader{
             
         }
         retArr[cellCounter] = word; // save the word into a cell
+        
         return retArr;
     }
     
