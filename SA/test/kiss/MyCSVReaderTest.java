@@ -228,7 +228,7 @@ public class MyCSVReaderTest {
         
         final String[][] expResult = new String[][]{
             new String[]{"dies","ist","ein","test,mit","\\verschiedenen\\"},
-            new String[]{"Entwertern\\."}};
+            new String[]{"Entwertern."}};
        
         Assert.assertArrayEquals(expResult, result);
     }
@@ -383,13 +383,59 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test//(timeout = 1000)
+    @Test(timeout = 1000)
     public void testStuff31() throws IOException {
         final String sut = "a\n";
         final String[][] result = new MyCSVReader().read(new StringReader(sut));
         
         final String[][] expResult = new String[][]{
             new String[]{"a"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff32() throws IOException {
+        final String sut = "\n";
+        final String[][] result = new MyCSVReader().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{""}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff33() throws IOException {
+        final String sut = "\\a\n";
+        final String[][] result = new MyCSVReader().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"a"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff34() throws IOException {
+        final String sut = "a\nb\n";
+        final String[][] result = new MyCSVReader().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"a"},
+            new String[]{"b"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff35() throws IOException {
+        final String sut = "a\n\\,b\n";
+        final String[][] result = new MyCSVReader().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"a"},
+            new String[]{",b"}};
        
         Assert.assertArrayEquals(expResult, result);
     }

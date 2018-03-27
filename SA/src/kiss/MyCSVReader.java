@@ -125,7 +125,6 @@ public class MyCSVReader implements CSVReader{
                 }else if(nextLetter == '\\'){
                     word += '\\';
                 }else{
-                    word += '\\';
                     word += nextLetter;
                 }
                 
