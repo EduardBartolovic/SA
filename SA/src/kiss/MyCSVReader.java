@@ -10,7 +10,7 @@ public class MyCSVReader implements CSVReader{
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
      * von einem Reader und gibt die Zeilen und Spalten in einem neuen,
-     * zweidimensionalen String-Array zurück. 
+     * zweidimensionalen String-Array zurueck. 
      * 
      * @param reader
      * @return csvText
@@ -57,6 +57,14 @@ public class MyCSVReader implements CSVReader{
         return csvText;
     }
     
+    /**
+     * Fuellt die zeilen des zwei dimensionalen Arrays mit
+     * den eingelesenen zeilen.
+     * 
+     * @param dataArray Alles eingelesenen Zeilen als eindimensionales array
+     * @param heightCounter hoehe des zweidimensionalen Arrays
+     * @return gefuelltes String[][] Array
+     */
     private String[][] fillLines(char[] dataArray, int heightCounter) {
         int lineCounter = 0;
         
@@ -80,9 +88,11 @@ public class MyCSVReader implements CSVReader{
     }
     
     /**
-     * splitting word by ,
-     * @param line
-     * @return line
+     * Aus einem String wird die momentane Zeile gebaut.
+     * Die Worte werden an ',' getrennt.
+     * 
+     * @param line Die anzuschauende Zeile als String
+     * @return Zeile als String[]
      */
     private String[] toStringArray(String line) {
         int cellCounter = 1;        
