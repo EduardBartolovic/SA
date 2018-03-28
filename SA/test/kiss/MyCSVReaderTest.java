@@ -41,7 +41,7 @@ public class MyCSVReaderTest {
     public MyCSVReaderTest() {
     }
 
-    @Test//(timeout = 1000)
+    @Test(timeout = 1000)
     public void testReadsimple1() throws Exception {
         final Reader reader = new FileReader(FILE1);
         final MyCSVReader sut = new MyCSVReader();
@@ -453,7 +453,7 @@ public class MyCSVReaderTest {
  
     }
     
-    @Test(timeout = 1000)
+    @Test//(timeout = 1000)
     public void testStuff38() throws IOException {
         final Reader reader = new FileReader(FILE20);
         final MyCSVReader sut = new MyCSVReader();

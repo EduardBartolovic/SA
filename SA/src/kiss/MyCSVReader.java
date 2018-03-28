@@ -61,33 +61,42 @@ public class MyCSVReader implements CSVReader{
      * @return gefuelltes String[][] Array
      */
     private String[][] fillLines(char[] dataArray, int heightCounter) {
-        int lineCounter = 0;
+        
         
         // allokate a big enough outer array
         final String[][] csvText = new String[heightCounter][0];
-        
-        String line = "";
+        int lineCounter = 0;
+        int commaCounter = 0;
+        int startOfNextLine = 0;
+        boolean flagForBackslash = false;
         for (int counter = 0; counter < dataArray.length ; counter++) {
             final char character = dataArray[counter];
             
             if(character == '\\'){
-                counter++;
-                final char nextCharacter = dataArray[counter];
-                line += character;
-                line += nextCharacter;
-            }else if (character == '\n') {
-                // override the former 'line' with the accual line 
-                // we read from the reader
-                if (!line.isEmpty())
-                    csvText[lineCounter] = toStringArray(line);
+                
+                flagForBackslash = !flagForBackslash;
+                
+            }else if(character == ',' && !flagForBackslash){
+                
+                commaCounter++;
+                
+            }else if(character == '\n' && !flagForBackslash) {
+                
+                final char[] line =  new char[counter - startOfNextLine ];
+                System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine );
+                startOfNextLine = counter+1;
+                
+                if (!new String(line).isEmpty())//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                    csvText[lineCounter] = toStringArray(line,commaCounter);
+                
                 lineCounter++;
-                line = "";
-            } else {
-                line += character;
-            }
+                commaCounter = 0;
+                flagForBackslash = false;
+            }else{
+                flagForBackslash = false;
+            } 
+            
         }
-
-
 
         
         return csvText;
@@ -100,22 +109,10 @@ public class MyCSVReader implements CSVReader{
      * @param line Die anzuschauende Zeile als String
      * @return Zeile als String[]
      */
-    private String[] toStringArray(String line) {
-        int cellCounter = 1;        
+    private String[] toStringArray(char[] lined, int commaCount) {
+        int cellCounter = commaCount+1;        
         
-        boolean flagForBackSlash = false;
-        for (int counter = 0; counter < line.length(); counter++){
-            final char letter = line.charAt(counter);
-            
-            if(letter == ',' && !flagForBackSlash){
-                cellCounter++;
-            }else if(letter == '\\'){
-                flagForBackSlash = !flagForBackSlash;
-            }else{
-                flagForBackSlash = false;
-            }
-            
-        }
+        final String line = new String(lined);
         
         final String[] retArr = new String[cellCounter];
         cellCounter = 0;
