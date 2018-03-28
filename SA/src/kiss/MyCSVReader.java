@@ -46,11 +46,14 @@ public class MyCSVReader implements CSVReader{
         }
         
         
+        if (testifEndisValid(allData))
+            throw new IllegalArgumentException("File ends not with \\n ");
+        
+        final char[] dataArray = allData.toCharArray(); 
+        
         int heightCounter = 0; // var to save number of lines
         boolean flagForBackslash = false;
-        for(int counter = 0 ;  counter < allData.length() ; counter++){
-            
-            final char letter = allData.charAt(counter);
+        for(char letter: dataArray){
             
             if(letter == '\\'){
                 flagForBackslash = !flagForBackslash;
@@ -61,13 +64,6 @@ public class MyCSVReader implements CSVReader{
                 flagForBackslash = false;
             }
         }
-        
-        final int positionOfLastElement = allData.trim().length();
-        if (allData.charAt(positionOfLastElement) != '\n')
-            throw new IllegalArgumentException("File ends not with \\n ");
-        
-        final char[] dataArray = allData.toCharArray(); 
-        
         
         return fillLines(dataArray, heightCounter);
     }
@@ -165,6 +161,13 @@ public class MyCSVReader implements CSVReader{
         return retArr;
     }
     
+    private boolean testifEndisValid(String allData){
         
+        final int positionOfLastElement = allData.trim().length();
+        if (allData.charAt(positionOfLastElement) != '\n')
+            throw new IllegalArgumentException("File ends not with \\n ");
+        
+        return true;
+    }
 }
 

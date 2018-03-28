@@ -13,8 +13,8 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-//    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
 //    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
@@ -133,7 +133,7 @@ public class MyCSVReaderTest {
         sut.read(reader);
     }
     
-    @Test//(timeout = 1000)
+    @Test(timeout = 1000)
     public void testReadEntwerteKomma5() throws Exception {
         final Reader reader = new FileReader(FILE5);
         final MyCSVReader sut = new MyCSVReader();
@@ -155,7 +155,6 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    //++++++++++++++++++++++++++++++++++++++++++++++++++anschauen wegen , zwischen 5 und 6
     @Test(timeout = 1000)
     public void testReadEntwerteEnter7() throws Exception {
         final Reader reader = new FileReader(FILE7);
@@ -178,7 +177,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test//(timeout = 1000)
+    @Test(timeout = 1000)
     public void testReadDoppelEntwerter9() throws Exception {
         final Reader reader = new FileReader(FILE9);
         final MyCSVReader sut = new MyCSVReader();
