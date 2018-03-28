@@ -85,7 +85,7 @@ public class MyCSVReader implements CSVReader{
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
                 startOfNextLine = counter+1;                                //the next line will start a counter position + 1
                 
-                if(!new String(line).trim().isEmpty())  
+                if(isReallyEmpty(line))//!new String(line).trim().isEmpty())  
                     csvText[lineCounter] = toStringArray(line,commaCounter); //generate the line with cells
                 
                 lineCounter++; 
@@ -210,6 +210,22 @@ public class MyCSVReader implements CSVReader{
     }
     
     return result;
+    }
+    
+    /**
+     * checks if file is empty (whitespaces are also empty)
+     * @param data
+     * @return empty
+     */
+    private boolean isReallyEmpty(char[] data){
+        
+        boolean empty = true;
+        for(int counter = 0; counter < data.length ; counter++){
+            if(!Character.isWhitespace(data[counter])){
+                empty = false;
+            }
+        }
+        return empty;
     }
 }
 
