@@ -218,14 +218,15 @@ public class MyCSVReader implements CSVReader{
      * @return empty
      */
     private boolean isReallyEmpty(char[] data){
+        if (data.length == 0)
+            return false;
         
-        boolean empty = true;
-        for(int counter = 0; counter < data.length ; counter++){
-            if(!Character.isWhitespace(data[counter])){
-                empty = false;
-            }
+        for (int counter = 0; counter < data.length; counter++) {
+            if (!Character.isWhitespace(data[counter]))
+                return true;
+            
         }
-        return empty;
+        return false;
     }
 }
 
