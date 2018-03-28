@@ -18,7 +18,7 @@ import java.util.Arrays;
 public class main {
     public static void main(String...args) throws IOException{
 //        MyCSVReader myReader = new MyCSVReader();
-        String sut = "a,asd,a\n";
+        String sut = "a,as\nd,a\n";
 //        final String[][] result = new MyCSVReader().read(new StringReader(sut));
         Reader reader = new StringReader(sut);
         char[] dataArray = new char[4];

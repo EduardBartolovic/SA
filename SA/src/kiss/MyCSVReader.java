@@ -33,28 +33,38 @@ public class MyCSVReader implements CSVReader{
         
         int heightCounter = 0; // var to save number of lines
         String allData = "";   // whole file will be saved to this string
-        int letter = bufReader.read(); 
+//        int letter = bufReader.read(); 
+        String line = bufReader.readLine();
         
-        
-        if(letter == 0)  //check if file is empty
+//        if(letter < 0)  //check if file is empty
+//            throw new IllegalArgumentException("text should not be empty");
+//        
+//        //read the whole file
+//        while(line != null) {  
+//            
+//            if(letter == '\\'){               
+//                allData += '\\';
+//                allData += (char)bufReader.read();
+//            }else{
+//                if(letter == '\n')  // to count the number of lines
+//                    heightCounter++;
+//                
+//                allData += (char)letter;
+//            }
+//            letter = bufReader.read();
+//        }
+
+        if (line == null)
             throw new IllegalArgumentException("text should not be empty");
         
-        //read the whole file
-        while( letter > 0) {  
+        while (line != null){
             
-            if(letter == '\\'){               
-                allData += '\\';
-                allData += (char)bufReader.read();
-            }else{
-                if(letter == '\n')  // to count the number of lines
-                    heightCounter++;
-                
-                allData += (char)letter;
-            }
-            letter = bufReader.read();
+            heightCounter++;
+            allData += line;
+            line = bufReader.readLine();
         }
         
-        if(letter < 0) //check if file ends with enter
+        if(allData.charAt(allData.length() - 1) != '\n') //check if file ends with enter
             throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
@@ -138,16 +148,7 @@ public class MyCSVReader implements CSVReader{
             if(letter == '\\'){
                 counter++;           // to see whats the next letter after the\
                 final char nextLetter = line.charAt(counter);
-                
-                if(nextLetter == ','){
-                    word += ',';
-                }else if(nextLetter == '\n'){
-                    word += '\n';
-                }else if(nextLetter == '\\'){
-                    word += '\\';
-                }else{
-                    word += nextLetter;
-                }
+                word += nextLetter;
                 
             }else if(letter == ',') {
                 
