@@ -45,26 +45,10 @@ public class MyCSVReader implements CSVReader{
             bufReader.read(data);
         }
         
-        
-        if (testifEndisValid(allData))
-            throw new IllegalArgumentException("File ends not with \\n ");
-        
         final char[] dataArray = allData.toCharArray(); 
         
-        int heightCounter = 0; // var to save number of lines
-        boolean flagForBackslash = false;
-        for(char letter: dataArray){
-            
-            if(letter == '\\'){
-                flagForBackslash = !flagForBackslash;
-            } else if(letter == '\n' && !flagForBackslash){
-                flagForBackslash = false;
-                heightCounter++;
-            }else{
-                flagForBackslash = false;
-            }
-        }
-        
+        int heightCounter = testNumberOfLines(allData); // var to save number of lines
+
         return fillLines(dataArray, heightCounter);
     }
     
@@ -161,13 +145,37 @@ public class MyCSVReader implements CSVReader{
         return retArr;
     }
     
-    private boolean testifEndisValid(String allData){
+    private int testNumberOfLines(String allData){
         
-        final int positionOfLastElement = allData.trim().length();
-        if (allData.charAt(positionOfLastElement) != '\n')
+        int numberOfLines = 0;
+        boolean flagForBackslash = false;
+        boolean flagForEndLine = false;
+        for(int counter = 0 ; counter < allData.length() ; counter++){
+            
+            final char letter = allData.charAt(counter);
+            
+            if(letter == '\\'){
+                flagForBackslash = !flagForBackslash;
+                flagForEndLine = false;
+            } else if(letter == '\n' && !flagForBackslash){
+                numberOfLines++;
+                flagForEndLine = true;
+            }else if(letter == 0){
+                flagForBackslash = false;
+            } else {
+                flagForBackslash = false;
+                flagForEndLine = false;
+            }
+        }
+            
+        if(!flagForEndLine)
             throw new IllegalArgumentException("File ends not with \\n ");
-        
-        return true;
+            
+         return numberOfLines;  
+         
     }
+        
+        
+    
 }
 
