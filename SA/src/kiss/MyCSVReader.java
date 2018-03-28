@@ -14,6 +14,8 @@ import java.io.Reader;
  */
 public class MyCSVReader implements CSVReader{
 
+    
+    public static final int LENGTHOFBUF = 20;
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
      * von einem Reader und gibt die Zeilen und Spalten in einem neuen,
@@ -27,18 +29,24 @@ public class MyCSVReader implements CSVReader{
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         
-//        char[] dataArray = new char[4];
-        
+   
         final BufferedReader bufReader = new BufferedReader(reader);
         
-        int heightCounter = 0; // var to save number of lines
         String allData = "";   // whole file will be saved to this string
-//        int letter = bufReader.read(); 
-        String line = bufReader.readLine();
+
+        char[] data = new char[LENGTHOFBUF];
         
-//        if(letter < 0)  //check if file is empty
-//            throw new IllegalArgumentException("text should not be empty");
-//        
+        bufReader.read(data);
+        
+        if(data[0] == 0)
+            throw new IllegalArgumentException("text should not be empty");
+        
+        while(data[0] > 0){
+            allData += new String(data); 
+            data = new char[LENGTHOFBUF];
+            bufReader.read(data);
+        }
+        
 //        //read the whole file
 //        while(line != null) {  
 //            
@@ -54,24 +62,33 @@ public class MyCSVReader implements CSVReader{
 //            letter = bufReader.read();
 //        }
 
-        if (line == null)
-            throw new IllegalArgumentException("text should not be empty");
-        
-        while (line != null){
-            
-            heightCounter++;
-            allData += line;
-            line = bufReader.readLine();
+//        String line = bufReader.readLine();
+//        if (line == null)
+//            throw new IllegalArgumentException("text should not be empty");
+//        
+//        while (line != null){
+//            allData += line;
+//            allData += '\n';
+//            line = bufReader.readLine();  
+//        }
+//        
+        int heightCounter = 0; // var to save number of lines
+        for(int counter = 0 ;  counter < allData.length() ; counter++){
+            final char letter = allData.charAt(counter);
+            if(letter == '\\'){
+                counter++;
+            } else{
+                if(letter == '\n')
+                    heightCounter++;
+            }
         }
         
-        if(allData.charAt(allData.length() - 1) != '\n') //check if file ends with enter
+        String modiefiedString = allData.trim();
+        if (allData.charAt(modiefiedString.length()) != '\n')
             throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
         
-        
-        // Build the full 2d array 
-//        final String[][] csvText = fillLines(dataArray, heightCounter);
         
         return fillLines(dataArray, heightCounter);
     }
