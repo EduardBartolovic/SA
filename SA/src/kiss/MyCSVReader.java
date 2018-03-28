@@ -31,8 +31,6 @@ public class MyCSVReader implements CSVReader{
         
         final BufferedReader bufReader = new BufferedReader(reader);
         
-        String allData = "";   // whole file will be saved to this string
-
         char[] data = new char[LENGTHOFBUF];
         
         bufReader.read(data);
@@ -40,6 +38,7 @@ public class MyCSVReader implements CSVReader{
         if(data[0] == 0)
             throw new IllegalArgumentException("text should not be empty");
         
+        String allData = "";   // whole file will be saved to this string
         while(data[0] > 0){
             allData += new String(data); 
             data = new char[LENGTHOFBUF];
@@ -48,13 +47,18 @@ public class MyCSVReader implements CSVReader{
         
         
         int heightCounter = 0; // var to save number of lines
+        boolean flagForBackslash = false;
         for(int counter = 0 ;  counter < allData.length() ; counter++){
+            
             final char letter = allData.charAt(counter);
+            
             if(letter == '\\'){
-                counter++;
-            } else{
-                if(letter == '\n')
-                    heightCounter++;
+                flagForBackslash = !flagForBackslash;
+            } else if(letter == '\n' && !flagForBackslash){
+                flagForBackslash = false;
+                heightCounter++;
+            }else{
+                flagForBackslash = false;
             }
         }
         
@@ -102,6 +106,9 @@ public class MyCSVReader implements CSVReader{
                 line += character;
             }
         }
+
+
+
         
         return csvText;
     }
@@ -158,6 +165,6 @@ public class MyCSVReader implements CSVReader{
         return retArr;
     }
     
-   
+        
 }
 
