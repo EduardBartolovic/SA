@@ -15,7 +15,7 @@ import java.io.Reader;
 public class MyCSVReader implements CSVReader{
 
     
-    public static final int LENGTHOFBUF = 20;
+    public static final int LENGTHOFBUF = 10000;
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
      * von einem Reader und gibt die Zeilen und Spalten in einem neuen,
@@ -29,7 +29,6 @@ public class MyCSVReader implements CSVReader{
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         
-   
         final BufferedReader bufReader = new BufferedReader(reader);
         
         String allData = "";   // whole file will be saved to this string
@@ -47,31 +46,7 @@ public class MyCSVReader implements CSVReader{
             bufReader.read(data);
         }
         
-//        //read the whole file
-//        while(line != null) {  
-//            
-//            if(letter == '\\'){               
-//                allData += '\\';
-//                allData += (char)bufReader.read();
-//            }else{
-//                if(letter == '\n')  // to count the number of lines
-//                    heightCounter++;
-//                
-//                allData += (char)letter;
-//            }
-//            letter = bufReader.read();
-//        }
-
-//        String line = bufReader.readLine();
-//        if (line == null)
-//            throw new IllegalArgumentException("text should not be empty");
-//        
-//        while (line != null){
-//            allData += line;
-//            allData += '\n';
-//            line = bufReader.readLine();  
-//        }
-//        
+        
         int heightCounter = 0; // var to save number of lines
         for(int counter = 0 ;  counter < allData.length() ; counter++){
             final char letter = allData.charAt(counter);
@@ -83,8 +58,8 @@ public class MyCSVReader implements CSVReader{
             }
         }
         
-        String modiefiedString = allData.trim();
-        if (allData.charAt(modiefiedString.length()) != '\n')
+        final int positionOfLastElement = allData.trim().length();
+        if (allData.charAt(positionOfLastElement) != '\n')
             throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
