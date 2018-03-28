@@ -13,9 +13,9 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
- //   public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
- //   public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
     public static final String FILE2 = LOCATION+"CSVTestFile2.txt";
@@ -400,7 +400,7 @@ public class MyCSVReaderTest {
         final String[][] result = new MyCSVReader().read(new StringReader(sut));
         
         final String[][] expResult = new String[][]{
-            new String[]{""}};
+            new String[0]};
        
         Assert.assertArrayEquals(expResult, result);
     }

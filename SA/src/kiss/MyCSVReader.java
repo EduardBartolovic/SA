@@ -5,7 +5,13 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
 
-
+/**
+ * Diese Klasse konvertiert Text im CSV Format in ein 
+ * zweidimensionales String Array. Es Implementiert das Interface
+ * CSVReader von Prof. Dr. Schiedermeier der FK 07 der Hochschule Muenchen.
+ * 
+ * @author Felix Peither, Eduard Bartolovic
+ */
 public class MyCSVReader implements CSVReader{
 
     /**
@@ -21,13 +27,16 @@ public class MyCSVReader implements CSVReader{
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         
-        final Reader bufReader = new BufferedReader(reader);
-          
+//        char[] dataArray = new char[4];
+        
+        final BufferedReader bufReader = new BufferedReader(reader);
+        
         int heightCounter = 0; // var to save number of lines
         String allData = "";   // whole file will be saved to this string
         int letter = bufReader.read(); 
         
-        if(letter < 0)  //check if file is empty
+        
+        if(letter == 0)  //check if file is empty
             throw new IllegalArgumentException("text should not be empty");
         
         //read the whole file
@@ -45,16 +54,16 @@ public class MyCSVReader implements CSVReader{
             letter = bufReader.read();
         }
         
-        if( allData.charAt(allData.length()-1) != '\n') //check if file ends with enter
+        if(letter < 0) //check if file ends with enter
             throw new IllegalArgumentException("File ends not with \\n ");
         
         final char[] dataArray = allData.toCharArray(); 
         
         
         // Build the full 2d array 
-        final String[][] csvText = fillLines(dataArray, heightCounter);
+//        final String[][] csvText = fillLines(dataArray, heightCounter);
         
-        return csvText;
+        return fillLines(dataArray, heightCounter);
     }
     
     /**
@@ -69,7 +78,7 @@ public class MyCSVReader implements CSVReader{
         int lineCounter = 0;
         
         // allokate a big enough outer array
-        final String[][] csvText = new String[heightCounter][1];
+        final String[][] csvText = new String[heightCounter][0];
         
         String line = "";
         for (int counter = 0; counter < dataArray.length ; counter++) {
@@ -80,11 +89,11 @@ public class MyCSVReader implements CSVReader{
                 final char nextCharacter = dataArray[counter];
                 line += character;
                 line += nextCharacter;
-                
             }else if (character == '\n') {
                 // override the former 'line' with the accual line 
                 // we read from the reader
-                csvText[lineCounter] = toStringArray(line);
+                if (!line.isEmpty())
+                    csvText[lineCounter] = toStringArray(line);
                 lineCounter++;
                 line = "";
             } else {
