@@ -33,9 +33,9 @@ public class MyCSVReader implements CSVReader{
         
         char[] data = new char[LENGTHOFBUF];
         
-        bufReader.read(data);
+        final int fileSize = bufReader.read(data);
         
-        if(data[0] == 0)
+        if(fileSize == 0)
             throw new IllegalArgumentException("text should not be empty");
         
         String allData = "";   // whole file will be saved to this string
@@ -47,9 +47,7 @@ public class MyCSVReader implements CSVReader{
         
         final char[] dataArray = allData.toCharArray(); 
         
-        int heightCounter = testNumberOfLines(allData); // var to save number of lines
-
-        return fillLines(dataArray, heightCounter);
+        return fillLines(dataArray, testNumberOfLines(allData));
     }
     
     /**
@@ -86,7 +84,7 @@ public class MyCSVReader implements CSVReader{
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
-                if(!new String(line).isEmpty())//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                if(!new String(line).trim().isEmpty())
                     csvText[lineCounter] = toStringArray(line,commaCounter);
                 
                 lineCounter++;
@@ -112,46 +110,19 @@ public class MyCSVReader implements CSVReader{
     private String[] toStringArray(char[] line, int commaCount) {
         int cellCounter = commaCount+1;  //there is a minimum of one cell   
         line[line.length-1] = ',';
-        
-//        final String line = new String(lined);
-//        
-//        final String[] retArr = new String[cellCounter];
-//        cellCounter = 0;
-//        String word = "";
-//        for (int counter = 0; counter < line.length(); counter++){
-// 
-//            final char letter = line.charAt(counter);
-//            
-//            if(letter == '\\'){
-//                counter++;           // to see whats the next letter after the\
-//                final char nextLetter = line.charAt(counter);
-//                word += nextLetter;
-//                
-//            }else if(letter == ',') {
-//                
-//                retArr[cellCounter] = word; // save the word into a cell
-//                cellCounter++;      //move to the next word
-//                word = "";          //reset the old word
-//                
-//            } else {
-//                word += line.charAt(counter);
-//            }
-//            
-//        }
-//        retArr[cellCounter] = word; // save the word into a cell
-//        
-//        return retArr;
-        
-        
-        
+
         final String[] csvLine = new String[cellCounter];
         cellCounter = 0;
         int startOfNextLine = 0;
+        int backslashCount = 0;
         boolean flagForBackslash = false;
         for (int counter = 0; counter < line.length ; counter++) {
             final char character = line[counter];
             
             if(character == '\\'){
+                
+                if (!flagForBackslash)
+                    backslashCount++;
                 
                 flagForBackslash = !flagForBackslash;
 
@@ -161,11 +132,11 @@ public class MyCSVReader implements CSVReader{
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
-                
-                csvLine[cellCounter] = new String(word).replace("\\\\", "\\");
-                
+                csvLine[cellCounter] = new String(removeBackSlashes(word, backslashCount));
+                                
                 cellCounter++;
                 flagForBackslash = false;
+                backslashCount = 0;
             }else{
                 flagForBackslash = false;
             } 
@@ -205,20 +176,33 @@ public class MyCSVReader implements CSVReader{
          
     }
     
-//    private char[] removeBackSlash(char[] line){
-//        
-//        
-//        
-//        for(int counter = 0 ; counter < line.length ; counter++){
-//            final char letter = line[counter];
-//            if(letter == '\\'){
-//                
-//            }
-//        }
-//        
-//        
-//        return;
-//    }
-        
+    /**
+     * Removes all anacceptable backslashes from a word.
+     * 
+     * @param original the original word
+     * @param backslashCount how many '\' to remove from a word
+     * @return A word without backslashes
+     */
+    public char[] removeBackSlashes(char[] original, int backslashCount){
+    final char[] result = new char[original.length - backslashCount];
+    int resultIndex = 0;
+    boolean flagForDoubleBackslash = false;
+    
+    for (Character c: original) {
+        if (c != '\\'){
+            result[resultIndex] = c;
+            resultIndex++;
+            flagForDoubleBackslash = false;
+        } else if (flagForDoubleBackslash) {
+            result[resultIndex] = c;
+            resultIndex++;
+            flagForDoubleBackslash = false;
+        } else {
+            flagForDoubleBackslash = true;
+        }
+    }
+    
+    return result;
+    }
 }
 

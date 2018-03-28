@@ -13,8 +13,8 @@ import org.junit.Test;
  */
 public class MyCSVReaderTest {
     
-//    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
+//    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
 //    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";
@@ -219,7 +219,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000)
+    @Test//(timeout = 1000)
     public void testReadVerschiedeneEntwerter12() throws Exception {
         final Reader reader = new FileReader(FILE12);
         final MyCSVReader sut = new MyCSVReader();
@@ -393,7 +393,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000)
+    @Test//(timeout = 1000)
     public void testStuff32() throws IOException {
         final String sut = "\n";
         final String[][] result = new MyCSVReader().read(new StringReader(sut));
