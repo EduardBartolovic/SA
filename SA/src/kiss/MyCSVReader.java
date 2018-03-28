@@ -82,11 +82,11 @@ public class MyCSVReader implements CSVReader{
                 
             }else if(character == '\n' && !flagForBackslash) {
                 
-                final char[] line =  new char[counter - startOfNextLine ];
+                final char[] line =  new char[counter - startOfNextLine +1];
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
-                if (!new String(line).isEmpty())//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                if(!new String(line).isEmpty())//+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
                     csvText[lineCounter] = toStringArray(line,commaCounter);
                 
                 lineCounter++;
@@ -109,37 +109,70 @@ public class MyCSVReader implements CSVReader{
      * @param line Die anzuschauende Zeile als String
      * @return Zeile als String[]
      */
-    private String[] toStringArray(char[] lined, int commaCount) {
-        int cellCounter = commaCount+1;        
+    private String[] toStringArray(char[] line, int commaCount) {
+        int cellCounter = commaCount+1;  //there is a minimum of one cell   
+        line[line.length-1] = ',';
         
-        final String line = new String(lined);
+//        final String line = new String(lined);
+//        
+//        final String[] retArr = new String[cellCounter];
+//        cellCounter = 0;
+//        String word = "";
+//        for (int counter = 0; counter < line.length(); counter++){
+// 
+//            final char letter = line.charAt(counter);
+//            
+//            if(letter == '\\'){
+//                counter++;           // to see whats the next letter after the\
+//                final char nextLetter = line.charAt(counter);
+//                word += nextLetter;
+//                
+//            }else if(letter == ',') {
+//                
+//                retArr[cellCounter] = word; // save the word into a cell
+//                cellCounter++;      //move to the next word
+//                word = "";          //reset the old word
+//                
+//            } else {
+//                word += line.charAt(counter);
+//            }
+//            
+//        }
+//        retArr[cellCounter] = word; // save the word into a cell
+//        
+//        return retArr;
         
-        final String[] retArr = new String[cellCounter];
+        
+        
+        final String[] csvLine = new String[cellCounter];
         cellCounter = 0;
-        String word = "";
-        for (int counter = 0; counter < line.length(); counter++){
- 
-            final char letter = line.charAt(counter);
+        int startOfNextLine = 0;
+        boolean flagForBackslash = false;
+        for (int counter = 0; counter < line.length ; counter++) {
+            final char character = line[counter];
             
-            if(letter == '\\'){
-                counter++;           // to see whats the next letter after the\
-                final char nextLetter = line.charAt(counter);
-                word += nextLetter;
+            if(character == '\\'){
                 
-            }else if(letter == ',') {
+                flagForBackslash = !flagForBackslash;
+
+            }else if(character == ',' && !flagForBackslash) {
                 
-                retArr[cellCounter] = word; // save the word into a cell
-                cellCounter++;      //move to the next word
-                word = "";          //reset the old word
+                final char[] word =  new char[counter - startOfNextLine ];
+                System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
+                startOfNextLine = counter+1;
                 
-            } else {
-                word += line.charAt(counter);
-            }
+                
+                csvLine[cellCounter] = new String(word).replace("\\\\", "\\");
+                
+                cellCounter++;
+                flagForBackslash = false;
+            }else{
+                flagForBackslash = false;
+            } 
             
         }
-        retArr[cellCounter] = word; // save the word into a cell
         
-        return retArr;
+        return csvLine;
     }
     
     private int testNumberOfLines(String allData){
@@ -171,8 +204,21 @@ public class MyCSVReader implements CSVReader{
          return numberOfLines;  
          
     }
-        
-        
     
+//    private char[] removeBackSlash(char[] line){
+//        
+//        
+//        
+//        for(int counter = 0 ; counter < line.length ; counter++){
+//            final char letter = line[counter];
+//            if(letter == '\\'){
+//                
+//            }
+//        }
+//        
+//        
+//        return;
+//    }
+        
 }
 

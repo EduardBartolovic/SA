@@ -144,7 +144,7 @@ public class MyCSVReaderTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000)
+    @Test//(timeout = 1000)
     public void testReadEntwerteEntwerter6() throws Exception {
         final Reader reader = new FileReader(FILE6);
         final MyCSVReader sut = new MyCSVReader();
