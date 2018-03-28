@@ -14,7 +14,9 @@ import java.io.Reader;
  */
 public class MyCSVReader implements CSVReader{
 
-    
+    /**
+     * this is a constant for the length of the char array in the buffered reader
+     */
     public static final int LENGTHOFBUF = 10000;
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
@@ -32,10 +34,9 @@ public class MyCSVReader implements CSVReader{
         final BufferedReader bufReader = new BufferedReader(reader);
         
         char[] data = new char[LENGTHOFBUF];
+        final int fileSize = bufReader.read(data);// read data out of file
         
-        final int fileSize = bufReader.read(data);
-        
-        if(fileSize == 0)
+        if(fileSize == 0) 
             throw new IllegalArgumentException("text should not be empty");
         
         String allData = "";   // whole file will be saved to this string
@@ -45,9 +46,9 @@ public class MyCSVReader implements CSVReader{
             bufReader.read(data);
         }
         
-        final char[] dataArray = allData.toCharArray(); 
+        final char[] dataArray = allData.toCharArray(); //transform whole String into Array
         
-        return fillLines(dataArray, testNumberOfLines(allData));
+        return fillLines(dataArray, testNumberOfLines(allData)); 
     }
     
     /**
@@ -62,17 +63,17 @@ public class MyCSVReader implements CSVReader{
         
         
         // allokate a big enough outer array
-        final String[][] csvText = new String[heightCounter][0];
-        int lineCounter = 0;
-        int commaCounter = 0;
-        int startOfNextLine = 0;
-        boolean flagForBackslash = false;
-        for (int counter = 0; counter < dataArray.length ; counter++) {
+        final String[][] csvText = new String[heightCounter][0]; 
+        int lineCounter = 0;                                //to keep track which line needs to be filled
+        int commaCounter = 0;                               //keep track how many commas are in one line
+        int startOfNextLine = 0;                            //keep track where evry line starts 
+        boolean flagForBackslash = false;                   //to remember that the last element was a '\'
+        for (int counter = 0; counter < dataArray.length ; counter++) { 
             final char character = dataArray[counter];
             
             if(character == '\\'){
                 
-                flagForBackslash = !flagForBackslash;
+                flagForBackslash = !flagForBackslash; 
                 
             }else if(character == ',' && !flagForBackslash){
                 
@@ -80,14 +81,14 @@ public class MyCSVReader implements CSVReader{
                 
             }else if(character == '\n' && !flagForBackslash) {
                 
-                final char[] line =  new char[counter - startOfNextLine +1];
-                System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine );
-                startOfNextLine = counter+1;
+                final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
+                System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
+                startOfNextLine = counter+1;                                //the next line will start a counter position + 1
                 
-                if(!new String(line).trim().isEmpty())
-                    csvText[lineCounter] = toStringArray(line,commaCounter);
+                if(!new String(line).trim().isEmpty())  
+                    csvText[lineCounter] = toStringArray(line,commaCounter); //generate the line with cells
                 
-                lineCounter++;
+                lineCounter++; 
                 commaCounter = 0;
                 flagForBackslash = false;
             }else{
@@ -105,14 +106,15 @@ public class MyCSVReader implements CSVReader{
      * Die Worte werden an ',' getrennt.
      * 
      * @param line Die anzuschauende Zeile als String
+     * @param commaCount die anzahl der gefundenen kommas
      * @return Zeile als String[]
      */
     private String[] toStringArray(char[] line, int commaCount) {
         int cellCounter = commaCount+1;  //there is a minimum of one cell   
-        line[line.length-1] = ',';
+        line[line.length-1] = ',';  //adding a ',' at the end to mark the end of the line
 
         final String[] csvLine = new String[cellCounter];
-        cellCounter = 0;
+        cellCounter = 0;    
         int startOfNextLine = 0;
         int backslashCount = 0;
         boolean flagForBackslash = false;
@@ -121,14 +123,14 @@ public class MyCSVReader implements CSVReader{
             
             if(character == '\\'){
                 
-                if (!flagForBackslash)
+                if (!flagForBackslash)              // only counting doublebackslash once
                     backslashCount++;
                 
                 flagForBackslash = !flagForBackslash;
 
             }else if(character == ',' && !flagForBackslash) {
                 
-                final char[] word =  new char[counter - startOfNextLine ];
+                final char[] word =  new char[counter - startOfNextLine ]; 
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
@@ -146,6 +148,11 @@ public class MyCSVReader implements CSVReader{
         return csvLine;
     }
     
+    /**
+     * counting the number of real newlines in String. thows exception when file has a bad ending
+     * @param allData String
+     * @return number of lines as int
+     */
     private int testNumberOfLines(String allData){
         
         int numberOfLines = 0;
@@ -188,13 +195,13 @@ public class MyCSVReader implements CSVReader{
     int resultIndex = 0;
     boolean flagForDoubleBackslash = false;
     
-    for (Character c: original) {
-        if (c != '\\'){
-            result[resultIndex] = c;
+    for (Character letter: original) {
+        if (letter != '\\'){
+            result[resultIndex] = letter;
             resultIndex++;
             flagForDoubleBackslash = false;
         } else if (flagForDoubleBackslash) {
-            result[resultIndex] = c;
+            result[resultIndex] = letter;
             resultIndex++;
             flagForDoubleBackslash = false;
         } else {
