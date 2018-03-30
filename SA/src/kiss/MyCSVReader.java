@@ -85,11 +85,8 @@ public class MyCSVReader implements CSVReader{
                 final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
                 startOfNextLine = counter+1; //the next line will start a counter position + 1
-                
-                final char[] trimmedLine = trim(line);
-                
-                
-                if (!new String(trimmedLine).isEmpty())/*isReallyEmpty(line)*///!new String(line).trim().isEmpty())  
+
+                if (isReallyEmpty(line))
                     csvText[lineCounter] = toStringArray(line,commaCounter); //generate the line with cells
                 
                 lineCounter++; 
@@ -106,17 +103,15 @@ public class MyCSVReader implements CSVReader{
     }
     
     /**
-     * Removes all unnecessary characters from the line.
-     * 
+     * checking if line is really Empty.
      * @param line the original line
-     * @return the trimmed line
+     * @return boolean
      */
-    private char[] trim(char...line) {
+    private boolean isReallyEmpty(char... line) {
         
         int endOfLine = line.length-1;
         boolean isAfterEnd = true;
-        
-        for (int index = line.length - 1; index >= 0; index--) {
+        for (int index = endOfLine ; index >= 0; index--) {
             if (line[index] != '\n' && !isAfterEnd) {
                 endOfLine = index;
                 isAfterEnd = false;
@@ -126,7 +121,8 @@ public class MyCSVReader implements CSVReader{
         final char[] trimmedLine = new char[endOfLine];
         System.arraycopy(line, 0, trimmedLine, 0, endOfLine);
         
-        return trimmedLine;
+       
+        return !new String(trimmedLine).isEmpty();
     }
     
     /**
