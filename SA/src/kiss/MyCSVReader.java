@@ -14,8 +14,8 @@ import java.io.Reader;
  */
 public class MyCSVReader implements CSVReader{
 
-    /**
-     * this is a constant for the length of the char array in the buffered reader
+    /** 
+     * this is a constant for the length of the char array in the buffered reader.
      */
     public static final int LENGTHOFBUF = 10000;
     /**
@@ -34,21 +34,22 @@ public class MyCSVReader implements CSVReader{
         final BufferedReader bufReader = new BufferedReader(reader);
         
         char[] data = new char[LENGTHOFBUF];
-        final int fileSize = bufReader.read(data);// read data out of file
+        int fileSize = bufReader.read(data);// read data out of file 
         
         if(fileSize == 0) 
             throw new IllegalArgumentException("text should not be empty");
         
-        String allData = "";   // whole file will be saved to this string
-        while(data[0] > 0){
-            allData += new String(data); 
+        final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
+        while(fileSize > 0){
+            allData.append(new String(data)); 
             data = new char[LENGTHOFBUF];
-            bufReader.read(data);
+            fileSize = bufReader.read(data);
         }
         
-        final char[] dataArray = allData.toCharArray(); //transform whole String into Array
+        final char[] dataArray = new char[allData.length()];
+        allData.getChars(0, allData.length(), dataArray, 0);
         
-        return fillLines(dataArray, testNumberOfLines(allData)); 
+        return fillLines(dataArray, testNumberOfLines(dataArray)); 
     }
     
     /**
@@ -153,14 +154,12 @@ public class MyCSVReader implements CSVReader{
      * @param allData String
      * @return number of lines as int
      */
-    private int testNumberOfLines(String allData){
+    private int testNumberOfLines(char... allData){
         
         int numberOfLines = 0;
         boolean flagForBackslash = false;
         boolean flagForEndLine = false;
-        for(int counter = 0 ; counter < allData.length() ; counter++){
-            
-            final char letter = allData.charAt(counter);
+        for(char letter : allData){
             
             if(letter == '\\'){
                 flagForBackslash = !flagForBackslash;
@@ -194,18 +193,18 @@ public class MyCSVReader implements CSVReader{
     final char[] result = new char[original.length - backslashCount];
     int resultIndex = 0;
     boolean flagForDoubleBackslash = false;
-    
     for (Character letter: original) {
-        if (letter != '\\'){
+
+        if (flagForDoubleBackslash) {
             result[resultIndex] = letter;
             resultIndex++;
             flagForDoubleBackslash = false;
-        } else if (flagForDoubleBackslash) {
-            result[resultIndex] = letter;
-            resultIndex++;
-            flagForDoubleBackslash = false;
-        } else {
+        } else if (letter == '\\'){
             flagForDoubleBackslash = true;
+        } else {
+            result[resultIndex] = letter;
+            resultIndex++;
+            flagForDoubleBackslash = false;
         }
     }
     
@@ -228,5 +227,6 @@ public class MyCSVReader implements CSVReader{
         }
         return false;
     }
+    
 }
 
