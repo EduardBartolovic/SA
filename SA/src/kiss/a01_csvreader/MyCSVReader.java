@@ -1,4 +1,4 @@
-package kiss;
+package kiss.a01_csvreader;
 
 import edu.hm.cs.rs.arch18.a01_kiss.CSVReader;
 import java.io.BufferedReader;

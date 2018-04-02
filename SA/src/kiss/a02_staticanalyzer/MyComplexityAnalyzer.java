@@ -1,5 +1,9 @@
-
-package kiss;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package kiss.a02_staticanalyzer;
 
 
 import edu.hm.cs.rs.arch18.a02_staticanalyzer.ComplexityAnalyzer;
@@ -12,7 +16,7 @@ import java.util.Map;
 import java.util.stream.Stream;
 /**
  *
- * @author Eduard
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
