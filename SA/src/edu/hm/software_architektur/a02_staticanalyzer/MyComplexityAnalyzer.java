@@ -29,7 +29,11 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     private static final String OPTION_C = "-c";
     private static final String OPTION_P = "-p";
     
-    MyComplexityAnalyzer(Path rootdir){
+    /**
+     * public Constructor for setting new path rootdirectory
+     * @param rootdir 
+     */
+    public MyComplexityAnalyzer(Path rootdir){
         this.rootDir = rootdir;
     }
     
@@ -41,7 +45,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
 
-        final List<String> fileNames = new ArrayList<>();
+        final List<String> fileNames = new ArrayList<>(); //list where file names are saved to
         
         final Function<List<List<String>>,Map<String,Integer>> fileAnalyzer = (listOflists) -> {
             
@@ -58,7 +62,6 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     }
                 }
                 analyzedFiles.put(fileNames.get(fileCount), complexityForEachFile[fileCount]);
-//                analyzedFiles.put("how many positions in int array " + Integer.toString(fileCount) + " | " + Integer.toString(complexityForEachFile[fileCount]), complexityForEachFile.length);
                 fileCount++;
             }
             
@@ -81,7 +84,8 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             return result.trim();
         };
         
-        final List<List<String>> fileData = Files.walk(rootDir)
+        
+        return fileAnalyzer.apply(Files.walk(rootDir)
                                         .filter(file -> file.toString().endsWith(".class"))
                                         //.distinct()
                                         .map((path) -> {
@@ -93,9 +97,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                                             retList.addAll(Arrays.asList(data.split("\n")));
                                             return retList;
                                         })
-                                        .collect(Collectors.toList());
-        
-        return fileAnalyzer.apply(fileData);
+                                        .collect(Collectors.toList()));
     }
     
 }
