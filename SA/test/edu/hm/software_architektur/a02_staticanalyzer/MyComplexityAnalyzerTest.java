@@ -151,20 +151,17 @@ public class MyComplexityAnalyzerTest {
     }
     @Test(timeout = 2000)
     public void test22() throws Exception {
-        final String fileName = "a.b.c.d.e.Hello";
-        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
-        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get(fileName+".class"));   
+        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"a"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("Hello"+".class"));   
     }
     @Test(timeout = 2000)
     public void test23() throws Exception {
-        final String fileName = "main.TwoClasses";
-        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
-        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get(fileName+".class"));   
+        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"main"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("TwoClasses.class"));   
     }
     @Test(timeout = 2000)
     public void test24() throws Exception {
-        final String fileName = "sub.Foo";
-        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
-        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get(fileName+".class"));   
+        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"sub"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("Foo"+".class"));   
     }
 }
