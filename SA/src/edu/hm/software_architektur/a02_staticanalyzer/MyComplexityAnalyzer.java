@@ -14,6 +14,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -24,19 +25,19 @@ import java.util.stream.Collectors;
 public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
     /**
-     * parameter for disambler
+     * parameter for disambler.
      */
     private static final String COMMAND = "javap";
     /**
-     * parameter for disambler
+     * parameter for disambler.
      */
     private static final String OPTION_C = "-c";
     /**
-     * parameter for disambler
+     * parameter for disambler.
      */
     private static final String OPTION_P = "-p";
     /**
-     * saving the directory where a search should start
+     * saving the directory where a search should start.
      */
     private final Path rootDir;
     
@@ -58,7 +59,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     public Map<String, Integer> analyzeClassfiles() throws IOException {
 
         final List<String> fileNames = new ArrayList<>(); //list where file names are saved to
-        final Function<List<List<String>>,Map<String,Integer>> fileAnalyzer = (listOflists) -> {
+        final Function<List<List<String>>,Optional<Map<String,Integer>>> fileAnalyzer = listOflists -> {
             boolean athrowSet = false;
             final Map<String,Integer> analyzedFiles = new HashMap<>();
             int fileCount = 0;
@@ -80,10 +81,10 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                 analyzedFiles.put(fileNames.get(fileCount), complexityForEachFile[fileCount]);
                 fileCount++;
             }
-            return Collections.unmodifiableMap(analyzedFiles);
+            return Optional.of(Collections.unmodifiableMap(analyzedFiles));
         };// end of Function fileAnayzer+++++++++
         
-        final Function<Path,String> pathToData = (path) -> {
+        final Function<Path,String> pathToData = path -> {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final PrintStream printStream = new PrintStream(baos);
             System.setOut(printStream);
@@ -101,7 +102,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         return fileAnalyzer.apply(Files.walk(rootDir)
                                         .filter(file -> file.toString().endsWith(".class"))
                                         //.distinct()
-                                        .map((path) -> {
+                                        .map(path -> {
                                             fileNames.add(path.getFileName().toString());
                                             return pathToData.apply(path);
                                         })
@@ -110,7 +111,8 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                                             retList.addAll(Arrays.asList(data.split("\n")));
                                             return retList;
                                         })
-                                        .collect(Collectors.toList()));
+                                        .collect(Collectors.toList()))
+                .get();// when map ist empty
     }
     
 }
