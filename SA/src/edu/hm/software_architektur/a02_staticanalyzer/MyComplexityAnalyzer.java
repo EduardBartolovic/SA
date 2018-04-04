@@ -2,16 +2,18 @@ package edu.hm.software_architektur.a02_staticanalyzer;
 
 
 import edu.hm.cs.rs.arch18.a02_staticanalyzer.ComplexityAnalyzer;
-import static edu.hm.software_architektur.a01_csvreader.MyCSVReader.LENGTHOFBUF;
-import java.io.BufferedReader;
-import java.io.FileReader;
+import edu.hm.cs.rs.arch18.a02_staticanalyzer.demo.ProcessRunner;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -37,53 +39,39 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
         
                 
-        final Function<List<Path>,Map<String,Integer>> fileAnalyzer = (pathList) -> {
+
+        final Function<List<String>,Map<String,Integer>> fileAnalyzer = (string) -> {
             
             final Map<String,Integer> analyzedFiles = new HashMap<>();
             
             
-            pathList.forEach((path) -> {
-                final BufferedReader bufReader;
-                try {
-                    bufReader = new BufferedReader(new FileReader(path.toString()));
-
-                    char[] data = new char[LENGTHOFBUF];
-                    int fileSize = bufReader.read(data);// read data out of file
-                    
-                    if(fileSize == 0) 
-                        throw new IllegalArgumentException("text should not be empty");
-
-                    final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
-                    while(fileSize > 0){
-                        allData.append(new String(data)); 
-                        data = new char[LENGTHOFBUF];
-                        fileSize = bufReader.read(data);
-                    }
-                    
-                    
-                    
-                    
-                } catch (IOException ex) {
-                    System.out.println("Error in finding File or error in reading File");
-                }
-            });
-
             return analyzedFiles;
+        };// end of Function fileAnayzer+++++++++
+        
+        final Function<Path,String> pathToData = (path) -> {
+            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            final PrintStream printStream = new PrintStream(baos);
+            System.setOut(printStream);
+            
+            try {
+                ProcessRunner.main(path.toString());
+            } catch (IOException | InterruptedException ex) {
+                Logger.getLogger(MyComplexityAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            final String result = baos.toString();
+            System.out.flush();
+            return result.trim();
         };
         
-        final List<Path> pathList = Files.walk(rootDir)
+        final List<String> fileData = Files.walk(rootDir)
                                         .filter(file -> file.toString().endsWith(".class"))
                                         //.distinct()
+                                        .map((path) -> pathToData.apply(path))
                                         .collect(Collectors.toList());
+
         
-        
-        
-      
-        
-        
-        
-        
-        return fileAnalyzer.apply(pathList);
+        return fileAnalyzer.apply(fileData);
     }
     
 }
