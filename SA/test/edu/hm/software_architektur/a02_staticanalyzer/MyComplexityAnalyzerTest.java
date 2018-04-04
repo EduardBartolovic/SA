@@ -21,6 +21,7 @@ public class MyComplexityAnalyzerTest {
     public void test1() throws Exception {
         MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"ABC=2"));
         System.out.println(analyzer.analyzeClassfiles().toString());
+        
     }
     
 }
