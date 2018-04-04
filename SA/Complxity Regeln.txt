@@ -1,0 +1,7 @@
+Bis jetzt hab ich: 
+
+jedes return da es das ende einer methode ist --> also für jede methode
+
+if... -> kann gefolgt von einem goto sein muss aber nicht
+
+athrow -> gefolgt von einem goto 
