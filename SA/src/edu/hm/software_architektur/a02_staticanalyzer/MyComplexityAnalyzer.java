@@ -15,8 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 /**
@@ -53,21 +51,20 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             final Map<String,Integer> analyzedFiles = new HashMap<>();
             int fileCount = 0;
             final int[] complexityForEachFile = new int[listOflists.size()];
-            for (List<String> list: listOflists) {
-                for (String line: list) {
+            for (List<String> file: listOflists) {
+                for (String line: file) {
                     System.out.println(line);
-                    if (line.contains("if")) {
+                    if(line.contains("if")) {
                         complexityForEachFile[fileCount]++;
                     }else if(line.contains("athrow")){
                         complexityForEachFile[fileCount]++;
-                    } else if (line.contains("return")){
+                    } else if(line.contains("return")){
                         complexityForEachFile[fileCount]++;
                     }
                 }
                 analyzedFiles.put(fileNames.get(fileCount), complexityForEachFile[fileCount]);
                 fileCount++;
             }
-            
             return Collections.unmodifiableMap(analyzedFiles);
         };// end of Function fileAnayzer+++++++++
         
@@ -75,13 +72,11 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             final ByteArrayOutputStream baos = new ByteArrayOutputStream();
             final PrintStream printStream = new PrintStream(baos);
             System.setOut(printStream);
-            
             try {
                 ProcessRunner.main(COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException ex) {
-                Logger.getLogger(MyComplexityAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println("Error in translting File");
             }
-            
             final String result = baos.toString();
             System.out.flush();
             return result.trim();
