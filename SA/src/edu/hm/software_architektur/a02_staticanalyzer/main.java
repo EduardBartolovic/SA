@@ -20,6 +20,6 @@ public class main {
 //            // do nothing
 //        }
 //        System.out.println(analyzer.analyzeClassfiles().toString());
-        ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\For.class");
+        ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\Finally.class");
     }
 }

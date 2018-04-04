@@ -53,15 +53,15 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             final Map<String,Integer> analyzedFiles = new HashMap<>();
             int fileCount = 0;
             final int[] complexityForEachFile = new int[listOflists.size()];
-            final String methodeRegex = "(public|private|protected|abstract)";
             for (List<String> list: listOflists) {
                 for (String line: list) {
+                    System.out.println(line);
                     if (line.contains("if")) {
-                        complexityForEachFile[fileCount] += 1;
-                    } else if (line.contains("goto")) {
-                        complexityForEachFile[fileCount] += 1;
-                    } else if (line.contains(methodeRegex)){
-                        complexityForEachFile[fileCount] += 1;
+                        complexityForEachFile[fileCount]++;
+                    }else if(line.contains("athrow")){
+                        complexityForEachFile[fileCount]++;
+                    } else if (line.contains("return")){
+                        complexityForEachFile[fileCount]++;
                     }
                 }
                 analyzedFiles.put(fileNames.get(fileCount), complexityForEachFile[fileCount]);
