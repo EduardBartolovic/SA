@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,8 +25,11 @@ import java.util.stream.Collectors;
 public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
     private final Path rootDir;
+    private static final String COMMAND = "javap";
+    private static final String OPTION_C = "-c";
+    private static final String OPTION_P = "-p";
     
-    private MyComplexityAnalyzer(Path rootdir){
+    MyComplexityAnalyzer(Path rootdir){
         this.rootDir = rootdir;
     }
     
@@ -35,15 +40,27 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
-        
 
+        final List<String> fileNames = new ArrayList<>();
         
-                
-
-        final Function<List<String>,Map<String,Integer>> fileAnalyzer = (string) -> {
+        final Function<List<List<String>>,Map<String,Integer>> fileAnalyzer = (listOflists) -> {
             
             final Map<String,Integer> analyzedFiles = new HashMap<>();
+            int fileCount = 0;
+            final int[] complexityForEachFile = new int[listOflists.size()];
             
+            for (List<String> list: listOflists) {
+                for (String line: list) {
+                    if (line.contains("if")) {
+                        complexityForEachFile[fileCount] += 1;
+                    } else if (line.contains("goto")) {
+                        complexityForEachFile[fileCount] += 1;
+                    }
+                }
+                analyzedFiles.put(fileNames.get(fileCount), complexityForEachFile[fileCount]);
+//                analyzedFiles.put("how many positions in int array " + Integer.toString(fileCount) + " | " + Integer.toString(complexityForEachFile[fileCount]), complexityForEachFile.length);
+                fileCount++;
+            }
             
             return analyzedFiles;
         };// end of Function fileAnayzer+++++++++
@@ -54,7 +71,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             System.setOut(printStream);
             
             try {
-                ProcessRunner.main(path.toString());
+                ProcessRunner.main(COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException ex) {
                 Logger.getLogger(MyComplexityAnalyzer.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -64,12 +81,19 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             return result.trim();
         };
         
-        final List<String> fileData = Files.walk(rootDir)
+        final List<List<String>> fileData = Files.walk(rootDir)
                                         .filter(file -> file.toString().endsWith(".class"))
                                         //.distinct()
-                                        .map((path) -> pathToData.apply(path))
+                                        .map((path) -> {
+                                            fileNames.add(path.getFileName().toString());
+                                            return pathToData.apply(path);
+                                        })
+                                        .map(data -> {
+                                            List<String> retList = new ArrayList<>();
+                                            retList.addAll(Arrays.asList(data.split("\n")));
+                                            return retList;
+                                        })
                                         .collect(Collectors.toList());
-
         
         return fileAnalyzer.apply(fileData);
     }
