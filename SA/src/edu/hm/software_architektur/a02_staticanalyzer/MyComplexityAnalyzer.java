@@ -45,9 +45,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     public Map<String, Integer> analyzeClassfiles() throws IOException {
 
         final List<String> fileNames = new ArrayList<>(); //list where file names are saved to
-        
+//        boolean athrowSet = false;
         final Function<List<List<String>>,Map<String,Integer>> fileAnalyzer = (listOflists) -> {
-            
+            boolean athrowSet = false;
             final Map<String,Integer> analyzedFiles = new HashMap<>();
             int fileCount = 0;
             final int[] complexityForEachFile = new int[listOflists.size()];
@@ -57,6 +57,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     if(line.contains("if")) {
                         complexityForEachFile[fileCount]++;
                     }else if(line.contains("athrow")){
+                        athrowSet = true;
+//                        complexityForEachFile[fileCount]++;
+                    } else if (line.contains("goto") && athrowSet) {
                         complexityForEachFile[fileCount]++;
                     } else if(line.contains("return")){
                         complexityForEachFile[fileCount]++;

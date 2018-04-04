@@ -151,17 +151,17 @@ public class MyComplexityAnalyzerTest {
     }
     @Test(timeout = 2000)
     public void test22() throws Exception {
-        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"a"));
+        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"Hello.class"));
         assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("Hello"+".class"));   
     }
     @Test(timeout = 2000)
     public void test23() throws Exception {
-        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"main"));
+        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"TwoClasses.class"));
         assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("TwoClasses.class"));   
     }
     @Test(timeout = 2000)
     public void test24() throws Exception {
-        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"sub"));
+        MyComplexityAnalyzer analyzer = new MyComplexityAnalyzer(Paths.get(path.toAbsolutePath().toString()+"\\"+"Foo.class"));
         assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("Foo"+".class"));   
     }
 }
