@@ -18,18 +18,31 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- *
+ * analyzing the complexity of a java class file.
  * @author Eduard Bartolovic, Felix Peither
  */
 public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
-    private final Path rootDir;
+    /**
+     * parameter for disambler
+     */
     private static final String COMMAND = "javap";
+    /**
+     * parameter for disambler
+     */
     private static final String OPTION_C = "-c";
+    /**
+     * parameter for disambler
+     */
     private static final String OPTION_P = "-p";
+    /**
+     * saving the directory where a search should start
+     */
+    private final Path rootDir;
+    
     
     /**
-     * public Constructor for setting new path rootdirectory
+     * public Constructor for setting new path rootdirectory.
      * @param rootdir 
      */
     public MyComplexityAnalyzer(Path rootdir){
@@ -45,7 +58,6 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     public Map<String, Integer> analyzeClassfiles() throws IOException {
 
         final List<String> fileNames = new ArrayList<>(); //list where file names are saved to
-//        boolean athrowSet = false;
         final Function<List<List<String>>,Map<String,Integer>> fileAnalyzer = (listOflists) -> {
             boolean athrowSet = false;
             final Map<String,Integer> analyzedFiles = new HashMap<>();
@@ -77,7 +89,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             System.setOut(printStream);
             try {
                 ProcessRunner.main(COMMAND, OPTION_C, OPTION_P, path.toString());
-            } catch (IOException | InterruptedException ex) {
+            } catch (IOException | InterruptedException exception) {
                 System.out.println("Error in translting File");
             }
             final String result = baos.toString();
@@ -94,7 +106,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                                             return pathToData.apply(path);
                                         })
                                         .map(data -> {
-                                            List<String> retList = new ArrayList<>();
+                                            final List<String> retList = new ArrayList<>();
                                             retList.addAll(Arrays.asList(data.split("\n")));
                                             return retList;
                                         })
