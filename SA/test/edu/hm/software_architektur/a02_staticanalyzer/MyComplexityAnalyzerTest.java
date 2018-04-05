@@ -171,7 +171,7 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"));
         final Map<String,Integer> have = analyzer.analyzeClassfiles();
         System.out.println(have);
-        assertEquals(25,have.size());  
+        assertEquals(27,have.size());  
         assertEquals(Integer.valueOf(2),have.get("ABC"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Anonymous"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Anonymous$1"+".class"));   
@@ -203,5 +203,17 @@ public class MyComplexityAnalyzerTest {
     public void test26() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Or.class"));
         assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("Or.class"));   
+    }
+    
+    @Test(timeout = 2000)
+    public void test27() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"MoreOr.class"));
+        assertEquals(Integer.valueOf(6),analyzer.analyzeClassfiles().get("MoreOr.class"));   
+    }
+    
+    @Test(timeout = 2000)
+    public void test28() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"MoreAnd.class"));
+        assertEquals(Integer.valueOf(6),analyzer.analyzeClassfiles().get("MoreAnd.class"));   
     }
 }
