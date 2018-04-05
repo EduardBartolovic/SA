@@ -2,10 +2,11 @@ package edu.hm.software_architektur.a02_staticanalyzer;
 
 
 import edu.hm.cs.rs.arch18.a02_staticanalyzer.ComplexityAnalyzer;
-import edu.hm.cs.rs.arch18.a02_staticanalyzer.demo.ProcessRunner;
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import javax.swing.filechooser.FileSystemView;
 
 /**
  * analyzing the complexity of a java class file.
@@ -41,6 +43,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private final Path rootDir;
     
+    public MyComplexityAnalyzer(){
+        rootDir = FileSystemView.getFileSystemView().getHomeDirectory().toPath();
+    }
     
     /**
      * public Constructor for setting new path rootdirectory.
@@ -71,7 +76,6 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                         complexityForEachFile[fileCount]++;
                     }else if(line.contains("athrow")){
                         athrowSet = true;
-//                        complexityForEachFile[fileCount]++;
                     } else if (line.contains("goto") && athrowSet) {
                         complexityForEachFile[fileCount]++;
                     } else if(line.contains("return")){
@@ -85,17 +89,12 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         };// end of Function fileAnayzer+++++++++
         
         final Function<Path,String> pathToData = path -> {
-            final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            final PrintStream printStream = new PrintStream(baos);
-            System.setOut(printStream);
             try {
-                ProcessRunner.main(COMMAND, OPTION_C, OPTION_P, path.toString());
-            } catch (IOException | InterruptedException exception) {
-                System.out.println("Error in translting File");
+                return runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
+            } catch (IOException | InterruptedException ex) {
+                System.out.println("Error in pathToData");
             }
-            final String result = baos.toString();
-            System.out.flush();
-            return result.trim();
+            return "";
         };
         
         
@@ -113,6 +112,30 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                                         })
                                         .collect(Collectors.toList()))
                 .get();// when map ist empty
+    }
+    
+    /**
+     * Startet ein anderes Programm und liefert dessen Konsolenausgabe (out und err) zurueck.
+     * @param command Programmname und Kommandozeilenargumente.
+     * @return Ausgabe des Programms.
+     * @exception IOException bei einem Fehler im Filesystem.
+     * @exception InterruptedException bei einer Unterbrechung des Prozesses.
+     */
+    private String runProgram(String... command) throws IOException, InterruptedException {
+        final Process process = new ProcessBuilder(command)
+        .redirectErrorStream(true)
+        .start();
+        final List<String> output = new ArrayList<>();
+        try(InputStream inputStream = process.getInputStream();
+            Reader reader = new InputStreamReader(inputStream);
+            BufferedReader bufferedReader = new BufferedReader(reader)) {
+            final Thread collector = new Thread(() -> bufferedReader.lines().forEach(output::add));
+            collector.start();
+            if(process.waitFor() != 0)
+                throw new IOException("process failed");
+            collector.join();
+        }
+        return output.stream().collect(Collectors.joining("\n"));
     }
     
 }
