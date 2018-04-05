@@ -76,9 +76,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         };
         
         return Collections.unmodifiableMap(complexityAnalyzer(Files.walk(rootDir)
-                                .filter(file -> file.toString().endsWith(".class"))
-                                .map(pathToData::apply)
-                                .collect(Collectors.toList()) , fileNames)
+                                                                .filter(file -> file.toString().endsWith(".class"))
+                                                                .map(pathToData::apply)
+                                                                .collect(Collectors.toList()) , fileNames)
         );
     }
     
