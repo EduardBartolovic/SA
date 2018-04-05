@@ -1,24 +1,21 @@
 package edu.hm.software_architektur.a02_staticanalyzer;
 
-
 import edu.hm.cs.rs.arch18.a02_staticanalyzer.ComplexityAnalyzer;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.Reader;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import javax.swing.filechooser.FileSystemView;
 
 /**
  * analyzing the complexity of a java class file.
@@ -47,7 +44,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      * default Constructor.
      */
     public MyComplexityAnalyzer(){
-        rootDir = FileSystemView.getFileSystemView().getHomeDirectory().toPath();
+        this(Paths.get(System.getProperty("user.dir")));
     }
     
     /**
@@ -65,48 +62,24 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
-
-        final List<String> fileNames = new ArrayList<>(); //list where file names are saved to
-        final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
-        
-        final Consumer<List<List<String>>> fileAnalyzer = listOflists -> {
-            boolean athrowSet = false;
-            int fileCount = 0;
-            for (List<String> file: listOflists) { //part for counting the complexity.
-                int complexity = 0;
-                for (String line: file) {
-                    if(line.contains("if")) {
-                        complexity++;
-                    }else if(line.contains("athrow")){
-                        athrowSet = true;
-                    } else if (line.contains("goto") && athrowSet) {
-                        complexity++;
-                    } else if(line.contains("return")){
-                        complexity++;
-                    }
-                }
-                analyzedFiles.put(fileNames.get(fileCount), complexity);
-                fileCount++;
-            }
-        };// end of Function fileAnayzer+++++++++
+        final List<String> fileNames = new ArrayList<>(); 
         
         final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into  list
             fileNames.add(path.getFileName().toString());
             String data = "";
             try {
                 data = runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
-            } catch (IOException | InterruptedException ex) {
+            } catch (IOException | InterruptedException exception) {
                 System.out.println("Error in pathToData");
             }
             return Arrays.asList(data.split("\n"));
         };
         
-        fileAnalyzer.accept(Files.walk(rootDir)
-                                    .filter(file -> file.toString().endsWith(".class"))
-                                    .map(pathToData::apply)
-                                    .collect(Collectors.toList())
+        return Collections.unmodifiableMap(complexityAnalyzer(Files.walk(rootDir)
+                                .filter(file -> file.toString().endsWith(".class"))
+                                .map(pathToData::apply)
+                                .collect(Collectors.toList()) , fileNames)
         );
-        return Collections.unmodifiableMap(analyzedFiles);
     }
     
     /**
@@ -121,9 +94,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         .redirectErrorStream(true)
         .start();
         final List<String> output = new ArrayList<>();
-        try(final InputStream inputStream = process.getInputStream();
-            final Reader reader = new InputStreamReader(inputStream);
-            final BufferedReader bufferedReader = new BufferedReader(reader)) {
+        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream(),Charset.defaultCharset()))) {
             final Thread collector = new Thread(() -> bufferedReader.lines().forEach(output::add));
             collector.start();
             if(process.waitFor() != 0)
@@ -133,4 +104,32 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         return output.stream().collect(Collectors.joining("\n"));
     }
     
+    /**
+     * calculating the complexity of some files.
+     * @param listOfList
+     * @param fileNames
+     * @return Map filled with file names and there complexity
+     */
+    private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList, List<String> fileNames){
+        final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
+        boolean athrowSet = false;
+        int fileCount = 0;
+        for (List<String> file: listOfList) { //part for counting the complexity.
+            int complexity = 0;
+            for (String line: file) {
+                if(line.contains("if")) {
+                    complexity++;
+                }else if(line.contains("athrow")){
+                    athrowSet = true;
+                } else if (line.contains("goto") && athrowSet) {
+                    complexity++;
+                } else if(line.contains("return")){
+                    complexity++;
+                }
+            }
+            analyzedFiles.put(fileNames.get(fileCount), complexity);
+            fileCount++;
+        }
+        return analyzedFiles;
+    }   
 }
