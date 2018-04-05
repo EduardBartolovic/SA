@@ -15,7 +15,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import javax.swing.filechooser.FileSystemView;
@@ -67,31 +67,30 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     public Map<String, Integer> analyzeClassfiles() throws IOException {
 
         final List<String> fileNames = new ArrayList<>(); //list where file names are saved to
-        final Function<List<List<String>>,Optional<Map<String,Integer>>> fileAnalyzer = listOflists -> {
+        final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
+        
+        final Consumer<List<List<String>>> fileAnalyzer = listOflists -> {
             boolean athrowSet = false;
-            final Map<String,Integer> analyzedFiles = new HashMap<>();
             int fileCount = 0;
-            final int[] complexityForEachFile = new int[listOflists.size()];
-            for (List<String> file: listOflists) {
+            for (List<String> file: listOflists) { //part for counting the complexity.
+                int complexity = 0;
                 for (String line: file) {
-                    System.out.println(line);
                     if(line.contains("if")) {
-                        complexityForEachFile[fileCount]++;
+                        complexity++;
                     }else if(line.contains("athrow")){
                         athrowSet = true;
                     } else if (line.contains("goto") && athrowSet) {
-                        complexityForEachFile[fileCount]++;
+                        complexity++;
                     } else if(line.contains("return")){
-                        complexityForEachFile[fileCount]++;
+                        complexity++;
                     }
                 }
-                analyzedFiles.put(fileNames.get(fileCount), complexityForEachFile[fileCount]);
+                analyzedFiles.put(fileNames.get(fileCount), complexity);
                 fileCount++;
             }
-            return Optional.of(Collections.unmodifiableMap(analyzedFiles));
         };// end of Function fileAnayzer+++++++++
         
-        final Function<Path,List<String>> pathToData = path -> {
+        final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into  list
             fileNames.add(path.getFileName().toString());
             String data = "";
             try {
@@ -102,12 +101,12 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             return Arrays.asList(data.split("\n"));
         };
         
-        
-        return fileAnalyzer.apply(Files.walk(rootDir)
-                                        .filter(file -> file.toString().endsWith(".class"))
-                                        .map(pathToData::apply)
-                                        .collect(Collectors.toList()))
-                .get();// when map ist empty
+        fileAnalyzer.accept(Files.walk(rootDir)
+                                    .filter(file -> file.toString().endsWith(".class"))
+                                    .map(pathToData::apply)
+                                    .collect(Collectors.toList())
+        );
+        return Collections.unmodifiableMap(analyzedFiles);
     }
     
     /**
@@ -122,9 +121,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         .redirectErrorStream(true)
         .start();
         final List<String> output = new ArrayList<>();
-        try(InputStream inputStream = process.getInputStream();
-            Reader reader = new InputStreamReader(inputStream);
-            BufferedReader bufferedReader = new BufferedReader(reader)) {
+        try(final InputStream inputStream = process.getInputStream();
+            final Reader reader = new InputStreamReader(inputStream);
+            final BufferedReader bufferedReader = new BufferedReader(reader)) {
             final Thread collector = new Thread(() -> bufferedReader.lines().forEach(output::add));
             collector.start();
             if(process.waitFor() != 0)
