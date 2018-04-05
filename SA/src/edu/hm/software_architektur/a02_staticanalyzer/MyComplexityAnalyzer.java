@@ -43,6 +43,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private final Path rootDir;
     
+    /**
+     * default Constructor.
+     */
     public MyComplexityAnalyzer(){
         rootDir = FileSystemView.getFileSystemView().getHomeDirectory().toPath();
     }
@@ -51,7 +54,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      * public Constructor for setting new path rootdirectory.
      * @param rootdir 
      */
-    public MyComplexityAnalyzer(Path rootdir){
+    private MyComplexityAnalyzer(Path rootdir){
         this.rootDir = rootdir;
     }
     
@@ -88,28 +91,21 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             return Optional.of(Collections.unmodifiableMap(analyzedFiles));
         };// end of Function fileAnayzer+++++++++
         
-        final Function<Path,String> pathToData = path -> {
+        final Function<Path,List<String>> pathToData = path -> {
+            fileNames.add(path.getFileName().toString());
+            String data = "";
             try {
-                return runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
+                data = runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException ex) {
                 System.out.println("Error in pathToData");
             }
-            return "";
+            return Arrays.asList(data.split("\n"));
         };
         
         
         return fileAnalyzer.apply(Files.walk(rootDir)
                                         .filter(file -> file.toString().endsWith(".class"))
-                                        //.distinct()
-                                        .map(path -> {
-                                            fileNames.add(path.getFileName().toString());
-                                            return pathToData.apply(path);
-                                        })
-                                        .map(data -> {
-                                            final List<String> retList = new ArrayList<>();
-                                            retList.addAll(Arrays.asList(data.split("\n")));
-                                            return retList;
-                                        })
+                                        .map(pathToData::apply)
                                         .collect(Collectors.toList()))
                 .get();// when map ist empty
     }
