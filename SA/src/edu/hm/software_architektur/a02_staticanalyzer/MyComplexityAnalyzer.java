@@ -36,35 +36,35 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private static final String OPTION_P = "-p";
     /**
-     * offset needed for searching the name of the file
+     * offset needed for searching the name of the file.
      */
     private static final int OFFSETFORCLASSNAME = 6;
     /**
-     * offset needed for searching the name of the file
+     * offset needed for searching the name of the file.
      */
     private static final int OFFSETFORINTERFACENAME = 10;
     /**
-     * regex for finding name of Class
+     * regex for finding name of Class.
      */
     private static final String REGEXFORCLASS= "[ ]*([p][u][b][l][i][c][ ]){0,1}([a][b][s][t][r][a][c][t][ ]){0,1}[c][l][a][s][s][ ][\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]*[{]";
     /**
-     * regex for finding name of Interface
+     * regex for finding name of Interface.
      */
     private static final String REGEXFORINTERFACE= "[ ]*([p][u][b][l][i][c][ ]){0,1}[i][n][t][e][r][f][a][c][e][ ][\\S]*[ ]*[\\S]*[ ]*[\\S]*[ ]*[{]";
     /**
-     * regex for finding ifs
+     * regex for finding ifs.
      */
     private static final String REGEXFORIF= "[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*";
     /**
-     * regex for finding athrowa
+     * regex for finding athrowa.
      */
     private static final String REGEXFORATRHOW = "[ ]*[0-9]*[:]( )[a][t][h][r][o][w]";
     /**
-     * regex for finding goto
+     * regex for finding goto.
      */
     private static final String REGEXFORGOTO = "[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*";
     /**
-     * regex for finding Methodes
+     * regex for finding Methodes.
      */
     private static final String REGEXFORMETHODE = "[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]";
     /**
@@ -110,7 +110,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                                                                 .filter(file -> file.toString().endsWith(".class")) //filter all files which are not .class files
                                                                 .map(pathToData::apply) // get the filecontent
                                                                 .collect(Collectors.toList())) 
-        );
+        );// returning a unmodifiable Map containing analyzed files and there complexity
     }
     
     /**
