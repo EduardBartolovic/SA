@@ -13,9 +13,8 @@ import org.junit.Test;
  */
 public class MyComplexityAnalyzerTest {
     
-    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
-//    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\edu\\hm\\software_architektur\\a02_staticanalyzer");
-//    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes"); 
+//    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
+    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes"); 
     
     public MyComplexityAnalyzerTest() {
     }
@@ -171,8 +170,7 @@ public class MyComplexityAnalyzerTest {
     public void test25() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"));
         final Map<String,Integer> have = analyzer.analyzeClassfiles();
-        System.out.println(have);
-//        assertEquals(30,have.size());  
+        System.out.println(have); 
         assertEquals(Integer.valueOf(2),have.get("ABC"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Anonymous"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Anonymous$1"+".class"));   
@@ -236,6 +234,31 @@ public class MyComplexityAnalyzerTest {
     public void test32() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"AbstractTest.class"));
         assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("AbstractTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test33() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"StringReturn.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("StringReturn.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test34() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"StringIf.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("StringIf.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test35() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"RegexTestImplements.class"));
+        assertEquals(Integer.valueOf(1),analyzer.analyzeClassfiles().get("RegexTestImplements.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test36() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"InterfaceExtends.class"));
+        assertEquals(Integer.valueOf(1),analyzer.analyzeClassfiles().get("InterfaceExtends.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test37() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"ExtendsImplements.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("ExtendsImplements.class"));   
     }
     
 

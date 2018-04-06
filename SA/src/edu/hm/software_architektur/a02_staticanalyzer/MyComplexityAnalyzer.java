@@ -44,6 +44,30 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private static final int OFFSETFORINTERFACENAME = 10;
     /**
+     * regex for finding name of Class
+     */
+    private static final String REGEXFORCLASS= "[ ]*([p][u][b][l][i][c][ ]){0,1}([a][b][s][t][r][a][c][t][ ]){0,1}[c][l][a][s][s][ ][\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]*[{]";
+    /**
+     * regex for finding name of Interface
+     */
+    private static final String REGEXFORINTERFACE= "[ ]*([p][u][b][l][i][c][ ]){0,1}[i][n][t][e][r][f][a][c][e][ ][\\S]*[ ]*[\\S]*[ ]*[\\S]*[ ]*[{]";
+    /**
+     * regex for finding ifs
+     */
+    private static final String REGEXFORIF= "[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*";
+    /**
+     * regex for finding athrowa
+     */
+    private static final String REGEXFORATRHOW = "[ ]*[0-9]*[:]( )[a][t][h][r][o][w]";
+    /**
+     * regex for finding goto
+     */
+    private static final String REGEXFORGOTO = "[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*";
+    /**
+     * regex for finding Methodes
+     */
+    private static final String REGEXFORMETHODE = "[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]";
+    /**
      * saving the directory where a search should start.
      */
     private final Path rootDir;
@@ -118,34 +142,32 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList){
         final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
-        for (List<String> file: listOfList) { //part for counting the complexity.
+        listOfList.forEach((file) -> {
+            //part for counting the complexity.
             int complexity = 0;
             String fileName = "";
-            boolean searchForName = true;
             boolean athrowSet = false;
             for (String line: file) {
-                if(line.contains("class ") && searchForName){
+                if(line.matches(REGEXFORCLASS)){
                     fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
                     fileName = fileName.substring(0,fileName.indexOf(' '))+".class";
-                    searchForName = false;
-                }else if(line.contains("interface ") && searchForName){
+                }else if(line.matches(REGEXFORINTERFACE)){
                     fileName = line.substring(line.indexOf("interface ")+OFFSETFORINTERFACENAME);
                     fileName = fileName.substring(0,fileName.indexOf(' '))+".class";
-                    searchForName = false;
-                }else if(line.contains("if")) {
+                }else if(line.matches(REGEXFORIF)) {
                     complexity++;
                     athrowSet = false;
-                }else if(line.contains("athrow")){
+                }else if(line.matches(REGEXFORATRHOW)){
                     athrowSet = true;
-                } else if (line.contains("goto") && athrowSet) {
+                } else if (line.matches(REGEXFORGOTO)&& athrowSet) {
                     complexity++;
-                } else if(line.contains("return")){
+                } else if(line.matches(REGEXFORMETHODE)){
                     complexity++;
                     athrowSet = false;
                 }
             }
             analyzedFiles.put(fileName,complexity);
-        }
+        });
         return analyzedFiles;
     }   
 }
