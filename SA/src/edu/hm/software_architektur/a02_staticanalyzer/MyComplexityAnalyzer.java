@@ -118,11 +118,11 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList){
         final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
-        boolean athrowSet = false;
         for (List<String> file: listOfList) { //part for counting the complexity.
             int complexity = 0;
             String fileName = "";
             boolean searchForName = true;
+            boolean athrowSet = false;
             for (String line: file) {
                 if(line.contains("class ") && searchForName){
                     fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
@@ -134,12 +134,14 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     searchForName = false;
                 }else if(line.contains("if")) {
                     complexity++;
+                    athrowSet = false;
                 }else if(line.contains("athrow")){
                     athrowSet = true;
                 } else if (line.contains("goto") && athrowSet) {
                     complexity++;
                 } else if(line.contains("return")){
                     complexity++;
+                    athrowSet = false;
                 }
             }
             analyzedFiles.put(fileName,complexity);

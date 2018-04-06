@@ -13,9 +13,9 @@ import org.junit.Test;
  */
 public class MyComplexityAnalyzerTest {
     
-//    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\edu\\hm\\software_architektur\\a02_staticanalyzer");
+    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
 //    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\edu\\hm\\software_architektur\\a02_staticanalyzer");
-       public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes"); 
+//    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes"); 
     
     public MyComplexityAnalyzerTest() {
     }
@@ -58,11 +58,12 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
         assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get(fileName+".class"));   
     }
-    @Test(timeout = 2000)
+    @Test//(timeout = 2000)
     public void test7() throws Exception {
         final String fileName = "For";
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
-        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get(fileName+".class"));   
+        Map<String, Integer> retValue = analyzer.analyzeClassfiles();
+        assertEquals(Integer.valueOf(4),retValue.get("For.class"));   
     }
     
     @Test(timeout = 2000)
@@ -175,11 +176,11 @@ public class MyComplexityAnalyzerTest {
         assertEquals(Integer.valueOf(2),have.get("ABC"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Anonymous"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Anonymous$1"+".class"));   
-        assertEquals(Integer.valueOf(5),have.get("BreakContinue"+".class"));   
+        assertEquals(Integer.valueOf(5),have.get("BreakContinue"+".class"));
         assertEquals(Integer.valueOf(3),have.get("ConditionalOp"+".class"));   
         assertEquals(Integer.valueOf(2),have.get("Finally"+".class"));   
-        assertEquals(Integer.valueOf(4),have.get("For"+".class"));   //++++++++++++++++++++++++
-//        assertEquals(Integer.valueOf(5),have.get("Hello"+".class"));   //+++++++++
+        assertEquals(Integer.valueOf(4),have.get("For.class")); 
+        assertEquals(Integer.valueOf(2),have.get("Hello"+".class"));          
         assertEquals(Integer.valueOf(2),have.get("HelloAgain"+".class"));   
         assertEquals(Integer.valueOf(10),have.get("HelloAll"+".class"));   
         assertEquals(Integer.valueOf(3),have.get("HelloIf"+".class"));   
@@ -190,13 +191,13 @@ public class MyComplexityAnalyzerTest {
         assertEquals(Integer.valueOf(4),have.get("Or.class"));  
         assertEquals(Integer.valueOf(5),have.get("PrivateFinal"+".class"));   
         assertEquals(Integer.valueOf(4),have.get("TryCatch"+".class"));   
-        assertEquals(Integer.valueOf(5),have.get("TryCatches"+".class"));   
-//        assertEquals(Integer.valueOf(5),have.get("TwoClasses"+".class"));   ///++++++++++++
-//        assertEquals(Integer.valueOf(3),have.get("Foo"+".class"));   //+++++++++++
-//       assertEquals(Integer.valueOf(3),have.get("While"+".class"));   //+++++++++++
+        assertEquals(Integer.valueOf(5),have.get("TryCatches"+".class"));       
+        assertEquals(Integer.valueOf(3),have.get("main.TwoClasses"+".class"));
+        assertEquals(Integer.valueOf(3),have.get("Foo"+".class"));  
+        assertEquals(Integer.valueOf(3),have.get("While"+".class"));  
         assertEquals(Integer.valueOf(2),have.get("Hello"+".class"));   
         assertEquals(Integer.valueOf(3),have.get("TwoClasses"+".class"));   
-//        assertEquals(Integer.valueOf(3),have.get("Foo"+".class"));   //+++++++++++++++++
+        assertEquals(Integer.valueOf(3),have.get("sub.Foo"+".class"));  
         
     }
     @Test(timeout = 2000)
