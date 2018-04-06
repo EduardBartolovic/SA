@@ -80,7 +80,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     }
     
     /**
-     * public Constructor for setting new path rootdirectory.
+     * private Constructor for setting new path rootdirectory.
      * @param rootdir 
      */
     private MyComplexityAnalyzer(Path rootdir){
@@ -95,21 +95,21 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
         
-        final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into  list
+        final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into list full of Strings
             String data = "";
             try {
                 data = runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException exception) {
                 throw new RuntimeException();
             }
-            return Arrays.asList(data.split("\n"));
+            return Arrays.asList(data.split("\n")); //split file to lines
         };
         
-        return Collections.unmodifiableMap(complexityAnalyzer(Files.walk(rootDir)
-                                                                .sequential()
-                                                                .filter(file -> file.toString().endsWith(".class"))
-                                                                .map(pathToData::apply)
-                                                                .collect(Collectors.toList()))
+        return Collections.unmodifiableMap(complexityAnalyzer(Files.walk(rootDir) // returns a stream of Files
+                                                                .sequential()      
+                                                                .filter(file -> file.toString().endsWith(".class")) //filter all files which are not .class files
+                                                                .map(pathToData::apply) // get the filecontent
+                                                                .collect(Collectors.toList())) 
         );
     }
     
@@ -142,11 +142,11 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList){
         final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
-        listOfList.forEach((file) -> {
-            //part for counting the complexity.
-            int complexity = 0;
-            String fileName = "";
-            boolean athrowSet = false;
+        //part for counting the complexity.
+        listOfList.forEach((file) -> { // for every file 
+            int complexity = 0;     //file complexity counter
+            String fileName = "";   
+            boolean athrowSet = false; //for try catch 
             for (String line: file) {
                 if(line.matches(REGEXFORCLASS)){
                     fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
@@ -166,7 +166,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     athrowSet = false;
                 }
             }
-            analyzedFiles.put(fileName,complexity);
+            analyzedFiles.put(fileName,complexity);  // save file with its complexity
         });
         return analyzedFiles;
     }   
