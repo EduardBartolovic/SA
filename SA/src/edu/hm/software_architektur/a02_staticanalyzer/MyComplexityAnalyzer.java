@@ -62,6 +62,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
+        
         final List<String> fileNames = new ArrayList<>(); 
         
         final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into  list
@@ -83,7 +84,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     }
     
     /**
-     * Startet ein anderes Programm und liefert dessen Konsolenausgabe (out und err) zurueck.
+     * Startet ein anderes Programm und liefert dessen Ausgabe zurueck.
      * @param command Programmname und Kommandozeilenargumente.
      * @return Ausgabe des Programms.
      * @exception IOException bei einem Fehler im Filesystem.

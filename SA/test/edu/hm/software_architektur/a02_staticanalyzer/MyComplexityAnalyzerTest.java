@@ -3,6 +3,7 @@ package edu.hm.software_architektur.a02_staticanalyzer;
 import edu.hm.cs.rs.arch18.a02_staticanalyzer.ComplexityAnalyzer;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Map;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -168,33 +169,33 @@ public class MyComplexityAnalyzerTest {
     @Test//(timeout = 20000)
     public void test25() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"));
-        //final Map<String,Integer> have = analyzer.analyzeClassfiles();
-//        System.out.println(have);
-//        assertEquals(28,have.size());  
-//        assertEquals(Integer.valueOf(2),have.get("ABC"+".class"));   
-//        assertEquals(Integer.valueOf(2),have.get("Anonymous"+".class"));   
-//        assertEquals(Integer.valueOf(2),have.get("Anonymous$1"+".class"));   
-//        assertEquals(Integer.valueOf(5),have.get("BreakContinue"+".class"));   
-//        assertEquals(Integer.valueOf(3),have.get("ConditionalOp"+".class"));   
-//        assertEquals(Integer.valueOf(2),have.get("Finally"+".class"));   
+        final Map<String,Integer> have = analyzer.analyzeClassfiles();
+        System.out.println(have);
+        assertEquals(30,have.size());  
+        assertEquals(Integer.valueOf(2),have.get("ABC"+".class"));   
+        assertEquals(Integer.valueOf(2),have.get("Anonymous"+".class"));   
+        assertEquals(Integer.valueOf(2),have.get("Anonymous$1"+".class"));   
+        assertEquals(Integer.valueOf(5),have.get("BreakContinue"+".class"));   
+        assertEquals(Integer.valueOf(3),have.get("ConditionalOp"+".class"));   
+        assertEquals(Integer.valueOf(2),have.get("Finally"+".class"));   
 //        assertEquals(Integer.valueOf(4),have.get("For"+".class"));   
 //        assertEquals(Integer.valueOf(5),have.get("Hello"+".class"));   
-//        assertEquals(Integer.valueOf(2),have.get("HelloAgain"+".class"));   
-//        assertEquals(Integer.valueOf(10),have.get("HelloAll"+".class"));   
-//        assertEquals(Integer.valueOf(3),have.get("HelloIf"+".class"));   
-//        assertEquals(Integer.valueOf(4),have.get("HelloIfAnd"+".class"));   
-//        assertEquals(Integer.valueOf(2),have.get("Interface"+".class"));   
-//        assertEquals(Integer.valueOf(3),have.get("Lambda"+".class"));   
-//        assertEquals(Integer.valueOf(8),have.get("NestedTryCatch"+".class")); 
-//        assertEquals(Integer.valueOf(4),have.get("Or.class"));  
-//        assertEquals(Integer.valueOf(5),have.get("PrivateFinal"+".class"));   
-//        assertEquals(Integer.valueOf(4),have.get("TryCatch"+".class"));   
-//        assertEquals(Integer.valueOf(5),have.get("TryCatches"+".class"));   
+        assertEquals(Integer.valueOf(2),have.get("HelloAgain"+".class"));   
+        assertEquals(Integer.valueOf(10),have.get("HelloAll"+".class"));   
+        assertEquals(Integer.valueOf(3),have.get("HelloIf"+".class"));   
+        assertEquals(Integer.valueOf(4),have.get("HelloIfAnd"+".class"));   
+        assertEquals(Integer.valueOf(2),have.get("Interface"+".class"));   
+        assertEquals(Integer.valueOf(3),have.get("Lambda"+".class"));   
+        assertEquals(Integer.valueOf(8),have.get("NestedTryCatch"+".class")); 
+        assertEquals(Integer.valueOf(4),have.get("Or.class"));  
+        assertEquals(Integer.valueOf(5),have.get("PrivateFinal"+".class"));   
+        assertEquals(Integer.valueOf(4),have.get("TryCatch"+".class"));   
+        assertEquals(Integer.valueOf(5),have.get("TryCatches"+".class"));   
 //        assertEquals(Integer.valueOf(5),have.get("TwoClasses"+".class"));   
 //        assertEquals(Integer.valueOf(3),have.get("Foo"+".class"));   
-//        assertEquals(Integer.valueOf(3),have.get("While"+".class"));   
-//        assertEquals(Integer.valueOf(2),have.get("Hello"+".class"));   
-//        assertEquals(Integer.valueOf(3),have.get("TwoClasses"+".class"));   
+//       assertEquals(Integer.valueOf(3),have.get("While"+".class"));   
+        assertEquals(Integer.valueOf(2),have.get("Hello"+".class"));   
+        assertEquals(Integer.valueOf(3),have.get("TwoClasses"+".class"));   
 //        assertEquals(Integer.valueOf(3),have.get("Foo"+".class"));   
         
     }
@@ -230,5 +231,5 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"IfInIfIf.class"));
         assertEquals(Integer.valueOf(5),analyzer.analyzeClassfiles().get("IfInIfIf.class"));   
     }
-    
+      
 }
