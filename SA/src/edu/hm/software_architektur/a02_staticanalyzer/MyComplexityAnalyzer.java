@@ -36,6 +36,14 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private static final String OPTION_P = "-p";
     /**
+     * offset needed for searching the name of the file
+     */
+    private static final int OFFSETFORCLASSNAME = 6;
+    /**
+     * offset needed for searching the name of the file
+     */
+    private static final int OFFSETFORINTERFACENAME = 10;
+    /**
      * saving the directory where a search should start.
      */
     private final Path rootDir;
@@ -63,23 +71,21 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
         
-        final List<String> fileNames = new ArrayList<>(); 
-        
         final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into  list
-            fileNames.add(path.getFileName().toString());
             String data = "";
             try {
                 data = runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException exception) {
-                System.out.println("Error in pathToData");
+                throw new RuntimeException();
             }
             return Arrays.asList(data.split("\n"));
         };
         
         return Collections.unmodifiableMap(complexityAnalyzer(Files.walk(rootDir)
+                                                                .sequential()
                                                                 .filter(file -> file.toString().endsWith(".class"))
                                                                 .map(pathToData::apply)
-                                                                .collect(Collectors.toList()) , fileNames)
+                                                                .collect(Collectors.toList()))
         );
     }
     
@@ -108,17 +114,25 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     /**
      * calculating the complexity of some files.
      * @param listOfList
-     * @param fileNames
      * @return Map filled with file names and there complexity
      */
-    private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList, List<String> fileNames){
+    private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList){
         final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
         boolean athrowSet = false;
-        int fileCount = 0;
         for (List<String> file: listOfList) { //part for counting the complexity.
             int complexity = 0;
+            String fileName = "";
+            boolean searchForName = true;
             for (String line: file) {
-                if(line.contains("if")) {
+                if(line.contains("class ") && searchForName){
+                    fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
+                    fileName = fileName.substring(0,fileName.indexOf(' '))+".class";
+                    searchForName = false;
+                }else if(line.contains("interface ") && searchForName){
+                    fileName = line.substring(line.indexOf("interface ")+OFFSETFORINTERFACENAME);
+                    fileName = fileName.substring(0,fileName.indexOf(' '))+".class";
+                    searchForName = false;
+                }else if(line.contains("if")) {
                     complexity++;
                 }else if(line.contains("athrow")){
                     athrowSet = true;
@@ -128,8 +142,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     complexity++;
                 }
             }
-            analyzedFiles.put(fileNames.get(fileCount), complexity);
-            fileCount++;
+            analyzedFiles.put(fileName,complexity);
         }
         return analyzedFiles;
     }   
