@@ -55,6 +55,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      * file typ 
      */
     private static final String CLASS = ".class";
+    
     /**
      * saving the directory where a search should start.
      */
