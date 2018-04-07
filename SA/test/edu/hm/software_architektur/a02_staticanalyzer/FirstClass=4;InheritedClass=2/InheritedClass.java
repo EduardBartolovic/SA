@@ -1,4 +1,3 @@
-
 public abstract class InheritedClass {
 	abstract void doThis(int a);
 	public abstract double doThat(Object b);

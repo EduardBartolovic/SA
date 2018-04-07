@@ -307,7 +307,7 @@ public class MyComplexityAnalyzerTest {
     }
     @Test(timeout = 2000)
     public void test47() throws Exception {
-        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Implements.class"));
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"ImplementsTest.class"));
         assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("ImplementsTest.class"));   
     }
     @Test(timeout = 2000)
@@ -317,7 +317,7 @@ public class MyComplexityAnalyzerTest {
     }
     @Test(timeout = 2000)
     public void test49() throws Exception {
-        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"HalloWorld.class"));
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"HelloWorld.class"));
         assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("HelloWorld.class"));   
     }
     @Test(timeout = 2000)
@@ -394,6 +394,41 @@ public class MyComplexityAnalyzerTest {
     public void test64() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"IfInSystem.class"));
         assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("IfInSystem.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test65() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CommentInside1.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("CommentInside1.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test66() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CommentInside2.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("CommentInside2.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test67() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CommentInside3.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("CommentInside3.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test68() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"OnlyClass.class"));
+        assertEquals(Integer.valueOf(1),analyzer.analyzeClassfiles().get("OnlyClass.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test69() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"WhileTrue1.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("WhileTrue1.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test70() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"WhileTrue2.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("WhileTrue2.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test71() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"WhileTrue3.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("WhileTrue3.class"));   
     }
     
     

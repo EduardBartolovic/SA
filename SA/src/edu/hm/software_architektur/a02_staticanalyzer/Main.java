@@ -30,7 +30,7 @@ public class Main {
         ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\Endless.class"); 
         ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\ABCAbstractFake.class"); 
         ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\InterfaceExtends.class"); 
-        ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\Anonymous$1.class"); 
+        ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\WhileTrue3.class"); 
         ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\Anonymous.class"); 
         ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\Interface.class"); 
         ProcessRunner.main(COMMAND, OPTION_C, OPTION_P,"C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes\\AbstractTest.class"); 
