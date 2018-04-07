@@ -166,7 +166,7 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Foo.class"));
         assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("Foo"+".class"));   
     }
-    @Test//(timeout = 20000)
+    @Test(timeout = 20000)
     public void test25() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"));
         final Map<String,Integer> have = analyzer.analyzeClassfiles();
@@ -360,5 +360,43 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CTors.class"));
         assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("CTors.class"));   
     }
+    @Test(timeout = 2000)
+    public void test58() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CodeInSystem.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("CodeInSystem.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test59() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Constructor.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("Constructor.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test60() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"DoWhile.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("DoWhile.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test61() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Endless.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("Endless.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test62() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"EndlessWithBreak.class"));
+        assertEquals(Integer.valueOf(5),analyzer.analyzeClassfiles().get("EndlessWithBreak.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test63() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"ExceptionTableInSystem.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("ExceptionTableInSystem.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test64() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"IfInSystem.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("IfInSystem.class"));   
+    }
+    
+    
+    
 
 }

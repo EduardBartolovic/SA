@@ -150,9 +150,13 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     athrowSet = true;
                 } else if (line.matches("[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*")&& athrowSet) { //find goto
                     complexity++;
-                } else if(line.matches("[ ]*([a-z]*[ ]){0,5}[\\S]*[(][\\S]*[)][;]")){//line.matches("[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]")){ // find methode
-                    complexity++;
-                    athrowSet = false;
+                } else if(line.matches("[ ]*([\\S]*[ ]){0,5}[\\S]*[(][\\S| ]*[)]([ ][t][h][r][o][w][s][ ][\\S]*){0,1}[;]")){//line.matches("[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]")){ // find methode
+                    if(line.contains("abstract")||line.contains("default")){ 
+                        
+                    }else{
+                       complexity++;
+                       athrowSet = false; 
+                    }
                 }
             }
             analyzedFiles.put(fileName,complexity);  // save file with its complexity
