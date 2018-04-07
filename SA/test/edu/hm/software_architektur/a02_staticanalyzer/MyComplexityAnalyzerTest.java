@@ -248,7 +248,7 @@ public class MyComplexityAnalyzerTest {
     @Test(timeout = 2000)
     public void test35() throws Exception {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"RegexTestImplements.class"));
-        assertEquals(Integer.valueOf(1),analyzer.analyzeClassfiles().get("RegexTestImplements.class"));   
+        assertEquals(Integer.valueOf(25),analyzer.analyzeClassfiles().get("RegexTestImplements.class"));   
     }
     @Test(timeout = 2000)
     public void test36() throws Exception {
@@ -260,6 +260,105 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"ExtendsImplements.class"));
         assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("ExtendsImplements.class"));   
     }
-    
+    @Test(timeout = 2000)
+    public void test38() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"ABCAbstractFake.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("ABCAbstractFake.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test39() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"SimpleLambdaTest.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("SimpleLambdaTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test40() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"SimpleIfTest.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("SimpleIfTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test41() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"SimpleForTest.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("SimpleForTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test42() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"SimpleCatchTest.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("SimpleCatchTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test43() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"MultipleMethodsAndThrows.class"));
+        assertEquals(Integer.valueOf(9),analyzer.analyzeClassfiles().get("MultipleMethodsAndThrows.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test44() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"MethodInString.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("MethodInString.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test45() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"MarkusTest.class"));
+        assertEquals(Integer.valueOf(15),analyzer.analyzeClassfiles().get("MarkusTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test46() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"InterfaceDefault.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("InterfaceDefault.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test47() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Implements.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("ImplementsTest.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test48() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"ifeq.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("ifeq.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test49() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"HalloWorld.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("HelloWorld.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test50() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"First.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("First.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test51() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"Inherited.class"));
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("Inherited.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test52() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"FakeAnonymous.class"));
+        assertEquals(Integer.valueOf(3),analyzer.analyzeClassfiles().get("FakeAnonymous.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test53() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"DeepPackageFakeFakeAnonymous$1.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("DeepPackageFakeFakeAnonymous$1.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test54() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"DeepPackageFakeFakeAnonymous$1$1.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("DeepPackageFakeFakeAnonymous$1.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test55() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"DeepPackageFakeFakeAnonymous.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("DeepPackageFakeFakeAnonymous.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test56() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CustomException.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("CustomException.class"));   
+    }
+    @Test(timeout = 2000)
+    public void test57() throws Exception {
+        ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"CTors.class"));
+        assertEquals(Integer.valueOf(4),analyzer.analyzeClassfiles().get("CTors.class"));   
+    }
 
 }

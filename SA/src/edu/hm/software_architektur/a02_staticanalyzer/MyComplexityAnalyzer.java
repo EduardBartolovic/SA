@@ -52,21 +52,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private static final String REGEXFORINTERFACE= "[ ]*([p][u][b][l][i][c][ ]){0,1}[i][n][t][e][r][f][a][c][e][ ][\\S]*[ ]*[\\S]*[ ]*[\\S]*[ ]*[{]";
     /**
-     * regex for finding ifs.
+     * file typ 
      */
-    private static final String REGEXFORIF= "[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*";
-    /**
-     * regex for finding athrowa.
-     */
-    private static final String REGEXFORATRHOW = "[ ]*[0-9]*[:]( )[a][t][h][r][o][w]";
-    /**
-     * regex for finding goto.
-     */
-    private static final String REGEXFORGOTO = "[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*";
-    /**
-     * regex for finding Methodes.
-     */
-    private static final String REGEXFORMETHODE = "[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]";
+    private static final String CLASS = ".class";
     /**
      * saving the directory where a search should start.
      */
@@ -100,7 +88,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             try {
                 data = runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException exception) {
-                throw new RuntimeException();
+                System.out.println("Error");
             }
             return Arrays.asList(data.split("\n")); //split file to lines
         };
@@ -137,31 +125,31 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     
     /**
      * calculating the complexity of some files.
-     * @param listOfList
+     * @param listOfList list containing data from files
      * @return Map filled with file names and there complexity
      */
     private Map<String,Integer> complexityAnalyzer(List<List<String>> listOfList){
         final Map<String,Integer> analyzedFiles = new HashMap<>(); // saving the complexity associated with filename
         //part for counting the complexity.
-        listOfList.forEach((file) -> { // for every file 
+        listOfList.forEach(file -> { // for every file 
             int complexity = 0;     //file complexity counter
             String fileName = "";   
             boolean athrowSet = false; //for try catch 
             for (String line: file) {
                 if(line.matches(REGEXFORCLASS)){
                     fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
-                    fileName = fileName.substring(0,fileName.indexOf(' '))+".class";
+                    fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
                 }else if(line.matches(REGEXFORINTERFACE)){
                     fileName = line.substring(line.indexOf("interface ")+OFFSETFORINTERFACENAME);
-                    fileName = fileName.substring(0,fileName.indexOf(' '))+".class";
-                }else if(line.matches(REGEXFORIF)) {
+                    fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
+                }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
                     complexity++;
                     athrowSet = false;
-                }else if(line.matches(REGEXFORATRHOW)){
+                }else if(line.matches("[ ]*[0-9]*[:]( )[a][t][h][r][o][w]")){ //find athrow
                     athrowSet = true;
-                } else if (line.matches(REGEXFORGOTO)&& athrowSet) {
+                } else if (line.matches("[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*")&& athrowSet) { //find goto
                     complexity++;
-                } else if(line.matches(REGEXFORMETHODE)){
+                } else if(line.matches("[ ]*([a-z]*[ ]){0,5}[\\S]*[(][\\S]*[)][;]")){//line.matches("[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]")){ // find methode
                     complexity++;
                     athrowSet = false;
                 }
