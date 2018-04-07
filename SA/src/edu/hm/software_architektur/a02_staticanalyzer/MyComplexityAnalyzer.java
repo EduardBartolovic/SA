@@ -52,7 +52,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private static final String REGEXFORINTERFACE= "[ ]*([p][u][b][l][i][c][ ]){0,1}[i][n][t][e][r][f][a][c][e][ ][\\S]*[ ]*[\\S]*[ ]*[\\S]*[ ]*[{]";
     /**
-     * file typ 
+     * file type. 
      */
     private static final String CLASS = ".class";
     
