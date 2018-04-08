@@ -1,6 +1,6 @@
 package edu.hm.software_architektur.a02_staticanalyzer;
 
-import edu.hm.cs.rs.arch18.a02_staticanalyzer.ComplexityAnalyzer;
+import edu.hm.cs.rs.arch.a02_staticanalyzer.ComplexityAnalyzer;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -135,7 +135,8 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         listOfList.forEach(file -> { // for every file 
             int complexity = 0;     //file complexity counter
             String fileName = "";   
-            boolean athrowSet = false; //for try catch 
+//            boolean athrowSet = false; //for try catch 
+            boolean exceptionTableFound = false;
             for (String line: file) {
                 if(line.matches(REGEXFORCLASS)){
                     fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
@@ -145,18 +146,26 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                     fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
                 }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
                     complexity++;
-                    athrowSet = false;
-                }else if(line.matches("[ ]*[0-9]*[:]( )[a][t][h][r][o][w]")){ //find athrow
-                    athrowSet = true;
-                } else if (line.matches("[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*")&& athrowSet) { //find goto
-                    complexity++;
+//                    athrowSet = false;
+                }else if(line.matches("[ ]*[E][x][c][e][p][t][i][o][n][ ][t][a][b][l][e][:][ ]*")) {
+                    exceptionTableFound = true;
+                }else if(exceptionTableFound && line.matches("[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*.*")) {
+                    if (!line.matches("[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*[a][n][y][ ]*"))
+                        complexity++;
+//                }else if(line.matches("[ ]*[0-9]*[:]( )[a][t][h][r][o][w]")){ //find athrow
+//                    athrowSet = true;
+//                } else if (line.matches("[ ]*[0-9]*[:]( )[g][o][t][o][ ]*[0-9]*")&& athrowSet) { //find goto
+//                    complexity++;
                 } else if(line.matches("[ ]*([\\S]*[ ]){0,5}[\\S]*[(][\\S| ]*[)]([ ][t][h][r][o][w][s][ ][\\S]*){0,1}[;]")){//line.matches("[ ]*[0-9]*[:]( | [\\D])[r][e][t][u][r][n]")){ // find methode
-                    if(line.contains("abstract")||line.contains("default")){ 
-                        
-                    }else{
-                       complexity++;
-                       athrowSet = false; 
+                    if(!line.contains("abstract ")&&!line.contains("default ")){ 
+                        complexity++;
+                        exceptionTableFound = false;
                     }
+//                    }else{
+//                       complexity++;
+//                       exceptionTableFound = false;
+////                       athrowSet = false; 
+//                    }
                 }
             }
             analyzedFiles.put(fileName,complexity);  // save file with its complexity

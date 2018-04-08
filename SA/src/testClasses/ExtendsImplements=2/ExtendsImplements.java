@@ -1,3 +1,5 @@
+package edu.hm.software_architektur.a02_staticanalyzer;
+
 import java.awt.List;
 
 public class ExtendsImplements extends List implements Runnable { 

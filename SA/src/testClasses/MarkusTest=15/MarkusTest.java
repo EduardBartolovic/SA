@@ -23,11 +23,10 @@ public class MarkusTest {
 				System.out.println("pfad" + pa.toString());
 			}
 			
-		}		catch (IOException e) {
+		}catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
-			catch(Exception ex){
+		}catch(Exception ex){
 			
 		}
 		

@@ -1,3 +1,6 @@
+
+import java.io.IOException;
+
 public class SimpleCatchTest {
 	public static void main(String[] args) {
 		try{

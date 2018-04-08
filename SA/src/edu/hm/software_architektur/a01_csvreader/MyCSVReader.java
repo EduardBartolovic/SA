@@ -1,6 +1,6 @@
 package edu.hm.software_architektur.a01_csvreader;
 
-import edu.hm.cs.rs.arch18.a01_kiss.CSVReader;
+import edu.hm.cs.rs.arch.a01_kiss.CSVReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;

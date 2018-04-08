@@ -2,7 +2,7 @@
  * Java 1.8.0_121, Linux x86_64 4.14.12
  * violet (Intel Core i7 CPU 920/2.67GHz, 8 cores, 2668 MHz, 24128 MByte RAM)
  **/
-package edu.hm.cs.rs.arch18.a02_staticanalyzer;
+package edu.hm.cs.rs.arch.a02_staticanalyzer;
 
 import java.io.IOException;
 import java.nio.file.Path;

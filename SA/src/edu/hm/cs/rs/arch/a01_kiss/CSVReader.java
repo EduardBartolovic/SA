@@ -2,7 +2,7 @@
  * Oracle Corporation Java 1.8.0_121, Linux i386 4.14.12
  * violet: Intel Core i7 920/2660 MHz, 8 Core(s), 24100 MByte RAM
  **/
-package edu.hm.cs.rs.arch18.a01_kiss;
+package edu.hm.cs.rs.arch.a01_kiss;
 
 import java.io.IOException;
 import java.io.Reader;
