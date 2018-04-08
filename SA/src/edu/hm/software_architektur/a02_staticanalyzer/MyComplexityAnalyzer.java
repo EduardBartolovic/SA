@@ -85,13 +85,17 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 
     @Override
     public Map<String, Integer> analyzeClassfiles() throws IOException {
-        
-        return Collections.unmodifiableMap(complexityAnalyzer(Files.walk(rootDir) // returns a stream of Files
-                                                                .sequential()      
-                                                                .filter(file -> file.toString().endsWith(".class")) //filter all files which are not .class files
-                                                                .map(path -> pathToData(path)) // get the filecontent
-                                                                .collect(Collectors.toList())) 
-        );// returning a unmodifiable Map containing analyzed files and there complexity
+        final Map<String, Integer> analyzedData;
+        try {
+        analyzedData = complexityAnalyzer(Files.walk(rootDir) // returns a stream of Files                             
+                .sequential()
+                .filter(file -> file.toString().endsWith(".class")) //filter all files which are not .class files
+                .map(path -> pathToData(path)) // get the filecontent
+                .collect(Collectors.toList()));
+        } catch (Exception e) {
+            throw new IOException();
+        }
+        return Collections.unmodifiableMap(analyzedData);// returning a unmodifiable Map containing analyzed files and there complexity
     }
     
     /**
@@ -156,7 +160,6 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     private Pair<String, Integer> analyzeFile(List<String> file) {
         int complexity = 0;     //file complexity counter
         String fileName = "";   
-        boolean exceptionTableFound = false;
         for (String line: file) {
             if(line.matches(REGEX_FOR_CLASS)){
                 fileName = line.substring(line.indexOf("class ")+OFFSET_FOR_CLASSNAME);
@@ -164,18 +167,30 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             }else if(line.matches(REGEX_FOR_INTERFACE)){ // checking if the class is an interface
                 fileName = line.substring(line.indexOf("interface ")+OFFSET_FOR_INTERFACENAME);
                 fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
-            }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
+//            }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
+//                complexity++;
+//            }else if(line.matches(REGEX_FOR_EXC_TABEL_ENTRY) && !line.matches(REGEX_FOR_BEEING_FIALLY)) {
+//                complexity++;
+//            } else if(isValidMethod(line)){ // find methods                   
+//                complexity++;
+//            }
+            } else if (addsToComplexity(line)) {
                 complexity++;
-            }else if(line.matches("[ ]*[E][x][c][e][p][t][i][o][n][ ][t][a][b][l][e][:][ ]*")) {
-                exceptionTableFound = true;
-            }else if(isValidExceptionEntry(line, exceptionTableFound)) { // finding an exception tabel entry
-                complexity++;
-            } else if(isValidMethod(line)){ // find methods                   
-                complexity++;
-                exceptionTableFound = false;
             }
         }
         return new Pair<>(fileName, complexity);
+    }
+    
+    /**
+     * Checks if a line adds to the complexity or not.
+     * 
+     * @param line the line to be examined
+     * @return true if line adds to complexity, otherwise false
+     */
+    private boolean addsToComplexity(String line) {
+        return (line.matches(REGEX_FOR_EXC_TABEL_ENTRY) && !line.matches(REGEX_FOR_BEEING_FIALLY)) 
+                || isValidMethod(line) 
+                || line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*");
     }
     
     /**
@@ -186,17 +201,5 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      */
     private boolean isValidMethod(String line) {
         return line.matches("[ ]*([\\S]*[ ]){0,5}[\\S]*[(][\\S| ]*[)]([ ][t][h][r][o][w][s][ ][\\S]*){0,1}[;]")&&!line.contains("abstract ")&&!line.contains("default ");
-    }
-    
-    /**
-     * Checks if a given line from an exception table matters
-     * for the coplexity.
-     * 
-     * @param line the line to be examined
-     * @param exceptionTableFound indicates if an exception table was found
-     * @return true if entry matters to for the complexity, false otherwise
-     */
-    private boolean isValidExceptionEntry(String line, boolean exceptionTableFound) {
-        return line.matches(REGEX_FOR_EXC_TABEL_ENTRY) && exceptionTableFound && !line.matches(REGEX_FOR_BEEING_FIALLY);
     }
 }

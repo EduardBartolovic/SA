@@ -13,8 +13,8 @@ import org.junit.Test;
  */
 public class MyComplexityAnalyzerTest {
     
-//    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
-    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\classes"); 
+    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
+//    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\classes"); 
     
     public MyComplexityAnalyzerTest() {
     }
@@ -69,7 +69,7 @@ public class MyComplexityAnalyzerTest {
     public void test8() throws Exception {
         final String fileName = "Hello";
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\a\\b\\c\\d\\e\\"+fileName+".class"));
-        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get(fileName+".class"));   
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get("a.b.c.d.e."+fileName+".class"));   
     }
     
     @Test(timeout = 2000)
