@@ -26,7 +26,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     /**
      * parameter for disambler.
      */
-    private static final String COMMAND = "javap";
+    private static final String JAVAP_COMMAND = "javap";
     /**
      * parameter for disambler.
      */
@@ -38,19 +38,32 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     /**
      * offset needed for searching the name of the file.
      */
-    private static final int OFFSETFORCLASSNAME = 6;
+    private static final int OFFSET_FOR_CLASSNAME = 6;
     /**
      * offset needed for searching the name of the file.
      */
-    private static final int OFFSETFORINTERFACENAME = 10;
+    private static final int OFFSET_FOR_INTERFACENAME = 10;
     /**
      * regex for finding name of Class.
      */
-    private static final String REGEXFORCLASS= "[ ]*([p][u][b][l][i][c][ ]){0,1}([a][b][s][t][r][a][c][t][ ]){0,1}[c][l][a][s][s][ ][\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]*[{]";
+    private static final String REGEX_FOR_CLASS= "[ ]*([p][u][b][l][i][c][ ]){0,1}([a][b][s][t][r][a][c][t][ ]){0,1}[c][l][a][s][s][ ][\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]{0,1}[\\S]*[ ]*[{]";
     /**
      * regex for finding name of Interface.
      */
-    private static final String REGEXFORINTERFACE= "[ ]*([p][u][b][l][i][c][ ]){0,1}[i][n][t][e][r][f][a][c][e][ ][\\S]*[ ]*[\\S]*[ ]*[\\S]*[ ]*[{]";
+    private static final String REGEX_FOR_INTERFACE= "[ ]*([p][u][b][l][i][c][ ]){0,1}[i][n][t][e][r][f][a][c][e][ ][\\S]*[ ]*[\\S]*[ ]*[\\S]*[ ]*[{]";
+    
+    /**
+     * regex for finding the beginning of an exceptiontabel
+     * for try catch blocks.
+     */
+    private static final String REGEX_FOR_EXCEPTION_TABEL_ENTRY = "[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*.*";
+    
+    /**
+     * regex for finding out if a exception table entry is 
+     * for a finally block or not.
+     */
+    private static final String REGEX_FOR_BEEING_FIALLY = "[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*[a][n][y][ ]*";
+    
     /**
      * file type. 
      */
@@ -87,7 +100,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
         final Function<Path,List<String>> pathToData = path -> { //this function will get the decompiled file and turns it into list full of Strings
             String data = "";
             try {
-                data = runProgram(COMMAND, OPTION_C, OPTION_P, path.toString());
+                data = runProgram(JAVAP_COMMAND, OPTION_C, OPTION_P, path.toString());
             } catch (IOException | InterruptedException exception) {
                 System.out.println("Error");
             }
@@ -138,19 +151,19 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
 //            boolean athrowSet = false; //for try catch 
             boolean exceptionTableFound = false;
             for (String line: file) {
-                if(line.matches(REGEXFORCLASS)){
-                    fileName = line.substring(line.indexOf("class ")+OFFSETFORCLASSNAME);
+                if(line.matches(REGEX_FOR_CLASS)){
+                    fileName = line.substring(line.indexOf("class ")+OFFSET_FOR_CLASSNAME);
                     fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
-                }else if(line.matches(REGEXFORINTERFACE)){
-                    fileName = line.substring(line.indexOf("interface ")+OFFSETFORINTERFACENAME);
+                }else if(line.matches(REGEX_FOR_INTERFACE)){
+                    fileName = line.substring(line.indexOf("interface ")+OFFSET_FOR_INTERFACENAME);
                     fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
                 }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
                     complexity++;
 //                    athrowSet = false;
                 }else if(line.matches("[ ]*[E][x][c][e][p][t][i][o][n][ ][t][a][b][l][e][:][ ]*")) {
                     exceptionTableFound = true;
-                }else if(exceptionTableFound && line.matches("[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*.*")) {
-                    if (!line.matches("[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*[a][n][y][ ]*"))
+                }else if(exceptionTableFound && line.matches(REGEX_FOR_EXCEPTION_TABEL_ENTRY)) { // finding an exception tabel entry
+                    if (!line.matches(REGEX_FOR_BEEING_FIALLY)) // checking that the entry doesn't belong to a finally block
                         complexity++;
 //                }else if(line.matches("[ ]*[0-9]*[:]( )[a][t][h][r][o][w]")){ //find athrow
 //                    athrowSet = true;
