@@ -1,7 +1,6 @@
 package edu.hm.software_architektur.a02_staticanalyzer;
 
 import edu.hm.cs.rs.arch.a02_staticanalyzer.ComplexityAnalyzer;
-import edu.hm.cs.rs.arch.a02_staticanalyzer.demo.ProcessRunner;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -50,7 +49,7 @@ public class Main {
 //        ComplexityAnalyzer analyzer1 = new MyComplexityAnalyzer().setRootdir(Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes")); 
 //        System.out.println(analyzer1.analyzeClassfiles());
 
-        ComplexityAnalyzer analyzer1 = new MyComplexityAnalyzer().setRootdir(Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\classes\\edu\\hm\\software_architektur\\a02_staticanalyzer\\MyComplexityAnalyzer.class")); 
+        ComplexityAnalyzer analyzer1 = new MyComplexityAnalyzer().setRootdir(Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\classes\\edu\\hm\\software_architektur\\a02_staticanalyzer\\MyComplexityAnalyzer.class")); 
         System.out.println(analyzer1.analyzeClassfiles());
         
 

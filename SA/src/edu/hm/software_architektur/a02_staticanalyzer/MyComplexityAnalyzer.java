@@ -54,14 +54,9 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
     private static final String REGEX_FOR_BEEING_FIALLY = "[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ][ ]*[0-9][0-9]*[ ]*[a][n][y][ ]*";
     
     /**
-     * regex for finding method heads.
-     */
-    private static final String REGEX_FOR_METHODS = "[ ]*([\\S]*[ ]){0,5}[\\S]*[(][\\S| ]*[)]([ ][t][h][r][o][w][s][ ][\\S]*){0,1}[;]";
-    
-    /**
      * file type. 
      */
-//    private static final String CLASS = ".class";
+    private static final String CLASS = ".class";
     
     /**
      * saving the directory where a search should start.
@@ -159,31 +154,28 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      * @return a pair of the file name and the computed complexity
      */
     private Pair<String, Integer> analyzeFile(List<String> file) {
-        final Pair<String, Integer> retPair;
         int complexity = 0;     //file complexity counter
         String fileName = "";   
         boolean exceptionTableFound = false;
         for (String line: file) {
             if(line.matches(REGEX_FOR_CLASS)){
                 fileName = line.substring(line.indexOf("class ")+OFFSET_FOR_CLASSNAME);
-                fileName = fileName.substring(0,fileName.indexOf(' '));//+ CLASS;
+                fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
             }else if(line.matches(REGEX_FOR_INTERFACE)){ // checking if the class is an interface
                 fileName = line.substring(line.indexOf("interface ")+OFFSET_FOR_INTERFACENAME);
-                fileName = fileName.substring(0,fileName.indexOf(' '));//+ CLASS;
+                fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
             }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
                 complexity++;
-//              athrowSet = false;
             }else if(line.matches("[ ]*[E][x][c][e][p][t][i][o][n][ ][t][a][b][l][e][:][ ]*")) {
                 exceptionTableFound = true;
             }else if(isValidExceptionEntry(line, exceptionTableFound)) { // finding an exception tabel entry
                 complexity++;
-            } else if(isValidMethod(line)){ // find methode                   
+            } else if(isValidMethod(line)){ // find methods                   
                 complexity++;
                 exceptionTableFound = false;
-                }
             }
-        retPair = new Pair<>(fileName, complexity);
-        return retPair;
+        }
+        return new Pair<>(fileName, complexity);
     }
     
     /**
@@ -193,11 +185,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      * @return true if the method matters for the complexity
      */
     private boolean isValidMethod(String line) {
-        boolean isValid = false;
-        if (line.matches(REGEX_FOR_METHODS)&&!line.contains("abstract ")&&!line.contains("default ")) {
-            isValid = true;
-        }
-        return isValid;
+        return line.matches("[ ]*([\\S]*[ ]){0,5}[\\S]*[(][\\S| ]*[)]([ ][t][h][r][o][w][s][ ][\\S]*){0,1}[;]")&&!line.contains("abstract ")&&!line.contains("default ");
     }
     
     /**
@@ -209,10 +197,6 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
      * @return true if entry matters to for the complexity, false otherwise
      */
     private boolean isValidExceptionEntry(String line, boolean exceptionTableFound) {
-        boolean isValid = false;
-        if(line.matches(REGEX_FOR_EXC_TABEL_ENTRY) && exceptionTableFound && !line.matches(REGEX_FOR_BEEING_FIALLY)) {
-            isValid = true;
-        }
-        return isValid;
+        return line.matches(REGEX_FOR_EXC_TABEL_ENTRY) && exceptionTableFound && !line.matches(REGEX_FOR_BEEING_FIALLY);
     }
 }

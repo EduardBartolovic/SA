@@ -13,8 +13,8 @@ import org.junit.Test;
  */
 public class MyComplexityAnalyzerTest {
     
-    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
-//    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes"); 
+//    public final Path path = Paths.get("C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\build\\test\\classes");
+    public final Path path = Paths.get("C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\build\\classes"); 
     
     public MyComplexityAnalyzerTest() {
     }
@@ -57,7 +57,7 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
         assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get(fileName+".class"));   
     }
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void test7() throws Exception {
         final String fileName = "For";
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
@@ -69,7 +69,7 @@ public class MyComplexityAnalyzerTest {
     public void test8() throws Exception {
         final String fileName = "Hello";
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\a\\b\\c\\d\\e\\"+fileName+".class"));
-//        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get(fileName+".class"));   
+        assertEquals(Integer.valueOf(2),analyzer.analyzeClassfiles().get(fileName+".class"));   
     }
     
     @Test(timeout = 2000)
@@ -121,7 +121,7 @@ public class MyComplexityAnalyzerTest {
         assertEquals(Integer.valueOf(5),analyzer.analyzeClassfiles().get(fileName+".class"));   
     }
     
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void test17() throws Exception {
         final String fileName = "TryCatch";
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
@@ -134,7 +134,7 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
         assertEquals(Integer.valueOf(5),analyzer.analyzeClassfiles().get(fileName+".class"));   
     }
-    @Test//(timeout = 2000)
+    @Test(timeout = 2000)
     public void test19() throws Exception {
         final String fileName = "TwoClasses";
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+fileName+".class"));
