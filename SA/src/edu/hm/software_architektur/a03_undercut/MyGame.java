@@ -12,6 +12,8 @@ public class MyGame implements Game{
     
     private Connection connection;
     
+    private String state;
+    
     private int scoreA;
     
     private int scoreB;
@@ -28,6 +30,7 @@ public class MyGame implements Game{
         scoreA = 0;
         scoreB = 0;
         round = 0;
+        state = "running";
     }
     
     @Override
@@ -35,6 +38,9 @@ public class MyGame implements Game{
         this.parameter = parameter;
         this.gameRule = gameRule;
         this.connection = connection;
+        
+        connection.openConnection();
+ 
     }
 
     @Override
@@ -72,6 +78,11 @@ public class MyGame implements Game{
     @Override
     public Parameters getParameters() {
         return parameter;
+    }
+
+    @Override
+    public String getState() {
+        return state;
     }
 
     

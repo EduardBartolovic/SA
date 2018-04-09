@@ -26,4 +26,6 @@ public interface Game {
     
     Parameters getParameters();
     
+    String getState();
+    
 }

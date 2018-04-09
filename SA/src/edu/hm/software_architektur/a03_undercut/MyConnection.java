@@ -23,7 +23,8 @@ public class MyConnection implements Connection{
 
     @Override
     public void openConnection() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.print("starting Server on: "+ port);
     }
+
     
 }
