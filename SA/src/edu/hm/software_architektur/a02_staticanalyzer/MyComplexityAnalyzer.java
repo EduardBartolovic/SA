@@ -92,7 +92,7 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
                 .filter(file -> file.toString().endsWith(".class")) //filter all files which are not .class files
                 .map(path -> pathToData(path)) // get the filecontent
                 .collect(Collectors.toList()));
-        } catch (Exception e) {
+        } catch (IOException exception) {
             throw new IOException();
         }
         return Collections.unmodifiableMap(analyzedData);// returning a unmodifiable Map containing analyzed files and there complexity
@@ -167,13 +167,6 @@ public class MyComplexityAnalyzer implements ComplexityAnalyzer {
             }else if(line.matches(REGEX_FOR_INTERFACE)){ // checking if the class is an interface
                 fileName = line.substring(line.indexOf("interface ")+OFFSET_FOR_INTERFACENAME);
                 fileName = fileName.substring(0,fileName.indexOf(' '))+ CLASS;
-//            }else if(line.matches("[ ]*[0-9]*[:]( )[i][f][_]*[a-z]*[ ]*[0-9]*")) { //find if
-//                complexity++;
-//            }else if(line.matches(REGEX_FOR_EXC_TABEL_ENTRY) && !line.matches(REGEX_FOR_BEEING_FIALLY)) {
-//                complexity++;
-//            } else if(isValidMethod(line)){ // find methods                   
-//                complexity++;
-//            }
             } else if (addsToComplexity(line)) {
                 complexity++;
             }
