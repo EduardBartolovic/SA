@@ -6,6 +6,10 @@ package edu.hm.software_architektur.a03_undercut;
  */
 public interface GameRule {
     
+    static GameRule make(String specification) throws ReflectiveOperationException {
+        return Factory.<GameRule>make(specification);
+    }
+    
     int getRoundsPlayed();
     
     int getScoreA();

@@ -1,9 +1,14 @@
 package edu.hm.software_architektur.a03_undercut;
 
-/**
- *
- * @author Edo
- */
+
 public interface Connection {
+    
+    static Connection make(String specification) throws ReflectiveOperationException {
+        return Factory.<Connection>make(specification);
+    }
+    
+    void changePort(int port);
+    
+    void openConnection(); 
     
 }

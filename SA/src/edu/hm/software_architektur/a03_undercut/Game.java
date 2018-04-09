@@ -6,16 +6,24 @@ package edu.hm.software_architektur.a03_undercut;
  */
 public interface Game {
     
-    void play(Parameters parameter);
+    static Game make(String specification) throws ReflectiveOperationException {
+        return Factory.<Game>make(specification);
+    }
     
-    boolean giveScoreA(int num);
+    void play(GameRule gameRule, Parameters parameter, Connection connection);
     
-    boolean giveScoreB(int num);
+    Game giveScoreA(int num);
+    
+    Game giveScoreB(int num);
     
     int getRoundsPlayed();
     
     int getScoreA();
     
     int getScoreB();
+    
+    GameRule getGameRules();
+    
+    Parameters getParameters();
     
 }
