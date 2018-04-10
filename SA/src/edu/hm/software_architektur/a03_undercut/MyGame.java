@@ -11,12 +11,6 @@ import java.io.IOException;
  */
 public class MyGame implements Game{
     
-    private GameRule gameRule;
-    
-    private Parameters parameter;
-    
-    private Connection connection;
-    
     private String state;
     
     private int scoreA;
@@ -34,33 +28,44 @@ public class MyGame implements Game{
     
     @Override
     public void play(GameRule gameRule, Parameters parameter, Connection connection) throws IOException {
-        this.parameter = parameter;
-        this.gameRule = gameRule;
-        this.connection = connection;
-        
         connection.openConnection();
         
+        int repeatedAnswerSame = 0;
         while(state.equals("running")) {
-            int playerAChoice = connection.getUserInputA(parameter.getChooseRange());
+            final int playerAChoice = connection.getUserInputA(parameter.getChooseRange());
 
-            int playerBChoice = connection.getUserInputB(parameter.getChooseRange());
-
-            // update scores
-            if(playerAChoice == playerBChoice - 1)
-                scoreA += playerAChoice + playerBChoice;
-            else if(playerBChoice == playerAChoice - 1)
-                scoreB += playerAChoice + playerBChoice;
-            else {
-                scoreA += playerAChoice;
-                scoreB += playerBChoice;
+            final int playerBChoice = connection.getUserInputB(parameter.getChooseRange());
+            
+            if(playerAChoice == playerBChoice){
+                repeatedAnswerSame++;
+            }else{
+                repeatedAnswerSame = 0;
             }
-            round++;
+            
+            if(repeatedAnswerSame > 2){ // when both users took the same number 3 times then tie
+                state = "tie"; 
+            }else{
                 
-            if(scoreA >= parameter.getScoreToWin()){
+                // update scores
+                if(playerAChoice == playerBChoice - 1)
+                    scoreA += playerAChoice + playerBChoice;
+                else if(playerBChoice == playerAChoice - 1)
+                    scoreB += playerAChoice + playerBChoice;
+                else {
+                    scoreA += playerAChoice;
+                    scoreB += playerBChoice;
+                } // need to be changed for game rules.++++++++++++++++++++++++++++++++++++++++++
+            
+            
+                round++;
+            }
+                
+            if(scoreA >= parameter.getScoreToWin()){ //winning criteria
                 state = "A won";
             }else if(scoreB >= parameter.getScoreToWin()){
                 state = "B won";
             }
+            
             connection.printState(state,round,scoreA,scoreB);
         }
  

@@ -18,8 +18,7 @@ public class MyConnection implements Connection{
 
     @Override
     public void printState(String state, int round, int scoreA , int scoreB) {
-        // publish scores to both players
-        System.out.println("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        System.out.println("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);// publish scores to both players
     }
 
     @Override
