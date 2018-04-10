@@ -17,9 +17,11 @@ public class MyUndercutMain {
      * @throws java.lang.ReflectiveOperationException
      */
     public static void main(String... args) throws IOException, ReflectiveOperationException {
-        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.MyConnection()";
+        //final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.MyConnection()";
+        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.OnlineConnection()";
+        
         final String gameSpecification = "edu.hm.software_architektur.a03_undercut.MyGame()";
-        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.MyGameRules()";
+        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.MyGameRules()";
         
         //final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.MyParameters()";
         final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.ShortGameParameters()";

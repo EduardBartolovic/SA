@@ -18,8 +18,9 @@ public interface Connection {
     
     /**
      * starting outside connection.
+     * @throws java.io.IOException
      */
-    void openConnection(); 
+    void openConnection() throws IOException; 
     
     /**
      * get Input from User A.
@@ -43,7 +44,8 @@ public interface Connection {
      * @param round
      * @param scoreA
      * @param scoreB 
+     * @throws java.io.IOException 
      */
-    void printState(String state, int round, int scoreA , int scoreB);
+    void printState(String state, int round, int scoreA , int scoreB) throws IOException;
     
 }
