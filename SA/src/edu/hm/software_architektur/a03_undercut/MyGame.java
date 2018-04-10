@@ -30,42 +30,28 @@ public class MyGame implements Game{
     public void play(GameRule gameRule, Parameters parameter, Connection connection) throws IOException {
         connection.openConnection();
         
-        int repeatedAnswerSame = 0;
         while(state.equals("running")) {
             final int playerAChoice = connection.getUserInputA(parameter.getChooseRange());
 
             final int playerBChoice = connection.getUserInputB(parameter.getChooseRange());
-            
-            if(playerAChoice == playerBChoice){
-                repeatedAnswerSame++;
+
+            final int[] scores = gameRule.calculateScore(playerAChoice, playerBChoice);
+            if(scores[0]<0){ // if the first value is negativ => player choose 3 times the same number => tie
+                state = "tie";
             }else{
-                repeatedAnswerSame = 0;
+                scoreA += scores[0];
+                scoreB += scores[1];
+
+                if(scoreA >= parameter.getScoreToWin() && scoreB >= parameter.getScoreToWin()){
+                    state = "tie";
+                }else if(scoreA >= parameter.getScoreToWin()){ //winning criteria
+                    state = "A won";
+                }else if(scoreB >= parameter.getScoreToWin()){
+                    state = "B won";
+                } 
             }
             
-            if(repeatedAnswerSame > 2){ // when both users took the same number 3 times then tie
-                state = "tie"; 
-            }else{
-                
-                // update scores
-                if(playerAChoice == playerBChoice - 1)
-                    scoreA += playerAChoice + playerBChoice;
-                else if(playerBChoice == playerAChoice - 1)
-                    scoreB += playerAChoice + playerBChoice;
-                else {
-                    scoreA += playerAChoice;
-                    scoreB += playerBChoice;
-                } // need to be changed for game rules.++++++++++++++++++++++++++++++++++++++++++
-            
-            
-                round++;
-            }
-                
-            if(scoreA >= parameter.getScoreToWin()){ //winning criteria
-                state = "A won";
-            }else if(scoreB >= parameter.getScoreToWin()){
-                state = "B won";
-            }
-            
+            round++;
             connection.printState(state,round,scoreA,scoreB);
         }
  

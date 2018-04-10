@@ -12,12 +12,7 @@ public interface GameRule {
         return Factory.<GameRule>make(specification);
     }
     
-    int getRoundsPlayed();
-    
-    int getScoreA();
-    
-    int getScoreB();
-    
+    int[] calculateScore(int playerAChoice, int playerBChoice);
     
     
 }
