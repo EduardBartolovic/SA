@@ -1,4 +1,6 @@
-package edu.hm.software_architektur.a03_undercut;
+package edu.hm.software_architektur.a03_undercut.gamerules;
+
+import edu.hm.software_architektur.a03_undercut.Factory;
 
 /**
  *

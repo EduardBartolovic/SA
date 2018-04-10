@@ -1,5 +1,7 @@
 
-package edu.hm.software_architektur.a03_undercut;
+package edu.hm.software_architektur.a03_undercut.parameter;
+
+import edu.hm.software_architektur.a03_undercut.Factory;
 
 /**
  *
@@ -13,5 +15,5 @@ public interface Parameters {
     
     int getScoreToWin();
     
-    int getUpperChoose();
+    int[] getChooseRange();
 }

@@ -1,5 +1,8 @@
 package edu.hm.software_architektur.a03_undercut;
 
+import edu.hm.software_architektur.a03_undercut.gamerules.GameRule;
+import edu.hm.software_architektur.a03_undercut.connections.Connection;
+import edu.hm.software_architektur.a03_undercut.parameter.Parameters;
 import java.io.IOException;
 
 /**
@@ -14,10 +17,12 @@ public class MyUndercutMain {
      * @throws java.lang.ReflectiveOperationException
      */
     public static void main(String... args) throws IOException, ReflectiveOperationException {
-        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.MyConnection(999)";
+        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.MyConnection()";
         final String gameSpecification = "edu.hm.software_architektur.a03_undercut.MyGame()";
         final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.MyGameRules()";
-        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.MyParameters()";
+        
+        //final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.MyParameters()";
+        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.ShortGameParameters()";
         
         final Connection connection = Connection.make(connectionSpecification);
         final Game game = Game.make(gameSpecification);

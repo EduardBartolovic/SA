@@ -1,22 +1,23 @@
-
-package edu.hm.software_architektur.a03_undercut;
+package edu.hm.software_architektur.a03_undercut.gamerules;
 
 /**
  *
  * @author Edo
  */
-public class MyParameters implements Parameters{
-
-    public MyParameters() {
-    }
+public class MyGameRules implements GameRule{
 
     @Override
-    public int getScoreToWin() {
+    public int getRoundsPlayed() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public int getUpperChoose() {
+    public int getScoreA() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int getScoreB() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
