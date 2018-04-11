@@ -22,8 +22,9 @@ public class MyUndercutMain {
         final String gameSpecification = "edu.hm.software_architektur.a03_undercut.MyGame()";
         
         //final String connectionSpecification = args[1];
-        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.ConsoleConnection()";
+//        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.ConsoleConnection()";
         //final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.OnlineConnection()";
+        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.FileReadConnection()";
         
         //final String gameRuleSpecification = args[2];
         final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.DefaultGameRules()";
@@ -36,6 +37,9 @@ public class MyUndercutMain {
         final Game game = Game.make(gameSpecification);
         final Parameters parameter = Parameters.make(parameterSpecification);
         final GameRule gameRule = GameRule.make(gameRuleSpecification);
+
         game.play(gameRule,parameter,connection);
+
+//        System.out.println(Integer.parseInt("23"));
     }
 }
