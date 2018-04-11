@@ -22,7 +22,7 @@ public interface GameRule {
      * calculating scores for each player.
      * @param playerAChoice
      * @param playerBChoice
-     * @return scores of this round.
+     * @return scores of this round. if negativ the game will end in a tie.
      */
     int[] calculateScore(int playerAChoice, int playerBChoice);
     
