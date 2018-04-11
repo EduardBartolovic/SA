@@ -3,7 +3,10 @@ package edu.hm.software_architektur.a03_undercut.connections;
 import edu.hm.software_architektur.a03_undercut.Factory;
 import java.io.IOException;
 
-
+/**
+ * this class is the interface between the main program and the outer world.
+ * @author Felix, Eduard
+ */
 public interface Connection {
     
     /**

@@ -7,60 +7,80 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.charset.Charset;
 
 /**
  *
  * @author Edo
  */
 public class OnlineConnection implements Connection{
-    
+    /**
+     * default port for player A.
+     */
     public static final int DEFAULTPORTA = 2001;
-    
+    /**
+     * default port for player B.
+     */
     public static final int DEFAULTPORTB = 2002;
-    
+    /**
+     * port.
+     */
     private final int portA;
-    
+    /**
+     * port.
+     */
     private final int portB;
     
+    /**
+     * writer to comunicate to A.
+     */
     private BufferedWriter outA;
     
+    /**
+     * writer to comunicate to B.
+     */
     private BufferedWriter outB;
     
+    /**
+     * reader to comunicate to A.
+     */
     private BufferedReader inA;
-    
+    /**
+     * reader to comunicate to A.
+     */
     private BufferedReader inB;
 
+    /**
+     * to set up ports.
+     * @param portA
+     * @param portB 
+     */
     public OnlineConnection(int portA, int portB) {
         this.portA = portA;
         this.portB = portB;
     }
     
+    /**
+     * constructor loading default values.
+     */
     public OnlineConnection(){
         this(DEFAULTPORTA,DEFAULTPORTB);
-    }
-    
-    public int getPortA() {
-        return portA;
-    }
-
-    public int getPortB() {
-        return portB;
     }
 
     @Override
     public void openConnection() throws IOException {
         
         final Socket socketA = new ServerSocket(portA).accept();
-        outA = new BufferedWriter(new OutputStreamWriter((socketA.getOutputStream())));
-        inA = new BufferedReader(new InputStreamReader(socketA.getInputStream()));
+        outA = new BufferedWriter(new OutputStreamWriter((socketA.getOutputStream()),Charset.defaultCharset()));
+        inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
         
         outA.write("Welcome Player A!");
         outA.write("Please wait for Player B...");
         outA.flush();
         
         final Socket socketB = new ServerSocket(portB).accept();
-        outB = new BufferedWriter(new OutputStreamWriter((socketB.getOutputStream())));
-        inB = new BufferedReader(new InputStreamReader(socketB.getInputStream()));
+        outB = new BufferedWriter(new OutputStreamWriter((socketB.getOutputStream()),Charset.defaultCharset()));
+        inB = new BufferedReader(new InputStreamReader(socketB.getInputStream(),Charset.defaultCharset()));
         
         outB.write("Welcome Player B!");
         
@@ -84,6 +104,13 @@ public class OnlineConnection implements Connection{
         return getUserInput(chooseRange, inB);
     }
     
+    /**
+     * comuncating with player. and getting a number.
+     * @param chooseRange
+     * @param inR
+     * @return int
+     * @throws IOException 
+     */
     private int getUserInput(int[] chooseRange,BufferedReader inR)throws IOException{
         int playerChoice;
         // read players' choices; if invalid, discard and retry

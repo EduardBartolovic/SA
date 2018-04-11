@@ -27,7 +27,6 @@ public class ConsoleConnectionTest {
         final ConsoleConnection sut = new ConsoleConnection();
         
         assertEquals("starting Game:",executeopenConnection(sut));
-        assertEquals("starting Game:",executeUserInputA(sut, new int[]{1,5}));
         
     }
     
@@ -36,7 +35,6 @@ public class ConsoleConnectionTest {
         final ConsoleConnection sut = new ConsoleConnection();
         
         assertEquals("starting Game:",executeopenConnection(sut));
-        assertEquals(,execute);
     }
     
     private static String executeopenConnection(ConsoleConnection sut) throws IOException {

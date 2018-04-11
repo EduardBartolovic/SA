@@ -19,6 +19,9 @@ public class MyGame implements Game{
     
     private int round;
 
+    /**
+     * constructor.
+     */
     public MyGame() {
         scoreA = 0;
         scoreB = 0;

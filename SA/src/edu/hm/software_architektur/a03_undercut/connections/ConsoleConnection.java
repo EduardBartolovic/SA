@@ -8,9 +8,6 @@ import java.io.IOException;
  */
 public class ConsoleConnection implements Connection{
     
-    public ConsoleConnection(){
-    }
-
     @Override
     public void openConnection() {
         System.out.println("starting Game:");   

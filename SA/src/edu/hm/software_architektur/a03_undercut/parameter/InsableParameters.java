@@ -5,10 +5,11 @@ package edu.hm.software_architektur.a03_undercut.parameter;
  * @author Edo
  */
 public class InsableParameters implements Parameters{
-    
+    /**
+     * score to win
+     */
     public static final int SCORETOWIN = 42;
     
-    public int CHOOSEONE = 3;
 
     @Override
     public int getScoreToWin() {
