@@ -17,14 +17,19 @@ public class MyUndercutMain {
      * @throws java.lang.ReflectiveOperationException
      */
     public static void main(String... args) throws IOException, ReflectiveOperationException {
+        
+        //final String gameSpecification = args[0];
         final String gameSpecification = "edu.hm.software_architektur.a03_undercut.MyGame()";
         
-        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.MyConnection()";
+        //final String connectionSpecification = args[1];
+        final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.ConsoleConnection()";
         //final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.OnlineConnection()";
         
-        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.MyGameRules()";
+        //final String gameRuleSpecification = args[2];
+        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.DefaultGameRules()";
         
-        //final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.MyParameters()";
+        //final String parameterSpecification = args[3];
+        //final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.DefaultParameters()";
         final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.ShortGameParameters()";
         
         final Connection connection = Connection.make(connectionSpecification);
@@ -32,6 +37,5 @@ public class MyUndercutMain {
         final Parameters parameter = Parameters.make(parameterSpecification);
         final GameRule gameRule = GameRule.make(gameRuleSpecification);
         game.play(gameRule,parameter,connection);
-        
     }
 }

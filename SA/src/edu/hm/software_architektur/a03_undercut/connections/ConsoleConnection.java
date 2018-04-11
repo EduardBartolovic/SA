@@ -6,9 +6,9 @@ import java.io.IOException;
  *
  * @author Edo
  */
-public class MyConnection implements Connection{
+public class ConsoleConnection implements Connection{
     
-    public MyConnection(){
+    public ConsoleConnection(){
     }
 
     @Override

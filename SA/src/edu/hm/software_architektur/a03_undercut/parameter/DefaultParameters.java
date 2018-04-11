@@ -5,7 +5,7 @@ package edu.hm.software_architektur.a03_undercut.parameter;
  *
  * @author Edo
  */
-public class MyParameters implements Parameters{
+public class DefaultParameters implements Parameters{
 
     public static final int SCORETOWIN = 40;
     

@@ -4,7 +4,7 @@ package edu.hm.software_architektur.a03_undercut.gamerules;
  *
  * @author Edo
  */
-public class MyGameRules implements GameRule{
+public class DefaultGameRules implements GameRule{
 
     private int repeatedAnswerSame = 0;
     
