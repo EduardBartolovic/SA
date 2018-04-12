@@ -43,20 +43,12 @@ public class DefaultGameRulesTest {
         });
     }
     
-    @Test(timeout=10000)
-    public void test_EmailVerify() {
+    @Test(timeout=2000)
+    public void test_DefaultVerify() {
         final GameRule sut = new DefaultGameRules();
         assertThat(sut.calculateScore(a, b), is(expected)); 
     }
-    
-    @Test(timeout=1000)
-    public void test_PotVerify2() {
-        final GameRule sut = new DefaultGameRules();
-        assertThat(sut.calculateScore(3, 3), is(new int[]{3,3}));
-        assertThat(sut.calculateScore(3, 3), is(new int[]{3,3}));
-        assertThat(sut.calculateScore(3, 3), is(new int[]{3,3}));
-        assertThat(sut.calculateScore(3, 3), is(new int[]{-1,0}));   
-    }
+
     
  
 }

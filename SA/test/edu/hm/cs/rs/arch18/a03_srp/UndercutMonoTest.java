@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  */
 @RunWith(Parameterized.class) public class UndercutMonoTest {
     /** SUT type. */
-    private static final Class<?> sutType = UndercutMono.class;
+    private static final Class<?> sutType = /*MyUndercutMain.class;*/UndercutMono.class;
     @Parameters(name = "{0} => {1}") public static Iterable<Object[]> generate() {
         return Arrays.asList(new Object[][] {
                                  // abwechselnd Wahl Spieler A/B, Regex in der Ausgabe
