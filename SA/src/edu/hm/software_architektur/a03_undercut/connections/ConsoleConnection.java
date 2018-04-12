@@ -1,6 +1,7 @@
 package edu.hm.software_architektur.a03_undercut.connections;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
  *
@@ -19,19 +20,18 @@ public class ConsoleConnection implements Connection{
     }
 
     @Override
-    public int getUserInputA(int[] chooseRange) throws IOException{
-        System.out.println("Player A, your choice ("+chooseRange[0]+"-"+chooseRange[1]+")?");// to player A
+    public int getUserInputA(List<Integer> chooseRange) throws IOException{
+        System.out.print("Player A, you can choose:"+chooseRange);// to player A
         return getUserInput(chooseRange);
     }
 
     @Override
-    public int getUserInputB(int[] chooseRange) throws IOException{
-        
-        System.out.println("Player B, your choice ("+chooseRange[0]+"-"+chooseRange[1]+")?"); // to player B
+    public int getUserInputB(List<Integer> chooseRange) throws IOException{
+        System.out.print("Player B, you can choose:"+chooseRange); // to player B
         return getUserInput(chooseRange);
     }
     
-    private int getUserInput(int[] chooseRange)throws IOException{
+    private int getUserInput(List<Integer> chooseRange)throws IOException{
         int playerChoice;
         // read players' choices; if invalid, discard and retry
         do {
@@ -39,8 +39,7 @@ public class ConsoleConnection implements Connection{
             if(input < 0)
                 throw new IOException(); // bomb out on end of input
             playerChoice = input - '0';
-        }
-        while(playerChoice < chooseRange[0] || playerChoice > chooseRange[1]);
+        } while(!chooseRange.contains(playerChoice));
         return playerChoice;
     }
 

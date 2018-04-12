@@ -2,6 +2,7 @@ package edu.hm.software_architektur.a03_undercut.connections;
 
 import edu.hm.software_architektur.a03_undercut.Factory;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * this class is the interface between the main program and the outer world.
@@ -31,7 +32,7 @@ public interface Connection {
      * @return
      * @throws IOException 
      */
-    int getUserInputA(int[] chooseRange) throws IOException;
+    int getUserInputA(List<Integer> chooseRange) throws IOException;
     
     /**
      * get input from User B.
@@ -39,7 +40,7 @@ public interface Connection {
      * @return
      * @throws IOException 
      */
-    int getUserInputB(int[] chooseRange) throws IOException;
+    int getUserInputB(List<Integer> chooseRange) throws IOException;
     
     /**
      * print game information to all players.

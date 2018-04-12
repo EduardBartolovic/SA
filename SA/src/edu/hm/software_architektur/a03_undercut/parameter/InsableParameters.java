@@ -1,5 +1,7 @@
 package edu.hm.software_architektur.a03_undercut.parameter;
 
+import java.util.List;
+
 /**
  *
  * @author Edo
@@ -17,7 +19,7 @@ public class InsableParameters implements Parameters{
     }
 
     @Override
-    public int[] getChooseRange() {
+    public List<Integer> getChooseRange() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

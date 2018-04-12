@@ -2,6 +2,7 @@
 package edu.hm.software_architektur.a03_undercut.parameter;
 
 import edu.hm.software_architektur.a03_undercut.Factory;
+import java.util.List;
 
 /**
  *
@@ -26,7 +27,7 @@ public interface Parameters {
     
     /**
      * range of choices.
-     * @return int[] size 2. 
+     * @return List<Integer>  
      */
-    int[] getChooseRange();
+    List<Integer> getChooseRange();
 }

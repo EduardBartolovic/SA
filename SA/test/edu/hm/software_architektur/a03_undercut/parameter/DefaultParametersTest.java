@@ -27,7 +27,7 @@ public class DefaultParametersTest {
     @Test
     public void testGetChooseRange() {
         final DefaultParameters sut = new DefaultParameters();
-        assertThat(sut.getChooseRange(), is(new int[]{1,5}));
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3,4,5}));
     }
     
 }

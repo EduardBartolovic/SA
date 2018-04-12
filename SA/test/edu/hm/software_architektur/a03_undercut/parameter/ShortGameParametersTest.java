@@ -23,7 +23,7 @@ public class ShortGameParametersTest {
     @Test
     public void testGetChooseRange() {
         final Parameters sut = new ShortGameParameters();
-        assertThat(sut.getChooseRange(), is(new int[]{1,3}));
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3}));
     }
     
 }

@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  *
@@ -38,25 +39,25 @@ public class FileReadConnection implements Connection{
     }
 
     @Override
-    public int getUserInputA(int[] chooseRange) throws IOException {
+    public int getUserInputA(List<Integer> chooseRange) throws IOException {
         return getUserInput(fileReader.readLine(), chooseRange);
         //return choice;
     }
 
     @Override
-    public int getUserInputB(int[] chooseRange) throws IOException {
+    public int getUserInputB(List<Integer> chooseRange) throws IOException {
         return getUserInput(fileReader.readLine(), chooseRange);
         //return choice;
     }
     
-    private int getUserInput(String number, int[] chooseRange) throws IOException{
+    private int getUserInput(String number, List<Integer> chooseRange) throws IOException{
         int choice = -1;
         try {
             choice = Integer.parseInt(number);
         } catch (java.lang.NumberFormatException nfe) {
         
         }
-        if (choice < chooseRange[0] || choice > chooseRange[1]) {
+        if (!chooseRange.contains(choice)) {
             throw new IOException("This: " + number + ". is no valid number!");
         }
         return choice;

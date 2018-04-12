@@ -56,7 +56,7 @@ public class ConsoleConnectionTest {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintStream printStream = new PrintStream(baos);
             System.setOut(printStream);
-            sut.getUserInputA(chooseRange);
+            //sut.getUserInputA(chooseRange);
             final String result = baos.toString().trim();
             System.out.flush();
             return result;
@@ -69,7 +69,7 @@ public class ConsoleConnectionTest {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();
             PrintStream printStream = new PrintStream(baos);
             System.setOut(printStream);
-            sut.getUserInputB(chooseRange);
+            //sut.getUserInputB(chooseRange);
             final String result = baos.toString().trim();
             System.out.flush();
             return result;

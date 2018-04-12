@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.List;
 
 /**
  *
@@ -91,15 +92,15 @@ public class OnlineConnection implements Connection{
     }
 
     @Override
-    public int getUserInputA(int[] chooseRange) throws IOException {
-        outA.write("Player A, your choice ("+chooseRange[0]+"-"+chooseRange[1]+")?");
+    public int getUserInputA(List<Integer> chooseRange) throws IOException {
+        outA.write("Player A, you can choose:"+chooseRange);
         outA.flush();
         return getUserInput(chooseRange, inA );
     }
 
     @Override
-    public int getUserInputB(int[] chooseRange) throws IOException {
-        outB.write("Player B, your choice ("+chooseRange[0]+"-"+chooseRange[1]+")?");
+    public int getUserInputB(List<Integer> chooseRange) throws IOException {
+        outB.write("Player B, you can choose:"+chooseRange);
         outB.flush();
         return getUserInput(chooseRange, inB);
     }
@@ -111,7 +112,7 @@ public class OnlineConnection implements Connection{
      * @return int
      * @throws IOException 
      */
-    private int getUserInput(int[] chooseRange,BufferedReader inR)throws IOException{
+    private int getUserInput(List<Integer> chooseRange,BufferedReader inR)throws IOException{
         int playerChoice;
         // read players' choices; if invalid, discard and retry
         do {
@@ -120,7 +121,7 @@ public class OnlineConnection implements Connection{
                 throw new IOException(); // bomb out on end of input
             playerChoice = input;
         }
-        while(playerChoice < chooseRange[0] || playerChoice > chooseRange[1]);
+        while(!chooseRange.contains(playerChoice));
         return playerChoice;
     }
 
