@@ -14,8 +14,6 @@ public class ChoiceDifferenceGameRule implements GameRule{
     @Override
     public int[] calculateScore(int playerAChoice, int playerBChoice) {
         final int[] scores = new int[2]; // int[0] score of player A, int[1] score of player B
-        final int higherScore = Math.max(playerBChoice, playerAChoice);
-        final int lowerScore = Math.max(playerAChoice, playerBChoice);
         
         if(playerAChoice == playerBChoice - 1) {
             scores[0] += playerAChoice + playerBChoice;
