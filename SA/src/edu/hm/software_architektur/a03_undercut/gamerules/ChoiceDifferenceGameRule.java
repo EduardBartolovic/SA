@@ -1,7 +1,8 @@
 package edu.hm.software_architektur.a03_undercut.gamerules;
 
 /**
- *
+ * Wenn die gewählten Punkte 2 oder mehr auseinander liegen,
+ * erhält der Spieler mit der hoeheren Zahl die Summe der Punkte (statt jeder Spieler seine Wahl). 
  * @author Computer
  */
 public class ChoiceDifferenceGameRule implements GameRule{

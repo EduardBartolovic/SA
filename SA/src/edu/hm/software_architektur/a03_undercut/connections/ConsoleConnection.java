@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- *
+ * Spiel ueber die Kommandozeile.
  * @author Edo
  */
 public class ConsoleConnection implements Connection{

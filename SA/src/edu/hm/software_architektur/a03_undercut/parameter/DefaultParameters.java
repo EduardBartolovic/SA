@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * standart undercut parameter.
  * @author Edo
  */
 public class DefaultParameters implements Parameters{

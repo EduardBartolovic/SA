@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- *
+ * Kurzes Spiel mit Wahlmoeglichkeiten 1−3 (statt 1−5) und Sieg mit 12 Punkten (statt 40). 
  * @author Edo
  */
 public class ShortGameParameters implements Parameters{

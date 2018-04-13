@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.hm.software_architektur.a03_undercut.connections;
 
 import java.io.BufferedReader;
@@ -15,7 +10,10 @@ import java.nio.file.Paths;
 import java.util.List;
 
 /**
- *
+ * Das Programm liest die Eingaben aus einem Textfile (statt von der Tastatur) 
+ * und schreibt die Ausgaben auf ein anderes Textfile (statt auf den Bildschirm).
+ * Die voreingestellten Files sind undercut.in.txt und undercut.out.txt, 
+ * beide im systemweiten Directory für temporäre Files (Systemproperty java.io.tmpdir). 
  * @author Computer
  */
 public class FileReadConnection implements Connection{

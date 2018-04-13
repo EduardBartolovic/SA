@@ -1,7 +1,10 @@
 package edu.hm.software_architektur.a03_undercut.gamerules;
 
 /**
- *
+ * Wenn beide Spieler die gleiche Zahl waehlen, kommen diese Punkte in einen Topf und
+ * die Spieler erhalten vorerst nichts (statt jeder Spieler seine Wahl).
+ * Der Gewinner des nächsten Undercut (1 unter dem Gegner) erhaelt den Inhalt des Topfes dazu.
+ * Wenn die Spieler mehr als dreimal nacheinander die gleiche Wahl treffen, endet das Spiel unentschieden. 
  * @author Edo
  */
 public class PotGameRule implements GameRule{

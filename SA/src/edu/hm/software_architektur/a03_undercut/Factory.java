@@ -2,7 +2,6 @@ package edu.hm.software_architektur.a03_undercut;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -30,7 +29,7 @@ public class Factory {
     public static <T> T make(String typenameAndArgs, Object... initialArgs) throws ReflectiveOperationException {
         final String[] token = typenameAndArgs.split("[^-\\w\\./;]");
         String typename = null;
-        final List<Object> arglist = new ArrayList<>(Arrays.asList(initialArgs));
+        final List<Object> arglist = Arrays.asList(initialArgs);
         for(String arg: token){
             if(typename == null){
                 typename = arg.replace(File.separatorChar, '.');
@@ -61,7 +60,7 @@ public class Factory {
             .replace("public ", "");
     }
 
-    /** Protokolliert die Argumente auf der Konsole, falls useStdout true ist.
+    /** Protokolliert die Argumente auf der Konsole.
      * @param constructor Konstruktor.
      * @param arglist Argumente.
      */
