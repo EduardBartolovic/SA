@@ -1,6 +1,5 @@
 package edu.hm.software_architektur.a03_undercut.parameter;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -42,7 +41,7 @@ public class InstableParameters implements Parameters{
 
     @Override
     public List<Integer> getChooseRange() {
-        List<Integer> retChooseRange = new ArrayList<>();
+        final List<Integer> retChooseRange;
         if (turnCount%3==0) {
             retChooseRange = chooseRangeThree;
         } else if (turnCount%2==0) {
@@ -51,7 +50,7 @@ public class InstableParameters implements Parameters{
             retChooseRange = chooseRangeOne;
         }
         turnCount++;
-        return retChooseRange;
+        return Collections.unmodifiableList(retChooseRange);
     }
 
     

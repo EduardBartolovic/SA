@@ -1,7 +1,7 @@
 
 package edu.hm.software_architektur.a03_undercut.parameter;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -16,28 +16,14 @@ public class DefaultParameters implements Parameters{
      */
     public static final int SCORETOWIN = 40;
     
-    /**
-     * upper choose range
-     */
-    public static final int UPPERCHOOSE = 5;
-    
-    /**
-     * lowerchooserange.
-     */
-    public static final int LOWERCHOOSE = 1;
-
     @Override
     public int getScoreToWin() {
         return SCORETOWIN;
     }
 
     @Override
-    public List<Integer> getChooseRange() {
-        final List<Integer> range = new ArrayList<>(UPPERCHOOSE);
-        for(int counter = LOWERCHOOSE; counter <= UPPERCHOOSE;counter++){
-            range.add(counter);
-        }
-        return Collections.unmodifiableList(range);
+    public List<Integer> getChooseRange () {
+        return Collections.unmodifiableList(Arrays.asList(1,2,3,4,5));
     }
 
 
