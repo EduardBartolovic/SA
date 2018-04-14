@@ -34,7 +34,12 @@ public class InstableParameters implements Parameters{
     /**
      * for keeping track of how many turns there were.
      */
-    private int turnCount = 0;
+    private int roundCount = 0;
+    
+    /**
+     * marks if player one makes the choice.
+     */
+    private boolean playerATurn = true;
     
     @Override
     public int getScoreToWin() {
@@ -44,14 +49,34 @@ public class InstableParameters implements Parameters{
     @Override
     public List<Integer> getChooseRange() {
         final List<Integer> retChooseRange;
-        if (turnCount%3==0) {
-            retChooseRange = chooseRangeThree;
-        } else if (turnCount%2==0) {
-            retChooseRange = chooseRangeTwo;
+        
+        if(roundCount == 2){
+            if(playerATurn){
+                retChooseRange = chooseRangeThree;
+            }else{
+                retChooseRange = chooseRangeOne;
+            }
+        } else if(roundCount == 1){
+            if(playerATurn){
+                retChooseRange = chooseRangeTwo;
+            }else{
+                retChooseRange = chooseRangeThree;
+            }
         } else {
-            retChooseRange = chooseRangeOne;
+            if(playerATurn){
+                retChooseRange = chooseRangeOne;
+            }else{
+                retChooseRange = chooseRangeTwo;
+            }
         }
-        turnCount++;
+        if(!playerATurn) // if both players made theire turn : next round
+            roundCount++;
+        
+        if(roundCount>2) 
+            roundCount = 0;
+        
+        playerATurn = !playerATurn;
+        
         return Collections.unmodifiableList(retChooseRange);
     }
 

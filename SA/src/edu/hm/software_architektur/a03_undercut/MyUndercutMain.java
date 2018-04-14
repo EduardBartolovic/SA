@@ -31,7 +31,8 @@ public class MyUndercutMain {
         
         //final String parameterSpecification = args[3];
         //final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.DefaultParameters()";
-        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.ShortGameParameters()";
+        //final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.ShortGameParameters()";
+        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.InstableParameters()";
         
         final Connection connection = Connection.make(connectionSpecification);
         final Game game = Game.make(gameSpecification);
