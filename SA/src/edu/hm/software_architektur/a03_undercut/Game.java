@@ -11,9 +11,9 @@ import java.io.IOException;
  */
 public interface Game {
     /**
-     * 
+     * factory method.
      * @param specification
-     * @return
+     * @return a Game
      * @throws ReflectiveOperationException 
      */
     static Game make(String specification) throws ReflectiveOperationException {

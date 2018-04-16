@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface Parameters {
     /**
-     * factoty method
+     * factory method
      * @param specification
      * @return Parameters
      * @throws ReflectiveOperationException 

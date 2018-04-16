@@ -13,7 +13,7 @@ public interface Connection {
     /**
      * produces a Connection.
      * @param specification
-     * @return
+     * @return a Connection
      * @throws ReflectiveOperationException 
      */
     static Connection make(String specification) throws ReflectiveOperationException {

@@ -79,6 +79,7 @@ public class OnlineConnection implements Connection{
         
         outA.write("Welcome Player A!");
         outA.write("Please wait for Player B...");
+        outA.newLine();
         outA.flush();
         
         final Socket socketB = new ServerSocket(portB).accept();
@@ -86,16 +87,21 @@ public class OnlineConnection implements Connection{
         inB = new BufferedReader(new InputStreamReader(socketB.getInputStream(),Charset.defaultCharset()));
         
         outB.write("Welcome Player B!");
+        outB.newLine();
         
         outA.write("Game starting!");
-        outB.write("Game starting!");
+        outA.newLine();
         outA.flush();
+        
+        outB.write("Game starting!");
+        outB.newLine();
         outB.flush();
     }
 
     @Override
     public int getUserInputA(List<Integer> chooseRange) throws IOException {
         outA.write("Player A, you can choose:"+chooseRange);
+        outA.newLine();
         outA.flush();
         return getUserInput(chooseRange, inA );
     }
@@ -103,6 +109,7 @@ public class OnlineConnection implements Connection{
     @Override
     public int getUserInputB(List<Integer> chooseRange) throws IOException {
         outB.write("Player B, you can choose:"+chooseRange);
+        outB.newLine();
         outB.flush();
         return getUserInput(chooseRange, inB);
     }
@@ -116,7 +123,7 @@ public class OnlineConnection implements Connection{
      */
     private int getUserInput(List<Integer> chooseRange,BufferedReader inR)throws IOException{
         int playerChoice;
-        // read players' choices; if invalid, discard and retry
+        // read player's choices; if invalid, discard and retry
         do {
             final int input = Integer.parseInt(inR.readLine());
             if(input < 0)
@@ -130,8 +137,10 @@ public class OnlineConnection implements Connection{
     @Override
     public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
         outA.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        outA.newLine();
         outA.flush();
         outB.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        outB.newLine();
         outB.flush();
     }
     
