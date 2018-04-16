@@ -5,7 +5,7 @@ package edu.hm.peither_bartolov.a03_undercut.gamerules;
  * die Spieler erhalten vorerst nichts (statt jeder Spieler seine Wahl).
  * Der Gewinner des nächsten Undercut (1 unter dem Gegner) erhaelt den Inhalt des Topfes dazu.
  * Wenn die Spieler mehr als dreimal nacheinander die gleiche Wahl treffen, endet das Spiel unentschieden. 
- * @author Edo
+ * @author Eduard Bartolovic
  */
 public class PotGameRule implements GameRule{
 
@@ -28,46 +28,44 @@ public class PotGameRule implements GameRule{
     
     @Override
     public int[] calculateScore(int playerAChoice, int playerBChoice) {
-        final int[] scores = new int[2]; // on position 0 is player A on 1 is player B
         if(playerAChoice == playerBChoice){
             repeatedAnswerSame++;
         }else{ 
             repeatedAnswerSame = 0;
         }
+        
+        int[] scores = new int[2]; // on position 0 is player A on 1 is player B
+        
         if(repeatedAnswerSame > 3){ // when both users took the same number 4 times then tie
             scores[0] = -1;
         }else{
-            final int[] newScores = getNewScores(scores[0], scores[1], playerAChoice, playerBChoice);
-            scores[0] = newScores[0];
-            scores[1] = newScores[1];  
+            scores = getScores(playerAChoice, playerBChoice); 
         }
         return scores;
     }
     
     /**
-     * Calculates the new scores of A and B.
-     * @param oldA current score of A
-     * @param oldB current score of B
+     * Calculates the scores of A and B and the new content for the pot.
      * @param choiceA choice of A
      * @param choiceB choice of B
      * @return new scores in an int[]
      */
-    private int[] getNewScores(int oldA, int oldB, int choiceA, int choiceB) {
-        int newA = oldA;
-        int newB = oldB; 
-        if(choiceA == choiceB - 1){
-            newA += choiceA + choiceB + pot;
+    private int[] getScores( int choiceA, int choiceB) {
+        int scoreA = 0;
+        int scoreB = 0; 
+        if(choiceA == choiceB - 1){ // player a won 
+            scoreA = choiceA + choiceB + pot;
             pot = 0; 
-        }else if(choiceB == choiceA - 1){
-            newB += choiceA + choiceB + pot;
+        }else if(choiceB == choiceA - 1){ // player b won
+            scoreB = choiceA + choiceB + pot;
             pot = 0;
-        }else if(choiceA == choiceB){
+        }else if(choiceA == choiceB){ // nobody won
             pot += choiceA+choiceB;
-        } else {
-            newA += choiceA;
-            newB += choiceB;
+        } else { 
+            scoreA = choiceA;
+            scoreB = choiceB;
         }
-        return new int[]{newA, newB};
+        return new int[]{scoreA, scoreB};
     }
     
 }
