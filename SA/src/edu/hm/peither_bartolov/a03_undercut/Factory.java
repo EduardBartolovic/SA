@@ -14,17 +14,14 @@ public class Factory {
      * Wenn der Typ nicht existiert, sucht die Klasse in einem Defaultpackage.
      * Wenn er dort auch nicht existiert, gibt die Methode auf.
      * Die Methode erzeugt das Objekt mit einem Konstruktor.
-     * Der erhaelt als erstes die initialArgs, gefolgt von den Argumenten der Spezifikation.
      * @param <T> Type des produzierten Objektes.
-     * @param typenameAndArgs String mit einem Klassennamen mit oder ohne Packagepfad, gefolgt von Konstruktorargumenten.
-     * Trenner zwischen Klassennamen und Argumenten sind Doppelpunkte oder Kommas.
-     * @param initialArgs Argumente fuer den Konstruktor.
+     * @param typenameArg String mit einem Klassennamen mit oder ohne Packagepfad, ohne Konstruktorargumenten.
      * @return Ein Objekt vom typ T.
      * @exception ReflectiveOperationException wenn beim Erzeugen des Objektes etwas schief geht.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T make(String typenameAndArgs, Object... initialArgs) throws ReflectiveOperationException {
-        final String[] token = typenameAndArgs.split("[^-\\w\\./;]");
+    public static <T> T make(String typenameArg) throws ReflectiveOperationException {
+        final String[] token = typenameArg.split("[^-\\w\\./;]");
         final String typename = token[0].replace(File.separatorChar, '.');
         final Class<?> type = Class.forName(typename);
         return (T)Stream.of(type.getDeclaredConstructors())
