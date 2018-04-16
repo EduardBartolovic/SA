@@ -1,3 +1,5 @@
+package edu.hm.cs.rs.arch18.a03_srp;
+
 /* (C) 2018, R. Schiedermeier, rs@cs.hm.edu
  * Java 1.8.0_121, Linux x86_64 4.15.4
  * bluna (Intel Core i7-5600U CPU/2.60GHz, 4 cores, 2003 MHz, 16000 MByte RAM)

@@ -28,30 +28,30 @@ public class OnlineConnection implements Connection{
     /**
      * port.
      */
-    private final int portA;
+    transient private final int portA;
     /**
      * port.
      */
-    private final int portB;
+    transient private final int portB;
     
     /**
      * writer to comunicate to A.
      */
-    private BufferedWriter outA;
+    transient private BufferedWriter outA;
     
     /**
      * writer to comunicate to B.
      */
-    private BufferedWriter outB;
+    transient private BufferedWriter outB;
     
     /**
      * reader to comunicate to A.
      */
-    private BufferedReader inA;
+    transient private BufferedReader inA;
     /**
      * reader to comunicate to A.
      */
-    private BufferedReader inB;
+    transient private BufferedReader inB;
 
     /**
      * to set up ports.
@@ -77,25 +77,33 @@ public class OnlineConnection implements Connection{
         outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
         inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
         
-        outA.write("Welcome Player A!");
-        outA.write("Please wait for Player B...");
-        outA.newLine();
+        outA.write("Welcome Player A!\r\nPlease wait for Player B...\r\n");
         outA.flush();
         
         final Socket socketB = new ServerSocket(portB).accept();
         outB = new BufferedWriter(new OutputStreamWriter(socketB.getOutputStream(),Charset.defaultCharset()));
         inB = new BufferedReader(new InputStreamReader(socketB.getInputStream(),Charset.defaultCharset()));
         
-        outB.write("Welcome Player B!");
-        outB.newLine();
+        startGameMessages(outA, outB);
+    }
+   
+    /**
+     * Informs both players that the game is starting.
+     * @param bwA writer for A
+     * @param bwB writer for B
+     * @throws IOException 
+     */
+    private void startGameMessages(BufferedWriter bwA, BufferedWriter bwB) throws IOException {
+        bwB.write("Welcome Player B!");
+        bwB.newLine();
         
-        outA.write("Game starting!");
-        outA.newLine();
-        outA.flush();
+        bwA.write("Game starting!");
+        bwA.newLine();
+        bwA.flush();
         
-        outB.write("Game starting!");
-        outB.newLine();
-        outB.flush();
+        bwB.write("Game starting!");
+        bwB.newLine();
+        bwB.flush();
     }
 
     @Override
@@ -117,17 +125,18 @@ public class OnlineConnection implements Connection{
     /**
      * comuncating with player. and getting a number.
      * @param chooseRange which numbers the user can choose from
-     * @param inR the reader which reads the input
+     * @param buffReader the reader which reads the input
      * @return int the chosen input from the user
      * @throws IOException if the input was not valid
      */
-    private int getUserInput(List<Integer> chooseRange,BufferedReader inR)throws IOException{
+    private int getUserInput(List<Integer> chooseRange,BufferedReader buffReader)throws IOException{
         int playerChoice;
         // read player's choices; if invalid, discard and retry
         do {
-            final int input = Integer.parseInt(inR.readLine());
-            if(input < 0)
+            final int input = Integer.parseInt(buffReader.readLine());
+            if(input < 0) {
                 throw new IOException(); // bomb out on end of input
+            }
             playerChoice = input;
         }
         while(!chooseRange.contains(playerChoice));
