@@ -6,13 +6,13 @@ import edu.hm.peither_bartolov.a03_undercut.parameter.Parameters;
 import java.io.IOException;
 
 /**
- *
+ * Interface for the game itself.
  * @author Edo
  */
 public interface Game {
     /**
      * factory method.
-     * @param specification
+     * @param specification specification for the game
      * @return a Game
      * @throws ReflectiveOperationException 
      */
@@ -21,10 +21,10 @@ public interface Game {
     }
     
     /**
-     * 
-     * @param gameRule
-     * @param parameter
-     * @param connection
+     * starts the game with given specifications.
+     * @param gameRule rule(s) for the game
+     * @param parameter parameters for the game
+     * @param connection connection for the game
      * @throws IOException 
      */
     void play(GameRule gameRule, Parameters parameter, Connection connection) throws IOException;

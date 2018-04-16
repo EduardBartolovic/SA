@@ -8,13 +8,14 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import javax.imageio.IIOException;
 
 /**
  * Das Programm liest die Eingaben aus einem Textfile (statt von der Tastatur) 
  * und schreibt die Ausgaben auf ein anderes Textfile (statt auf den Bildschirm).
  * Die voreingestellten Files sind undercut.in.txt und undercut.out.txt, 
  * beide im systemweiten Directory für temporäre Files (Systemproperty java.io.tmpdir). 
- * @author Computer
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class FileReadConnection implements Connection{
     
@@ -31,7 +32,7 @@ public class FileReadConnection implements Connection{
     /**
      * Path to the java tmp directory.
      */
-    private final Path filesPath = Paths.get((System.getProperty("java.io.tmpdir")));
+    private final Path filesPath = Paths.get(System.getProperty("java.io.tmpdir"));
     
     /**
      * Path of file to read its choices.
@@ -47,6 +48,7 @@ public class FileReadConnection implements Connection{
     public void openConnection() throws IOException {
         fileReader = new BufferedReader(new FileReader(inputFilePath.toFile()));
         fileWriter = new BufferedWriter(new FileWriter(outputFilePath.toFile()));
+        fileWriter.write("");
     }
 
     @Override
@@ -64,7 +66,7 @@ public class FileReadConnection implements Connection{
      * @param number file input
      * @param chooseRange allowed number Range
      * @return the choice from the player as int
-     * @throws IOException 
+     * @throws IOException if the input is not valid
      */
     private int getUserInput(String number, List<Integer> chooseRange) throws IOException{
         int choice = -1;
@@ -73,7 +75,9 @@ public class FileReadConnection implements Connection{
         } catch (java.lang.NumberFormatException nfe) {
             
         }
-        if (!chooseRange.contains(choice)) {
+        if (number == null) {
+            throw new IIOException("Not enough numbers in file to finish the game!");
+        } else if (!chooseRange.contains(choice)) {
             throw new IOException("This: " + number + ". is no valid number!");
         }
         return choice;
@@ -81,7 +85,8 @@ public class FileReadConnection implements Connection{
 
     @Override
     public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
-        fileWriter.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        fileWriter.append("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB + " \r\n");
+        fileWriter.append('\n');
         fileWriter.flush();
     }
     

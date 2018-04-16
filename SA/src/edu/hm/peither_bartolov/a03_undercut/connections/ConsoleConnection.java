@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * Spiel ueber die Kommandozeile.
- * @author Edo
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class ConsoleConnection implements Connection{
     
@@ -31,6 +31,12 @@ public class ConsoleConnection implements Connection{
         return getUserInput(chooseRange);
     }
     
+    /**
+     * gets the user input from the console.
+     * @param chooseRange which numbers the user can choose from
+     * @return the chosen number
+     * @throws IOException if the input is not valid
+     */
     private int getUserInput(List<Integer> chooseRange)throws IOException{
         int playerChoice;
         // read players' choices; if invalid, discard and retry
@@ -42,8 +48,4 @@ public class ConsoleConnection implements Connection{
         } while(!chooseRange.contains(playerChoice));
         return playerChoice;
     }
-
-
-
-    
 }

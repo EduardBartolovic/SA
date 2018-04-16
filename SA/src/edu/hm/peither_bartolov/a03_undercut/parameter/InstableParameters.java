@@ -42,7 +42,9 @@ public class InstableParameters implements Parameters{
      */
     private int roundCount;
     
-
+    /**
+     * filling the list in which all possible choose ranges are.
+     */
     public InstableParameters() {
         chooseRangeList = new ArrayList<>();
         roundCount = 0;

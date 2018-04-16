@@ -15,7 +15,7 @@ public class ShortGameParameters implements Parameters{
      */
     public static final int SCORETOWIN = 12;
     /**
-     * upper choose range
+     * upper choose range.
      */
     public static final int UPPERCHOOSE = 3;
     /**

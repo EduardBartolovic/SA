@@ -14,7 +14,7 @@ import java.util.List;
  * Das Programm oeffnet zu jedem Spieler einen eigenen Socket (Voreinstellung: Ports 2001 und 2002).
  * Es liest Eingaben vom Socket des betreffenden Spielers und schickt Ausgaben wahlweise an einen oder beide Spieler. (Die Spieler können über ein Netzwerk spielen,
  * beispielsweise mit einem Telnet-Client. Sie sehen die Wahl des Gegners nicht.) 
- * @author Edo
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class OnlineConnection implements Connection{
     /**
@@ -55,8 +55,8 @@ public class OnlineConnection implements Connection{
 
     /**
      * to set up ports.
-     * @param portA
-     * @param portB 
+     * @param portA port of player A
+     * @param portB port of player B
      */
     public OnlineConnection(int portA, int portB) {
         this.portA = portA;
@@ -74,7 +74,7 @@ public class OnlineConnection implements Connection{
     public void openConnection() throws IOException {
         
         final Socket socketA = new ServerSocket(portA).accept();
-        outA = new BufferedWriter(new OutputStreamWriter((socketA.getOutputStream()),Charset.defaultCharset()));
+        outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
         inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
         
         outA.write("Welcome Player A!");
@@ -83,7 +83,7 @@ public class OnlineConnection implements Connection{
         outA.flush();
         
         final Socket socketB = new ServerSocket(portB).accept();
-        outB = new BufferedWriter(new OutputStreamWriter((socketB.getOutputStream()),Charset.defaultCharset()));
+        outB = new BufferedWriter(new OutputStreamWriter(socketB.getOutputStream(),Charset.defaultCharset()));
         inB = new BufferedReader(new InputStreamReader(socketB.getInputStream(),Charset.defaultCharset()));
         
         outB.write("Welcome Player B!");
@@ -116,10 +116,10 @@ public class OnlineConnection implements Connection{
     
     /**
      * comuncating with player. and getting a number.
-     * @param chooseRange
-     * @param inR
-     * @return int
-     * @throws IOException 
+     * @param chooseRange which numbers the user can choose from
+     * @param inR the reader which reads the input
+     * @return int the chosen input from the user
+     * @throws IOException if the input was not valid
      */
     private int getUserInput(List<Integer> chooseRange,BufferedReader inR)throws IOException{
         int playerChoice;

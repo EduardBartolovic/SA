@@ -6,15 +6,15 @@ import edu.hm.peither_bartolov.a03_undercut.parameter.Parameters;
 import java.io.IOException;
 
 /**
- *
- * @author Edo Felix
+ * The main method, so we can play a game of undercut.
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class MyUndercutMain {
     /**
      * Entry point.
      * @param args Commandline args: none.
      * @exception IOException on incomplete input.
-     * @throws java.lang.ReflectiveOperationException
+     * @exception ReflectiveOperationException if a build failuer occurs.
      */
     public static void main(String... args) throws IOException, ReflectiveOperationException {
         

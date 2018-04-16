@@ -12,7 +12,7 @@ public interface Connection {
     
     /**
      * produces a Connection.
-     * @param specification
+     * @param specification what kind of connection is used
      * @return a Connection
      * @throws ReflectiveOperationException 
      */
@@ -22,32 +22,32 @@ public interface Connection {
     
     /**
      * starting outside connection.
-     * @throws java.io.IOException
+     * @throws IOException if the connection can not be opened
      */
     void openConnection() throws IOException; 
     
     /**
      * get Input from User A.
-     * @param chooseRange
-     * @return
-     * @throws IOException 
+     * @param chooseRange which numbers the user can choose from
+     * @return the input from user A
+     * @throws IOException if the user input is not valid
      */
     int getUserInputA(List<Integer> chooseRange) throws IOException;
     
     /**
      * get input from User B.
-     * @param chooseRange
-     * @return
-     * @throws IOException 
+     * @param chooseRange which numbers the user can choose from
+     * @return the input from user B
+     * @throws IOException if the user input is not valid
      */
     int getUserInputB(List<Integer> chooseRange) throws IOException;
     
     /**
      * print game information to all players.
-     * @param state
-     * @param round
-     * @param scoreA
-     * @param scoreB 
+     * @param state state of the current game
+     * @param round the current round
+     * @param scoreA score of player A
+     * @param scoreB score of player B
      * @throws java.io.IOException 
      */
     void printState(String state, int round, int scoreA , int scoreB) throws IOException;

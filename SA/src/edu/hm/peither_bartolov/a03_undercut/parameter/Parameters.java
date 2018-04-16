@@ -5,13 +5,13 @@ import edu.hm.peither_bartolov.a03_undercut.Factory;
 import java.util.List;
 
 /**
- *
+ * Interface for all parameter classes.
  * @author Felix Peither, Eduard Bartolovic
  */
 public interface Parameters {
     /**
-     * factory method
-     * @param specification
+     * factory method.
+     * @param specification which parameters are used
      * @return Parameters
      * @throws ReflectiveOperationException 
      */
