@@ -1,4 +1,4 @@
-package edu.hm.software_architektur.a02_staticanalyzer;
+package edu.hm.peither_bartolov.a02_staticanalyzer;
 
 import edu.hm.cs.rs.arch.a02_staticanalyzer.ComplexityAnalyzer;
 import java.io.BufferedReader;

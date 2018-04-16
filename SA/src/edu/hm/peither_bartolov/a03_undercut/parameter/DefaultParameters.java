@@ -1,5 +1,5 @@
 
-package edu.hm.software_architektur.a03_undercut.parameter;
+package edu.hm.peither_bartolov.a03_undercut.parameter;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package edu.hm.software_architektur.a01_csvreader;
+package edu.hm.peither_bartolov.a01_csvreader;
 
 import edu.hm.cs.rs.arch.a01_kiss.CSVReader;
 import java.io.BufferedReader;

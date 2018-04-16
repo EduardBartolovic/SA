@@ -1,4 +1,5 @@
 package edu.hm.software_architektur.a03_undercut.gamerules;
+import edu.hm.peither_bartolov.a03_undercut.gamerules.PotGameRule;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;

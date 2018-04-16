@@ -1,4 +1,4 @@
-package edu.hm.software_architektur.a03_undercut.gamerules;
+package edu.hm.peither_bartolov.a03_undercut.gamerules;
 
 /**
  * default undercut game rules.

@@ -5,6 +5,7 @@
  */
 package edu.hm.software_architektur.a03_undercut.connections;
 
+import edu.hm.peither_bartolov.a03_undercut.connections.ConsoleConnection;
 import java.io.ByteArrayOutputStream;
 import java.io.FileDescriptor;
 import java.io.FileOutputStream;

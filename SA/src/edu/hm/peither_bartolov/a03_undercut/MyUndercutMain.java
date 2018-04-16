@@ -1,8 +1,8 @@
-package edu.hm.software_architektur.a03_undercut;
+package edu.hm.peither_bartolov.a03_undercut;
 
-import edu.hm.software_architektur.a03_undercut.gamerules.GameRule;
-import edu.hm.software_architektur.a03_undercut.connections.Connection;
-import edu.hm.software_architektur.a03_undercut.parameter.Parameters;
+import edu.hm.peither_bartolov.a03_undercut.gamerules.GameRule;
+import edu.hm.peither_bartolov.a03_undercut.connections.Connection;
+import edu.hm.peither_bartolov.a03_undercut.parameter.Parameters;
 import java.io.IOException;
 
 /**

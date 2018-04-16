@@ -1,7 +1,7 @@
 
-package edu.hm.software_architektur.a03_undercut.parameter;
+package edu.hm.peither_bartolov.a03_undercut.parameter;
 
-import edu.hm.software_architektur.a03_undercut.Factory;
+import edu.hm.peither_bartolov.a03_undercut.Factory;
 import java.util.List;
 
 /**

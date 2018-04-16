@@ -1,5 +1,6 @@
 package edu.hm.software_architektur.a02_staticanalyzer;
 
+import edu.hm.peither_bartolov.a02_staticanalyzer.MyComplexityAnalyzer;
 import edu.hm.cs.rs.arch.a02_staticanalyzer.ComplexityAnalyzer;
 import java.nio.file.Path;
 import java.nio.file.Paths;

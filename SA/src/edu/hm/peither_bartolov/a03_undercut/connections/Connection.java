@@ -1,6 +1,6 @@
-package edu.hm.software_architektur.a03_undercut.connections;
+package edu.hm.peither_bartolov.a03_undercut.connections;
 
-import edu.hm.software_architektur.a03_undercut.Factory;
+import edu.hm.peither_bartolov.a03_undercut.Factory;
 import java.io.IOException;
 import java.util.List;
 

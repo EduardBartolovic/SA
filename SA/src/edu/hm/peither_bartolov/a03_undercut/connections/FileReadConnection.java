@@ -1,4 +1,4 @@
-package edu.hm.software_architektur.a03_undercut.connections;
+package edu.hm.peither_bartolov.a03_undercut.connections;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;

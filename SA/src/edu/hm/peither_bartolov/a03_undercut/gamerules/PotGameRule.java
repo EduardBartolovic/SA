@@ -1,4 +1,4 @@
-package edu.hm.software_architektur.a03_undercut.gamerules;
+package edu.hm.peither_bartolov.a03_undercut.gamerules;
 
 /**
  * Wenn beide Spieler die gleiche Zahl waehlen, kommen diese Punkte in einen Topf und
