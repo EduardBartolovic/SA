@@ -40,6 +40,24 @@ public class InstableParametersTest {
         
         assertThat(sut.getChooseRange().toArray(), is(new int[]{1,3,5})); //a
         assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3,4}));   //b
+        
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3,4})); //a
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{2,3,4,5})); //b
+        
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{2,3,4,5})); //a
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,3,5}));   //b
+        
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,3,5})); //a
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3,4}));   //b
+        
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3,4})); //a
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{2,3,4,5})); //b
+        
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{2,3,4,5})); //a
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,3,5}));   //b
+        
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,3,5})); //a
+        assertThat(sut.getChooseRange().toArray(), is(new int[]{1,2,3,4}));   //b
     }
     
 }
