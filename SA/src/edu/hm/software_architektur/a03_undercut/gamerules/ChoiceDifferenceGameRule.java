@@ -3,7 +3,7 @@ package edu.hm.software_architektur.a03_undercut.gamerules;
 /**
  * Wenn die gewählten Punkte 2 oder mehr auseinander liegen,
  * erhält der Spieler mit der hoeheren Zahl die Summe der Punkte (statt jeder Spieler seine Wahl). 
- * @author Computer
+ * @author Felix Peither, Eduard Bartolovic
  */
 public class ChoiceDifferenceGameRule implements GameRule{
 
@@ -15,9 +15,9 @@ public class ChoiceDifferenceGameRule implements GameRule{
             scores[0] += playerAChoice + playerBChoice;
         } else if(playerBChoice == playerAChoice - 1) {     // player a one more point
             scores[1] += playerAChoice + playerBChoice;
-        } else if (playerAChoice - playerBChoice >= 2) {  // player b has more than 1 point difference
+        } else if (playerAChoice - playerBChoice > 1) {  // player b has more than 1 point difference
             scores[0] += playerAChoice + playerBChoice;
-        } else if (playerBChoice - playerAChoice >= 2) { // player a has more than 1 point difference
+        } else if (playerBChoice - playerAChoice > 1) { // player a has more than 1 point difference
             scores[1] += playerAChoice + playerBChoice;
         }else{                                              // both player have the same score
             scores[0] += playerAChoice;
