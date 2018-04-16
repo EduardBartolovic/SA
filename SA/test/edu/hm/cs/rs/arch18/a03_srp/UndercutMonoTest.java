@@ -2,7 +2,7 @@
  * Java 1.8.0_121, Linux x86_64 4.15.4
  * bluna (Intel Core i7-5600U CPU/2.60GHz, 4 cores, 2003 MHz, 16000 MByte RAM)
  **/
-import edu.hm.cs.rs.arch.a03_srp.UndercutMono;
+import edu.hm.peither_bartolov.a03_undercut.MyUndercutMain;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  */
 @RunWith(Parameterized.class) public class UndercutMonoTest {
     /** SUT type. */
-    private static final Class<?> sutType = /*MyUndercutMain.class;*/UndercutMono.class;
+    private static final Class<?> sutType = MyUndercutMain.class;//UndercutMono.class;
     @Parameters(name = "{0} => {1}") public static Iterable<Object[]> generate() {
         return Arrays.asList(new Object[][] {
                                  // abwechselnd Wahl Spieler A/B, Regex in der Ausgabe

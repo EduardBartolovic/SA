@@ -45,29 +45,29 @@ public class Factory {
         return (T)Stream.of(type.getDeclaredConstructors())
             .filter(ctor -> ctor.getParameterTypes().length == arglist.size())
             .peek(ctor -> ctor.setAccessible(true))
-            .peek(ctor -> logCtor(ctor, arglist))
+            .peek(ctor -> logCtor(ctor))
             .findAny()
             .orElseThrow(IllegalArgumentException::new)
             .newInstance(arglist.toArray());
+    }
+    
+    /** Protokolliert die Argumente auf der Konsole.
+     * @param constructor Konstruktor.
+     */
+    private static void logCtor(Constructor<?> constructor) {
+            System.out.printf("generate: %s %n",
+                              stripPackages(constructor.toString()));
     }
 
     /** Ersetzt in einem String FQCN durch einfache Klassennamen.
      * @param string String mit FQCN.
      * @return String mit einfachen Klassennamen.
      */
-    static String stripPackages(String string) {
+    private static String stripPackages(String string) {
         return string.replaceAll("(?:[_a-z0-9]+\\.)+([A-Z]\\w+)", "$1")
             .replace("public ", "");
     }
 
-    /** Protokolliert die Argumente auf der Konsole.
-     * @param constructor Konstruktor.
-     * @param arglist Argumente.
-     */
-    private static void logCtor(Constructor<?> constructor, List<?> arglist) {
-            System.out.printf("make: %s %s%n",
-                              stripPackages(constructor.toString()),
-                              stripPackages(arglist.toString()));
-    }
+    
 
 }
