@@ -51,7 +51,7 @@ public class ChoiceDifferenceGameRuleTest {
     
     @Test(timeout=2000)
     public void test_DefaultVerify() {
-        final GameRule sut = new DefaultGameRules();
+        final GameRule sut = new ChoiceDifferenceGameRule();
         assertThat(sut.calculateScore(a, b), is(expected)); 
     }
     

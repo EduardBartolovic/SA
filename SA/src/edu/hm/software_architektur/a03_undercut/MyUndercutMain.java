@@ -27,12 +27,13 @@ public class MyUndercutMain {
         //final String connectionSpecification = "edu.hm.software_architektur.a03_undercut.connections.FileReadConnection()";
         
         //final String gameRuleSpecification = args[2];
-        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.DefaultGameRules()";
+//        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.DefaultGameRules()";
+        final String gameRuleSpecification = "edu.hm.software_architektur.a03_undercut.gamerules.ChoiceDifferenceGameRule()";
         
         //final String parameterSpecification = args[3];
-//        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.DefaultParameters()";
+        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.DefaultParameters()";
 //        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.ShortGameParameters()";
-        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.InstableParameters()";
+//        final String parameterSpecification = "edu.hm.software_architektur.a03_undercut.parameter.InstableParameters()";
         
         final Connection connection = Connection.make(connectionSpecification);
         final Game game = Game.make(gameSpecification);
