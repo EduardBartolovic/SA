@@ -73,7 +73,7 @@ public class FileReadConnection implements Connection{
         try {
             choice = Integer.parseInt(number);
         } catch (java.lang.NumberFormatException nfe) {
-            
+            // does nothing because of the IOException which is thrown if anything goes wrong.
         }
         if (number == null) {
             throw new IIOException("Not enough numbers in file to finish the game!");
@@ -85,8 +85,8 @@ public class FileReadConnection implements Connection{
 
     @Override
     public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
-        fileWriter.append("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB + " \r\n");
-        fileWriter.append('\n');
+        fileWriter.append("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        fileWriter.newLine();
         fileWriter.flush();
     }
     

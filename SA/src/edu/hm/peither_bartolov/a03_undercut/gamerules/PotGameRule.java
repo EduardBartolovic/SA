@@ -12,39 +12,62 @@ public class PotGameRule implements GameRule{
     /**
      * counter to see if answers where the same over multiple rounds.
      */
-    private int repeatedAnswerSame = 0;
+    private int repeatedAnswerSame;
     /**
      * this is the winning pot.
      */
-    private int pot = 0;
+    private int pot;
+
+    /**
+     * Constructor.
+     */
+    public PotGameRule() {
+        pot = 0;
+        repeatedAnswerSame = 0;
+    }
     
     @Override
     public int[] calculateScore(int playerAChoice, int playerBChoice) {
+        final int[] scores = new int[2]; // on position 0 is player A on 1 is player B
         if(playerAChoice == playerBChoice){
             repeatedAnswerSame++;
-        }else{
+        }else{ 
             repeatedAnswerSame = 0;
         }
-
-        final int[] scores = new int[2]; // on position 0 is player A on 1 is player B
         if(repeatedAnswerSame > 3){ // when both users took the same number 4 times then tie
             scores[0] = -1;
         }else{
-            if(playerAChoice == playerBChoice - 1){
-                scores[0] += playerAChoice + playerBChoice + pot;
-                pot = 0; 
-            }else if(playerBChoice == playerAChoice - 1){
-                scores[1] += playerAChoice + playerBChoice + pot;
-                pot = 0;
-            }else if(playerAChoice == playerBChoice){
-                pot += playerAChoice+playerBChoice;
-            } else {
-                scores[0] += playerAChoice;
-                scores[1] += playerBChoice;
-            }
+            final int[] newScores = getNewScores(scores[0], scores[1], playerAChoice, playerBChoice);
+            scores[0] = newScores[0];
+            scores[1] = newScores[1];  
         }
-           
         return scores;
+    }
+    
+    /**
+     * Calculates the new scores of A and B.
+     * @param oldA current score of A
+     * @param oldB current score of B
+     * @param choiceA choice of A
+     * @param choiceB choice of B
+     * @return new scores in an int[]
+     */
+    private int[] getNewScores(int oldA, int oldB, int choiceA, int choiceB) {
+        int newA = oldA;
+        int newB = oldB; 
+        if(choiceA == choiceB - 1){
+            newA += choiceA + choiceB + pot;
+            pot = 0; 
+        }else if(choiceB == choiceA - 1){
+            newB += choiceA + choiceB + pot;
+            pot = 0;
+        }else if(choiceA == choiceB){
+            pot += choiceA+choiceB;
+        } else {
+            newA += choiceA;
+            newB += choiceB;
+        }
+        return new int[]{newA, newB};
     }
     
 }

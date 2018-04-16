@@ -28,30 +28,30 @@ public class OnlineConnection implements Connection{
     /**
      * port.
      */
-    transient private final int portA;
+    private final int portA;
     /**
      * port.
      */
-    transient private final int portB;
+    private final int portB;
     
     /**
      * writer to comunicate to A.
      */
-    transient private BufferedWriter outA;
+    private BufferedWriter outA;
     
     /**
      * writer to comunicate to B.
      */
-    transient private BufferedWriter outB;
+    private BufferedWriter outB;
     
     /**
      * reader to comunicate to A.
      */
-    transient private BufferedReader inA;
+    private BufferedReader inA;
     /**
      * reader to comunicate to A.
      */
-    transient private BufferedReader inB;
+    private BufferedReader inB;
 
     /**
      * to set up ports.

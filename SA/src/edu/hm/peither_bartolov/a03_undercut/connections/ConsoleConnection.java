@@ -42,8 +42,9 @@ public class ConsoleConnection implements Connection{
         // read players' choices; if invalid, discard and retry
         do {
             final int input = System.in.read();
-            if(input < 0)
+            if(input < 0) {
                 throw new IOException(); // bomb out on end of input
+            }
             playerChoice = input - '0';
         } while(!chooseRange.contains(playerChoice));
         return playerChoice;
