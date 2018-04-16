@@ -18,42 +18,60 @@ import java.util.List;
  */
 public class FileReadConnection implements Connection{
     
+    /**
+     * bufferedReader to read file.
+     */
     private BufferedReader fileReader;
     
+    /**
+     * bufferedWriter to write file.
+     */
     private BufferedWriter fileWriter;
     
-    // C:\Users\Computer\AppData\Local\Temp\
-    
+    /**
+     * Path to the java tmp directory.
+     */
     private final Path filesPath = Paths.get((System.getProperty("java.io.tmpdir")));
     
+    /**
+     * Path of file to read its choices.
+     */
     private final Path inputFilePath = Paths.get(filesPath.toString() + "\\undercut.in.txt");
     
+    /**
+     * Path of file to write the round information.
+     */
     private final Path outputFilePath = Paths.get(filesPath.toString() + "\\undercut.out.txt");
 
     @Override
     public void openConnection() throws IOException {
-        fileReader = new BufferedReader(new FileReader(inputFilePath.toFile()));//inputFilePath.toFile());
-        fileWriter = new BufferedWriter(new FileWriter(outputFilePath.toFile()));//outputFilePath.toFile());
+        fileReader = new BufferedReader(new FileReader(inputFilePath.toFile()));
+        fileWriter = new BufferedWriter(new FileWriter(outputFilePath.toFile()));
     }
 
     @Override
     public int getUserInputA(List<Integer> chooseRange) throws IOException {
         return getUserInput(fileReader.readLine(), chooseRange);
-        //return choice;
     }
 
     @Override
     public int getUserInputB(List<Integer> chooseRange) throws IOException {
         return getUserInput(fileReader.readLine(), chooseRange);
-        //return choice;
     }
     
+    /**
+     * checking if file made a good input.
+     * @param number file input
+     * @param chooseRange allowed number Range
+     * @return the choice from the player as int
+     * @throws IOException 
+     */
     private int getUserInput(String number, List<Integer> chooseRange) throws IOException{
         int choice = -1;
         try {
             choice = Integer.parseInt(number);
         } catch (java.lang.NumberFormatException nfe) {
-        
+            
         }
         if (!chooseRange.contains(choice)) {
             throw new IOException("This: " + number + ". is no valid number!");
