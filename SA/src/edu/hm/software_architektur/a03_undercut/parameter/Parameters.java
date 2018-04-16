@@ -27,7 +27,7 @@ public interface Parameters {
     
     /**
      * range of choices.
-     * @return List<Integer>  
+     * @return List of Integer
      */
     List<Integer> getChooseRange();
 }

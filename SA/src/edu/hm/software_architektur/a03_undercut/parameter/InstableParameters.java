@@ -1,5 +1,6 @@
 package edu.hm.software_architektur.a03_undercut.parameter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -19,24 +20,39 @@ public class InstableParameters implements Parameters{
     /**
      * the first choose range 1,2,3,4.
      */
-    private final List<Integer> chooseRangeOne = Arrays.asList(1,2,3,4);//new ArrayList<>();
+    private static final List<Integer> CHOOSERANGEONE = Arrays.asList(1,2,3,4);//new ArrayList<>();
     
     /**
      * the secont choose range 2,3,4,5.
      */
-    private final List<Integer> chooseRangeTwo = Arrays.asList(2,3,4,5);
+    private static final List<Integer> CHOOSERANGETWO = Arrays.asList(2,3,4,5);
     
     /**
      * the third choose range 1/3/5.
      */
-    private final List<Integer> chooseRangeThree = Arrays.asList(1,3,5);
+    private static final List<Integer> CHOOSERANGETHREE = Arrays.asList(1,3,5);
     
+    /**
+     * specific turn will be saved to it.
+     */
+    private final List<List<Integer>> chooseRangeList;
+        
     /**
      * for keeping track of how many turns there were.
      */
-    private int roundCount = 0;
+    private int roundCount;
     
-    private boolean playerATurn = true;
+
+    public InstableParameters() {
+        chooseRangeList = new ArrayList<>();
+        roundCount = 0;
+        chooseRangeList.add(CHOOSERANGEONE);
+        chooseRangeList.add(CHOOSERANGETWO);
+        chooseRangeList.add(CHOOSERANGETWO);
+        chooseRangeList.add(CHOOSERANGETHREE);
+        chooseRangeList.add(CHOOSERANGETHREE);
+        chooseRangeList.add(CHOOSERANGEONE);
+    }
     
     @Override
     public int getScoreToWin() {
@@ -45,35 +61,10 @@ public class InstableParameters implements Parameters{
 
     @Override
     public List<Integer> getChooseRange() {
-        final List<Integer> retChooseRange;
+        final List<Integer> retChooseRange = chooseRangeList.get(roundCount%(chooseRangeList.size()));
         
-        if(roundCount == 2){
-            if(playerATurn){
-                retChooseRange = chooseRangeThree;
-            }else{
-                retChooseRange = chooseRangeOne;
-            }
-        } else if(roundCount == 1){
-            if(playerATurn){
-                retChooseRange = chooseRangeTwo;
-            }else{
-                retChooseRange = chooseRangeThree;
-            }
-        } else {
-            if(playerATurn){
-                retChooseRange = chooseRangeOne;
-            }else{
-                retChooseRange = chooseRangeTwo;
-            }
-        }
-        if(!playerATurn) // if both players made theire turn : next round
-            roundCount++;
-        
-        if(roundCount>2) 
-            roundCount = 0;
-        
-        playerATurn = !playerATurn;
-        
+        roundCount++;
+  
         return Collections.unmodifiableList(retChooseRange);
     }
 
