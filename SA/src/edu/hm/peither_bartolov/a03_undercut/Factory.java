@@ -2,8 +2,6 @@ package edu.hm.peither_bartolov.a03_undercut;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -19,36 +17,21 @@ public class Factory {
      * Die Methode erzeugt das Objekt mit einem Konstruktor.
      * Der erhaelt als erstes die initialArgs, gefolgt von den Argumenten der Spezifikation.
      * @param <T> Type des produzierten Objektes.
-     * @param typenameAndArgs String mit einem Klassennamen mit oder ohne Packagepfad, gefolgt von Konstruktorargumenten.
-     * Trenner zwischen Klassennamen und Argumenten sind Doppelpunkte oder Kommas.
-     * @param initialArgs Argumente fuer den Konstruktor.
+     * @param typenameArg String mit einem Klassennamen mit oder ohne Packagepfad, ohne Konstruktorargumenten.
      * @return Ein Objekt vom typ T.
      * @exception ReflectiveOperationException wenn beim Erzeugen des Objektes etwas schief geht.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T make(String typenameAndArgs, Object... initialArgs) throws ReflectiveOperationException {
-        final String[] token = typenameAndArgs.split("[^-\\w\\./;]");
-        String typename = null;
-        final List<Object> arglist = Arrays.asList(initialArgs);
-        for(String arg: token){
-            if(typename == null){
-                typename = arg.replace(File.separatorChar, '.');
-            } else {
-                try {
-                    arglist.add(Integer.parseInt(arg));
-                } catch(NumberFormatException exception) {
-                    arglist.add(arg);
-                }
-            }
-        }
+    public static <T> T make(String typenameArg) throws ReflectiveOperationException {
+        final String[] token = typenameArg.split("[^-\\w\\./;]");
+        final String typename = token[0].replace(File.separatorChar, '.');
         final Class<?> type = Class.forName(typename);
         return (T)Stream.of(type.getDeclaredConstructors())
-            .filter(ctor -> ctor.getParameterTypes().length == arglist.size())
             .peek(ctor -> ctor.setAccessible(true))
             .peek(ctor -> logCtor(ctor))
             .findAny()
             .orElseThrow(IllegalArgumentException::new)
-            .newInstance(arglist.toArray());
+            .newInstance();
     }
     
     /** Protokolliert die Argumente auf der Konsole.
