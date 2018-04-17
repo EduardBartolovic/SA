@@ -27,13 +27,13 @@ public class MyUndercutMain {
         final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.FileReadConnection()";
     
         //final String gameRuleSpecification = args[2];
-        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.DefaultGameRules()";
+//        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.DefaultGameRules()";
 //        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.ChoiceDifferenceGameRule()";
-//        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.PotGameRule()";
+        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.PotGameRule()";
         
         //final String parameterSpecification = args[3];
-//        final String parameterSpecification = "edu.hm.peither_bartolov.a03_undercut.parameter.DefaultParameters()";
-        final String parameterSpecification = "edu.hm.peither_bartolov.a03_undercut.parameter.ShortGameParameters()";
+        final String parameterSpecification = "edu.hm.peither_bartolov.a03_undercut.parameter.DefaultParameters()";
+//        final String parameterSpecification = "edu.hm.peither_bartolov.a03_undercut.parameter.ShortGameParameters()";
 //        final String parameterSpecification = "edu.hm.peither_bartolov.a03_undercut.parameter.InstableParameters()";
         
         final Connection connection = Connection.make(connectionSpecification);

@@ -1,8 +1,8 @@
 package edu.hm.peither_bartolov.a03_undercut.gamerules;
 
 /**
- * Wenn die gewählten Punkte 2 oder mehr auseinander liegen,
- * erhält der Spieler mit der hoeheren Zahl die Summe der Punkte (statt jeder Spieler seine Wahl). 
+ * Wenn die gewaehlten Punkte 2 oder mehr auseinander liegen,
+ * erhaelt der Spieler mit der hoeheren Zahl die Summe der Punkte (statt jeder Spieler seine Wahl). 
  * @author Felix Peither, Eduard Bartolovic
  */
 public class ChoiceDifferenceGameRule implements GameRule{

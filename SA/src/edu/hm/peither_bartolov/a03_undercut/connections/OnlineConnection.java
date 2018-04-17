@@ -12,7 +12,7 @@ import java.util.List;
 
 /**
  * Das Programm oeffnet zu jedem Spieler einen eigenen Socket (Voreinstellung: Ports 2001 und 2002).
- * Es liest Eingaben vom Socket des betreffenden Spielers und schickt Ausgaben wahlweise an einen oder beide Spieler. (Die Spieler können über ein Netzwerk spielen,
+ * Es liest Eingaben vom Socket des betreffenden Spielers und schickt Ausgaben wahlweise an einen oder beide Spieler. (Die Spieler koennen ueber ein Netzwerk spielen,
  * beispielsweise mit einem Telnet-Client. Sie sehen die Wahl des Gegners nicht.) 
  * @author Eduard Bartolovic, Felix Peither
  */

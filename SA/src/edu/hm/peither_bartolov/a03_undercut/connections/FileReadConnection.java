@@ -8,13 +8,12 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import javax.imageio.IIOException;
 
 /**
  * Das Programm liest die Eingaben aus einem Textfile (statt von der Tastatur) 
  * und schreibt die Ausgaben auf ein anderes Textfile (statt auf den Bildschirm).
  * Die voreingestellten Files sind undercut.in.txt und undercut.out.txt, 
- * beide im systemweiten Directory für temporäre Files (Systemproperty java.io.tmpdir). 
+ * beide im systemweiten Directory fuer temporaere Files (Systemproperty java.io.tmpdir). 
  * @author Eduard Bartolovic, Felix Peither
  */
 public class FileReadConnection implements Connection{
