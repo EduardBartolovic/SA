@@ -1,0 +1,4 @@
+hallo,dies,ist,ein
+text,in,csv
+format,\,mit
+kommasetzung
