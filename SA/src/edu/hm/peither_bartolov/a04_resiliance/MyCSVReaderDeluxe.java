@@ -69,18 +69,25 @@ public class MyCSVReaderDeluxe implements CSVReader{
         int commaCounter = 0;                               //keep track how many commas are in one line
         int startOfNextLine = 0;                            //keep track where evry line starts 
         boolean flagForBackslash = false;                   //to remember that the last element was a '\'
+        boolean flagForQuotes = false;
         for (int counter = 0; counter < dataArray.length ; counter++) { 
             final char character = dataArray[counter];
             
-            if(character == '\\'){
+            if(character == '"' ){
+                
+                flagForQuotes = !flagForQuotes; 
+                
+                flagForBackslash = false;
+                
+            }else if(character == '\\' ){
                 
                 flagForBackslash = !flagForBackslash; 
                 
-            }else if(character == ',' && !flagForBackslash){
+            }else if(character == ',' && (!flagForBackslash || !flagForQuotes)){
                 
                 commaCounter++;
                 
-            }else if(character == '\n' && !flagForBackslash) {
+            }else if(character == '\n' && (!flagForBackslash || !flagForQuotes)) {
                 
                 final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 

@@ -442,5 +442,6 @@ public class MyComplexityAnalyzerTest {
         ComplexityAnalyzer analyzer = new MyComplexityAnalyzer().setRootdir(Paths.get(path.toAbsolutePath().toString()+"\\"+"WhileTrue3.class"));
         Map<String, Integer> have = analyzer.analyzeClassfiles();
         assertEquals(Integer.valueOf(3),have.get("WhileTrue3.class"));   
-    }   
+    } 
+    
 }
