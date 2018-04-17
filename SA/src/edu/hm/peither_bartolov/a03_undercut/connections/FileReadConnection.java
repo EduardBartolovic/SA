@@ -76,7 +76,7 @@ public class FileReadConnection implements Connection{
             // does nothing because of the IOException which is thrown if anything goes wrong.
         }
         if (number == null) {
-            throw new IIOException("Not enough numbers in file to finish the game!");
+            throw new IOException("Not enough numbers in file to finish the game!");
         } else if (!chooseRange.contains(choice)) {
             throw new IOException("This: " + number + ". is no valid number!");
         }

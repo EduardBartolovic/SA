@@ -23,13 +23,13 @@ public class MyUndercutMain {
         
         //final String connectionSpecification = args[1];
 //        final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.ConsoleConnection()";
-      final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.OnlineConnection()";
-        //final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.FileReadConnection()";
+//      final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.OnlineConnection()";
+        final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.FileReadConnection()";
     
         //final String gameRuleSpecification = args[2];
-//        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.DefaultGameRules()";
+        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.DefaultGameRules()";
 //        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.ChoiceDifferenceGameRule()";
-        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.PotGameRule()";
+//        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.PotGameRule()";
         
         //final String parameterSpecification = args[3];
 //        final String parameterSpecification = "edu.hm.peither_bartolov.a03_undercut.parameter.DefaultParameters()";
