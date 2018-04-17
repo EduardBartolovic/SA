@@ -15,27 +15,27 @@ public class Factory {
      * Wenn er dort auch nicht existiert, gibt die Methode auf.
      * Die Methode erzeugt das Objekt mit einem Konstruktor.
      * @param <T> Type des produzierten Objektes.
+     * @param clazz Type of the class which will be prodcued.
      * @param typenameArg String mit einem Klassennamen mit oder ohne Packagepfad, ohne Konstruktorargumenten.
      * @return Ein Objekt vom typ T.
      * @exception ReflectiveOperationException wenn beim Erzeugen des Objektes etwas schief geht.
      */
     @SuppressWarnings("unchecked")
-    public static <T> T make(String typenameArg) throws ReflectiveOperationException {
+    public static <T> T make(Class<T> clazz ,String typenameArg) throws ReflectiveOperationException {
         final String[] token = typenameArg.split("[^-\\w\\./;]");
         final String typename = token[0].replace(File.separatorChar, '.');
         final Class<?> type = Class.forName(typename);
-        return (T)Stream.of(type.getDeclaredConstructors())
+        return clazz.cast(Stream.of(type.getDeclaredConstructors())
             .filter(ctor -> ctor.getParameterTypes().length == 0)
             .peek(ctor -> ctor.setAccessible(true))
             .peek(ctor -> logCtor(ctor))
             .findAny()
             .orElseThrow(IllegalArgumentException::new)
-            .newInstance();
+            .newInstance());
     }
     
     /** Protokolliert die Argumente auf der Konsole.
      * @param constructor Konstruktor.
-     * @param arglist Argumente.
      */
     private static void logCtor(Constructor<?> constructor) {
             System.out.printf("make: %s %n",

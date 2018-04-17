@@ -1,4 +1,6 @@
-package kiss;
+
+package edu.hm.software_architektur.a04_csvdeluxe;
+
 
 import edu.hm.peither_bartolov.a04_resiliance.MyCSVReaderDeluxe;
 import java.io.FileReader;
@@ -15,7 +17,7 @@ import org.junit.Test;
 public class MyCSVReaderDeluxeTest {
     
 //    public static final String LOCATION = "C:\\Users\\Computer\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
-    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\edu\\hm\\software_architektur\\a04_csvdeluxe";
+    public static final String LOCATION = "C:\\Users\\Edo\\Documents\\NetBeansProjects\\SA\\SA\\test\\edu\\hm\\software_architektur\\a04_csvdeluxe\\";
 //    public static final String LOCATION = "C:\\Users\\Eduard\\Documents\\NetBeansProjects\\SA\\SA\\test\\kiss\\";
     
     public static final String FILE1 = LOCATION+"CSVTestFile1.txt";

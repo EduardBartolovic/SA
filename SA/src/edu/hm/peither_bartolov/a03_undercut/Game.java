@@ -17,7 +17,7 @@ public interface Game {
      * @throws ReflectiveOperationException 
      */
     static Game make(String specification) throws ReflectiveOperationException {
-        return Factory.<Game>make(specification);
+        return Factory.<Game>make(Game.class, specification);
     }
     
     /**

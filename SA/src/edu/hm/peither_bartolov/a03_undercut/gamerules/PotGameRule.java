@@ -10,6 +10,10 @@ package edu.hm.peither_bartolov.a03_undercut.gamerules;
 public class PotGameRule implements GameRule{
 
     /**
+     * after 3 same choices the game will end in tie.
+     */
+    public static final int ABORTCRITERIA = 3;
+    /**
      * counter to see if answers where the same over multiple rounds.
      */
     private int repeatedAnswerSame;
@@ -36,7 +40,7 @@ public class PotGameRule implements GameRule{
         
         int[] scores = new int[2]; // on position 0 is player A on 1 is player B
         
-        if(repeatedAnswerSame > 3){ // when both users took the same number 4 times then tie
+        if(repeatedAnswerSame > ABORTCRITERIA){ // when both users took the same number 4 times then tie
             scores[0] = -1;
         }else{
             scores = getScores(playerAChoice, playerBChoice); 

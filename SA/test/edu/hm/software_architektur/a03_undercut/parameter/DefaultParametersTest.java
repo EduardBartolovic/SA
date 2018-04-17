@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package edu.hm.software_architektur.a03_undercut.parameter;
 
 import edu.hm.peither_bartolov.a03_undercut.parameter.DefaultParameters;

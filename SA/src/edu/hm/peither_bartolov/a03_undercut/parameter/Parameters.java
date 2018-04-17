@@ -16,7 +16,7 @@ public interface Parameters {
      * @throws ReflectiveOperationException 
      */
     static Parameters make(String specification) throws ReflectiveOperationException {
-        return Factory.<Parameters>make(specification);
+        return Factory.<Parameters>make(Parameters.class,specification);
     }
     
     /**

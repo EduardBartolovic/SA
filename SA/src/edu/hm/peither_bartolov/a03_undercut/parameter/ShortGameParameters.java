@@ -5,8 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Kurzes Spiel mit Wahlmoeglichkeiten 1−3 (statt 1−5) und Sieg mit 12 Punkten (statt 40). 
- * @author Edo
+ * Kurzes Spiel mit Wahlmoeglichkeiten 1-3 (statt 1-5) und Sieg mit 12 Punkten (statt 40). 
+ * @author Eduard
  */
 public class ShortGameParameters implements Parameters{
 
@@ -22,6 +22,10 @@ public class ShortGameParameters implements Parameters{
      * lowerchooserange.
      */
     public static final int LOWERCHOOSE = 1;
+    /**
+     * the chooseRange.
+     */
+    public static final List<Integer> CHOOSERANGE = Arrays.asList(1,2,3);
 
     @Override
     public int getScoreToWin() {
@@ -30,7 +34,7 @@ public class ShortGameParameters implements Parameters{
 
     @Override
     public List<Integer> getChooseRange() {
-        return Collections.unmodifiableList(Arrays.asList(1,2,3));
+        return Collections.unmodifiableList(CHOOSERANGE);
     }
     
 }

@@ -83,11 +83,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 
                 flagForBackslash = !flagForBackslash; 
                 
-            }else if(character == ',' && (!flagForBackslash || !flagForQuotes)){
+            }else if(character == ',' && !flagForBackslash ){
                 
                 commaCounter++;
                 
-            }else if(character == '\n' && (!flagForBackslash || !flagForQuotes)) {
+            }else if(character == '\n' && !flagForBackslash) {
                 
                 final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 

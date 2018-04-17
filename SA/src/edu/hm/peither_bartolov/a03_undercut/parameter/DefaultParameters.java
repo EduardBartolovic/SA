@@ -16,6 +16,11 @@ public class DefaultParameters implements Parameters{
      */
     public static final int SCORETOWIN = 40;
     
+    /**
+     * the chooserange.
+     */
+    private static final List<Integer> CHOOSERANGE = Arrays.asList(1,2,3,4,5);
+    
     @Override
     public int getScoreToWin() {
         return SCORETOWIN;
@@ -23,7 +28,7 @@ public class DefaultParameters implements Parameters{
 
     @Override
     public List<Integer> getChooseRange () {
-        return Collections.unmodifiableList(Arrays.asList(1,2,3,4,5));
+        return Collections.unmodifiableList(CHOOSERANGE);
     }
 
 

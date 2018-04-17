@@ -6,10 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Instabiles Spiel mit in jeder Runde reihum wechselnden Wahlmoeglichkeiten 1−4, 2−5, 1/3/5.
- * Spieler A beginnt mit 1−4, Spieler B mit 2−5.
+ * Instabiles Spiel mit in jeder Runde reihum wechselnden Wahlmoeglichkeiten 1-4, 2-5, 1/3/5.
+ * Spieler A beginnt mit 1-4, Spieler B mit 2-5.
  * Das Spiel endet, sobald ein Spieler 42 Punkte erreicht. 
- * @author Edo
+ * @author Eduard
  */
 public class InstableParameters implements Parameters{
     /**

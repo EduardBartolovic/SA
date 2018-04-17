@@ -17,7 +17,7 @@ public interface Connection {
      * @throws ReflectiveOperationException 
      */
     static Connection make(String specification) throws ReflectiveOperationException {
-        return Factory.<Connection>make(specification);
+        return Factory.<Connection>make(Connection.class, specification);
     }
     
     /**

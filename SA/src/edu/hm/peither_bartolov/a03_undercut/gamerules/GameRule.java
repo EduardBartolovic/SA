@@ -15,7 +15,7 @@ public interface GameRule {
      * @throws ReflectiveOperationException 
      */
     static GameRule make(String specification) throws ReflectiveOperationException {
-        return Factory.<GameRule>make(specification);
+        return Factory.<GameRule>make(GameRule.class,specification);
     }
     
     /**

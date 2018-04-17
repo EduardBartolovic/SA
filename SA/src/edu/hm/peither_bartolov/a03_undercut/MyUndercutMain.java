@@ -22,9 +22,9 @@ public class MyUndercutMain {
         final String gameSpecification = "edu.hm.peither_bartolov.a03_undercut.MyGame()";
         
         //final String connectionSpecification = args[1];
-//        final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.ConsoleConnection()";
+        final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.ConsoleConnection()";
 //      final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.OnlineConnection()";
-        final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.FileReadConnection()";
+//        final String connectionSpecification = "edu.hm.peither_bartolov.a03_undercut.connections.FileReadConnection()";
     
         //final String gameRuleSpecification = args[2];
 //        final String gameRuleSpecification = "edu.hm.peither_bartolov.a03_undercut.gamerules.DefaultGameRules()";
