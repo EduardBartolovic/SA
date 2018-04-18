@@ -148,6 +148,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
         cellCounter = 0;    
         int startOfNextLine = 0;
         int backslashCount = 0;
+        int quotesCount = 0;
         boolean flagForBackslash = false;
         boolean flagForQuotes = false;
         for (int counter = 0; counter < line.length ; counter++) {
@@ -155,6 +156,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
             
             if(character == '"'){
                 flagForQuotes = !flagForQuotes;
+                if(!flagForQuotes)
+                    quotesCount++;
             }else if(character == '\\' && !flagForQuotes){
                 
                 if (!flagForBackslash)              // only counting doublebackslash once
@@ -168,7 +171,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
-                csvLine[cellCounter] = new String(removeBackSlashes(word, backslashCount));
+                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word, backslashCount),quotesCount));
                                 
                 cellCounter++;
                 flagForBackslash = false;
@@ -249,32 +252,33 @@ public class MyCSVReaderDeluxe implements CSVReader{
     return result;
     }
     
-    public char[] removeQuotes(char[] original) {
-        char[] result = new char[original.length];
-        boolean flagForFirstQuote = false;
-        boolean flagForEndQuote = false;
+    public char[] removeQuotes(char[] original, int quoteCount) {
+        if(original[0] != '"')
+            return original;
+        
+        if(original[original.length-1] != '"')
+            throw new IllegalArgumentException("quotes are not correct");
+        
+        char[] result = new char[original.length-quoteCount]; // here is the Error in quounte Count
+        
+        boolean flagForDoubleQuotes = false;
         int resultIndex = 0;
-        int originalIndex = 0;
-        if (original[0] != '"') {
-        result = original;
-        } else {
-            for (Character letter: original) {
-                if (letter == '"') {
-                    flagForFirstQuote = true;
-                } else if (letter == '"' && flagForFirstQuote) {
-                    flagForEndQuote = true;
-                } else if (letter == '"' && flagForEndQuote) {
-                    result[resultIndex] = '"';
-                    resultIndex++;
-                    flagForEndQuote = false;
-                } else if (letter != ',' || letter != '\n' && flagForEndQuote) {
-                    throw new IllegalArgumentException("word does not end correctly");
-                } else {
-                    result[resultIndex] = letter;
-                    resultIndex++;
-                }
+        for (int counter = 1 ; counter < original.length-1; counter++) {
+            final char letter = original[counter];
+            
+            if (flagForDoubleQuotes) {
+                result[resultIndex] = letter;
+                resultIndex++;
+                flagForDoubleQuotes = false;
+            } else if (letter == '"'){
+                flagForDoubleQuotes = true;
+            } else {
+                result[resultIndex] = letter;
+                resultIndex++;
+                flagForDoubleQuotes = false;
             }
         }
+        
         return result;
     }
 }

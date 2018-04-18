@@ -483,7 +483,7 @@ public class MyCSVReaderDeluxeTest {
     
     
     
-    @Test//(timeout = 1000)
+    @Test(timeout = 1000)
     public void testStuff40() throws IOException {
         final String sut = "Abra,\"ka\",dabra\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
