@@ -277,6 +277,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 resultIndex++;
                 flagForDoubleQuotes = false;
                 flagForFirstQuote = false;
+            } else if (letter == '\n' && flagForFirstQuote && !flagForDoubleQuotes) {
+                
             } else {
                 result[resultIndex] = letter;
                 resultIndex++;
