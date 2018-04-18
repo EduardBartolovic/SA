@@ -568,16 +568,16 @@ public class MyCSVReaderDeluxeTest {
     public void testStuff50() throws IOException {
         final String sut = "\"\"\"\"\"\"\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
-        final String[][] expResult = new String[][]{ new String[]{"\"\"\""} };
+        final String[][] expResult = new String[][]{ new String[]{"\"\""} };
        
         Assert.assertArrayEquals(expResult, result);
     }
     
     @Test(timeout = 1000)
     public void testStuff51() throws IOException {
-        final String sut = "\"\"\"\"\"\"\n\"\\\"\\\"\\\"\\\"\\\"\\\"\n";
+        final String sut = "\"\"\"\"\"\"\n\"\"\"\"\"\"\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
-        final String[][] expResult = new String[][]{ new String[]{"\"\"\""},new String[]{"\"\"\""} };
+        final String[][] expResult = new String[][]{ new String[]{"\"\""},new String[]{"\"\""} };
        
         Assert.assertArrayEquals(expResult, result);
     }

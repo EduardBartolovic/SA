@@ -4,6 +4,8 @@ import edu.hm.cs.rs.arch.a01_kiss.CSVReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Diese Klasse konvertiert Text im CSV Format in ein 
@@ -76,7 +78,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
             if(character == '"' ){
                 
                 flagForQuotes = !flagForQuotes;
-//                flagForBackslash = false;
                 
             }else if(character == '\\' ){
                 
@@ -85,7 +86,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
             }else if(character == ',' && !flagForBackslash && !flagForQuotes){
                 
                 commaCounter++;
-//                flagForBackslash = false;
                 
             }else if(character == '\n' && !flagForBackslash && !flagForQuotes) {
                 
@@ -154,11 +154,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
         for (int counter = 0; counter < line.length ; counter++) {
             final char character = line[counter];
             
-//            if(character == '"'){
-//                flagForQuotes = !flagForQuotes;
-//                if(!flagForQuotes)
-//                    quotesCount++;
-            if(character == '\\' && !flagForQuotes){
+            if(character == '"'){
+                flagForQuotes = !flagForQuotes;
+                
+            } else if(character == '\\' && !flagForQuotes){
                 
                 if (!flagForBackslash)              // only counting doublebackslash once
                     backslashCount++;
@@ -255,41 +254,39 @@ public class MyCSVReaderDeluxe implements CSVReader{
     
     public char[] removeQuotes(char[] original) {
         
-        char[] result = new char[original.length]; // here is the Error in quounte Count
+       if(original.length == 0)
+           return original;
         
-        boolean flagForFirstQuote = false;
-        boolean flagForDoubleQuotes = false;
-        int resultIndex = 0;
+        if(original[0] != '"')
+            return original;
         
-        for (int originalIndex = 0; originalIndex < original.length; originalIndex++) {
+        List<Character> result = new ArrayList<>();
+        
+        boolean flagForQuote = false;
+        
+        for (int originalIndex = 1; originalIndex < original.length-1; originalIndex++) {
             final char letter = original[originalIndex];
-            if (letter == '"' && !flagForFirstQuote && !flagForDoubleQuotes) {
-                flagForFirstQuote = true;
-            } else if (letter == '"' && flagForFirstQuote && !flagForDoubleQuotes) {
-                flagForDoubleQuotes = true;
-            } else if (letter == '"' && flagForDoubleQuotes) {
-                flagForDoubleQuotes = false;
-                result[resultIndex] = letter;
-                resultIndex++;
-            } else if ((letter != ',' && letter != '\n') && flagForDoubleQuotes) { 
-                throw new IllegalArgumentException("A word in quotes does not end right.");
-            } else if ((letter == ',' || letter == '\n') && flagForDoubleQuotes) {
-                result[resultIndex] = letter;
-                resultIndex++;
-                flagForDoubleQuotes = false;
-                flagForFirstQuote = false;
-            } else if (letter == '\n' && flagForFirstQuote && !flagForDoubleQuotes) {
-                
-            } else {
-                result[resultIndex] = letter;
-                resultIndex++;
+            
+            if(letter == '"' && flagForQuote){
+                flagForQuote = false;
+                result.add(letter);
+            }else if(letter == '"'){
+                flagForQuote = true;
+            }else{
+                result.add(letter);
             }
+            
         }
         
-        char[] retArr = new char[resultIndex + 1];
-        System.arraycopy(result, 0, retArr, 0, resultIndex);
+        if(original[original.length-1] != '"')
+            throw new IllegalArgumentException();
         
-        return retArr;
+        
+        final char[] returnValue = new char[result.size()];
+        for(int counter = 0; counter < returnValue.length ; counter++)
+            returnValue[counter] = result.get(counter);
+        
+        return returnValue;
     }
 }
 
