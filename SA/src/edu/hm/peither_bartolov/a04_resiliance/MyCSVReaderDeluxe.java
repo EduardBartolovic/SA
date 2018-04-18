@@ -248,5 +248,34 @@ public class MyCSVReaderDeluxe implements CSVReader{
     
     return result;
     }
+    
+    public char[] removeQuotes(char[] original) {
+        char[] result = new char[original.length];
+        boolean flagForFirstQuote = false;
+        boolean flagForEndQuote = false;
+        int resultIndex = 0;
+        int originalIndex = 0;
+        if (original[0] != '"') {
+        result = original;
+        } else {
+            for (Character letter: original) {
+                if (letter == '"') {
+                    flagForFirstQuote = true;
+                } else if (letter == '"' && flagForFirstQuote) {
+                    flagForEndQuote = true;
+                } else if (letter == '"' && flagForEndQuote) {
+                    result[resultIndex] = '"';
+                    resultIndex++;
+                    flagForEndQuote = false;
+                } else if (letter != ',' || letter != '\n' && flagForEndQuote) {
+                    throw new IllegalArgumentException("word does not end correctly");
+                } else {
+                    result[resultIndex] = letter;
+                    resultIndex++;
+                }
+            }
+        }
+        return result;
+    }
 }
 
