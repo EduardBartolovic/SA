@@ -483,11 +483,11 @@ public class MyCSVReaderDeluxeTest {
     
     
     
-    @Test(timeout = 1000)
+    @Test//(timeout = 1000)
     public void testStuff40() throws IOException {
         final String sut = "Abra,\"ka\",dabra\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
-        final String[][] expResult = new String[][]{ new String[]{"Abra","\"ka\"","dabra"} };
+        final String[][] expResult = new String[][]{ new String[]{"Abra","ka","dabra"} };
        
         Assert.assertArrayEquals(expResult, result);
     }
@@ -510,19 +510,19 @@ public class MyCSVReaderDeluxeTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    @Test(timeout = 1000 , expected = Exception.class )
+    @Test(timeout = 1000 , expected = IllegalArgumentException.class )
     public void testStuff43() throws IOException {
         final String sut = "Abra,\"ka\"dabra\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
     }
     
-    @Test(timeout = 1000 , expected = Exception.class )
+    @Test(timeout = 1000 , expected = IllegalArgumentException.class )
     public void testStuff44() throws IOException {
         final String sut = "Abra,\"ka\\\"dabra\"\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
     }
     
-    @Test(timeout = 1000 , expected = Exception.class )
+    @Test(timeout = 1000 , expected = IllegalArgumentException.class )
     public void testStuff45() throws IOException {
         final String sut = "Abra,\"kadabra\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
@@ -562,6 +562,29 @@ public class MyCSVReaderDeluxeTest {
         final String[][] expResult = new String[][]{ new String[]{""} };
        
         Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff50() throws IOException {
+        final String sut = "\"\"\"\"\"\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"\"\"\""} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff51() throws IOException {
+        final String sut = "\"\"\"\"\"\"\n\"\\\"\\\"\\\"\\\"\\\"\\\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"\"\"\""},new String[]{"\"\"\""} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    @Test(timeout = 1000, expected = IllegalArgumentException.class)
+    public void testStuff52() throws IOException {
+        final String sut = "\"\"a\n\"\\\"\\\"\\\"\\\"\\\"\\\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
     }
     
     
