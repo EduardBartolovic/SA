@@ -247,6 +247,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
     return result;
     }
     
+    /**
+     * removing all neccesary quotes from array.
+     * @param original char array
+     * @return result char array
+     */
     public char[] removeQuotes(char[] original) {
         
        if(original.length == 0)
@@ -255,15 +260,12 @@ public class MyCSVReaderDeluxe implements CSVReader{
         if(original[0] != '"')
             return original;
         
-        
         final char[] resultArray = new char[original.length-countQuotes(original)]; 
         
         boolean flagForQuote = false;
-        
         int counter = 0;
         for (int originalIndex = 1; originalIndex < original.length-1; originalIndex++) {
             final char letter = original[originalIndex];
-            
             if(letter == '"' && flagForQuote){
                 flagForQuote = false;
                 resultArray[counter] = letter;
@@ -274,7 +276,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 resultArray[counter] = letter;
                 counter++;
             }
-            
         }
         
         if(original[original.length-1] != '"')
@@ -283,12 +284,17 @@ public class MyCSVReaderDeluxe implements CSVReader{
         return resultArray;
     }
     
+    /**
+     * counting all quotes from array.
+     * @param original char array
+     * @return count int 
+     */
     private int countQuotes(char[] original) {
         int count = 2;
         boolean flag = false;
         for(int counter = 1 ; counter < original.length-1 ; counter++){
             char letter = original[counter];
-            if(letter == '"'){ // possible error if '"' is behind a \
+            if(letter == '"'){ // possible error if '"' is behind a \  or two " are more behind each other
                 if(flag)
                     count++;
                 
