@@ -75,19 +75,19 @@ public class MyCSVReaderDeluxe implements CSVReader{
             
             if(character == '"' ){
                 
-                flagForQuotes = !flagForQuotes; 
-                
-                flagForBackslash = false;
+                flagForQuotes = !flagForQuotes;
+//                flagForBackslash = false;
                 
             }else if(character == '\\' ){
                 
                 flagForBackslash = !flagForBackslash; 
                 
-            }else if(character == ',' && !flagForBackslash ){
+            }else if(character == ',' && !flagForBackslash && !flagForQuotes){
                 
                 commaCounter++;
+//                flagForBackslash = false;
                 
-            }else if(character == '\n' && !flagForBackslash) {
+            }else if(character == '\n' && !flagForBackslash && !flagForQuotes) {
                 
                 final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
@@ -149,17 +149,20 @@ public class MyCSVReaderDeluxe implements CSVReader{
         int startOfNextLine = 0;
         int backslashCount = 0;
         boolean flagForBackslash = false;
+        boolean flagForQuotes = false;
         for (int counter = 0; counter < line.length ; counter++) {
             final char character = line[counter];
             
-            if(character == '\\'){
+            if(character == '"'){
+                flagForQuotes = !flagForQuotes;
+            }else if(character == '\\' && !flagForQuotes){
                 
                 if (!flagForBackslash)              // only counting doublebackslash once
                     backslashCount++;
                 
                 flagForBackslash = !flagForBackslash;
 
-            }else if(character == ',' && !flagForBackslash) {
+            }else if(character == ',' && !flagForBackslash && !flagForQuotes) {
                 
                 final char[] word =  new char[counter - startOfNextLine ]; 
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
@@ -189,13 +192,18 @@ public class MyCSVReaderDeluxe implements CSVReader{
         int numberOfLines = 0;
         boolean flagForBackslash = false;
         boolean flagForEndLine = false;
+        boolean flagForQuotes = false;
         for(char letter : allData){
             
-            if(letter == '\\'){
+            if(letter == '"' && !flagForBackslash){
+                flagForQuotes = !flagForQuotes;
+                flagForBackslash = false;
+            } else if(letter == '\\' && !flagForQuotes){
                 flagForBackslash = !flagForBackslash;
                 flagForEndLine = false;
-            } else if(letter == '\n' && !flagForBackslash){
+            } else if(letter == '\n' && !flagForBackslash && !flagForQuotes){
                 numberOfLines++;
+                flagForBackslash = false;
                 flagForEndLine = true;
             }else if(letter == 0){
                 flagForBackslash = false;
