@@ -154,11 +154,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
         for (int counter = 0; counter < line.length ; counter++) {
             final char character = line[counter];
             
-            if(character == '"'){
-                flagForQuotes = !flagForQuotes;
-                if(!flagForQuotes)
-                    quotesCount++;
-            }else if(character == '\\' && !flagForQuotes){
+//            if(character == '"'){
+//                flagForQuotes = !flagForQuotes;
+//                if(!flagForQuotes)
+//                    quotesCount++;
+            if(character == '\\' && !flagForQuotes){
                 
                 if (!flagForBackslash)              // only counting doublebackslash once
                     backslashCount++;
@@ -171,7 +171,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
-                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word, backslashCount),quotesCount));
+                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word, backslashCount)));
+//                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(line, backslashCount)));
                                 
                 cellCounter++;
                 flagForBackslash = false;
@@ -252,9 +253,9 @@ public class MyCSVReaderDeluxe implements CSVReader{
     return result;
     }
     
-    public char[] removeQuotes(char[] original, int quoteCount) {
+    public char[] removeQuotes(char[] original) {
         
-        char[] result = new char[original.length-quoteCount]; // here is the Error in quounte Count
+        char[] result = new char[original.length]; // here is the Error in quounte Count
         
         boolean flagForFirstQuote = false;
         boolean flagForDoubleQuotes = false;
@@ -285,7 +286,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
             }
         }
         
-        return result;
+        char[] retArr = new char[resultIndex + 1];
+        System.arraycopy(result, 0, retArr, 0, resultIndex);
+        
+        return retArr;
     }
 }
 
