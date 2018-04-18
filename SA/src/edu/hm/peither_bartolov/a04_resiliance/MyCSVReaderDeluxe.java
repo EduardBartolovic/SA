@@ -148,7 +148,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
         cellCounter = 0;    
         int startOfNextLine = 0;
         int backslashCount = 0;
-        int quotesCount = 0;
         boolean flagForBackslash = false;
         boolean flagForQuotes = false;
         for (int counter = 0; counter < line.length ; counter++) {
@@ -156,7 +155,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
             
             if(character == '"'){
                 flagForQuotes = !flagForQuotes;
-                
             } else if(character == '\\' && !flagForQuotes){
                 
                 if (!flagForBackslash)              // only counting doublebackslash once
@@ -171,7 +169,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 startOfNextLine = counter+1;
                 
                 csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word, backslashCount)));
-//                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(line, backslashCount)));
                                 
                 cellCounter++;
                 flagForBackslash = false;
@@ -286,7 +283,24 @@ public class MyCSVReaderDeluxe implements CSVReader{
         for(int counter = 0; counter < returnValue.length ; counter++)
             returnValue[counter] = result.get(counter);
         
+        if(returnValue.length != (original.length-countQuotes(original)) )
+            throw new IllegalArgumentException("++" + returnValue.length+"+++++ "+(countQuotes(original)));
         return returnValue;
+    }
+    
+    private int countQuotes(char[] original) {
+        int count = 2;
+        boolean flag = false;
+        for(char letter : original){
+            
+            if(letter == '"'){
+                if(flag)
+                    count++;
+                
+                flag = !flag;
+            }
+        }
+        return count;
     }
 }
 
