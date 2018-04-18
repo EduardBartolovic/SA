@@ -253,29 +253,33 @@ public class MyCSVReaderDeluxe implements CSVReader{
     }
     
     public char[] removeQuotes(char[] original, int quoteCount) {
-        if(original[0] != '"')
-            return original;
-        
-        if(original[original.length-1] != '"')
-            throw new IllegalArgumentException("quotes are not correct");
         
         char[] result = new char[original.length-quoteCount]; // here is the Error in quounte Count
         
+        boolean flagForFirstQuote = false;
         boolean flagForDoubleQuotes = false;
         int resultIndex = 0;
-        for (int counter = 1 ; counter < original.length-1; counter++) {
-            final char letter = original[counter];
-            
-            if (flagForDoubleQuotes) {
+        
+        for (int originalIndex = 0; originalIndex < original.length; originalIndex++) {
+            final char letter = original[originalIndex];
+            if (letter == '"' && !flagForFirstQuote && !flagForDoubleQuotes) {
+                flagForFirstQuote = true;
+            } else if (letter == '"' && flagForFirstQuote && !flagForDoubleQuotes) {
+                flagForDoubleQuotes = true;
+            } else if (letter == '"' && flagForDoubleQuotes) {
+                flagForDoubleQuotes = false;
+                result[resultIndex] = letter;
+                resultIndex++;
+            } else if ((letter != ',' && letter != '\n') && flagForDoubleQuotes) { 
+                throw new IllegalArgumentException("A word in quotes does not end right.");
+            } else if ((letter == ',' || letter == '\n') && flagForDoubleQuotes) {
                 result[resultIndex] = letter;
                 resultIndex++;
                 flagForDoubleQuotes = false;
-            } else if (letter == '"'){
-                flagForDoubleQuotes = true;
+                flagForFirstQuote = false;
             } else {
                 result[resultIndex] = letter;
                 resultIndex++;
-                flagForDoubleQuotes = false;
             }
         }
         
