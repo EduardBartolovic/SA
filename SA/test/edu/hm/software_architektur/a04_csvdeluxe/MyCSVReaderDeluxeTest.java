@@ -449,17 +449,120 @@ public class MyCSVReaderDeluxeTest {
  
     }
     
-        @Test(timeout = 1000)
+    @Test(timeout = 1000)
     public void testStuff37() throws IOException {
         final String sut = "a\n\\,b                               \n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
  
     }
     
-    @Test//(timeout = 1000)
+    @Test(timeout = 1000)
     public void testStuff38() throws IOException {
         final Reader reader = new FileReader(FILE20);
         final MyCSVReaderDeluxe sut = new MyCSVReaderDeluxe();
         final String[][] result = sut.read(reader);
     }
+    
+    
+    @Test(timeout = 1000)
+    public void testStuff39() throws IOException {
+        final String sut = "Hallo\\,\\,\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        
+        final String[][] expResult = new String[][]{
+            new String[]{"Hallo,,"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    
+    //Deluxe part+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+    
+    
+    
+    
+    
+    
+    @Test(timeout = 1000)
+    public void testStuff40() throws IOException {
+        final String sut = "Abra,\"ka\",dabra\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"Abra","\"ka\"","dabra"} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test//(timeout = 1000)
+    public void testStuff41() throws IOException {
+        final String sut = "Abra,\"ka,dabra\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"Abra","ka,dabra"} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff42() throws IOException {
+        final String sut = "Abra,\"ka\ndabra\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"Abra","ka\ndabra"} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000 , expected = Exception.class )
+    public void testStuff43() throws IOException {
+        final String sut = "Abra,\"ka\"dabra\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+    }
+    
+    @Test(timeout = 1000 , expected = Exception.class )
+    public void testStuff44() throws IOException {
+        final String sut = "Abra,\"ka\\\"dabra\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+    }
+    
+    @Test(timeout = 1000 , expected = Exception.class )
+    public void testStuff45() throws IOException {
+        final String sut = "Abra,\"kadabra\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff46() throws IOException {
+        final String sut = "Abra,\"ka\"\"da\"\"bra\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"Abra","ka\"da\"bra"} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff47() throws IOException {
+        final String sut = "\"x\"\"\",\"\"\"\"\"\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"x\"","\"\""} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff48() throws IOException {
+        final String sut = "\"\",\"\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"",""} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    @Test(timeout = 1000)
+    public void testStuff49() throws IOException {
+        final String sut = "\"\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{""} };
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
+    
+    
 }
