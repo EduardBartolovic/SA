@@ -101,7 +101,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
             } 
             
         }
-
         
         return csvText;
     }
@@ -125,7 +124,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
         final char[] trimmedLine = new char[endOfLine];
         System.arraycopy(line, 0, trimmedLine, 0, endOfLine);
         
-       
         return !new String(trimmedLine).isEmpty();
     }
     
@@ -144,7 +142,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
         final String[] csvLine = new String[cellCounter];
         cellCounter = 0;    
         int startOfNextLine = 0;
-        int backslashCount = 0;
         boolean flagForBackslash = false;
         boolean flagForQuotes = false;
         for (int counter = 0; counter < line.length ; counter++) {
@@ -152,10 +149,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
             
             if(character == '"'){
                 flagForQuotes = !flagForQuotes;
-            } else if(character == '\\' && !flagForQuotes){
-                
-                if (!flagForBackslash)              // only counting doublebackslash once
-                    backslashCount++;
+            } else if(flagChecker(character,'\\',flagForQuotes,false)){
                 
                 flagForBackslash = !flagForBackslash;
 
@@ -165,11 +159,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
                 startOfNextLine = counter+1;
                 
-                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word, backslashCount)));
+                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word)));
                                 
                 cellCounter++;
                 flagForBackslash = false;
-                backslashCount = 0;
             }else{
                 flagForBackslash = false;
             } 
@@ -221,11 +214,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * Removes all anacceptable backslashes from a word.
      * 
      * @param original the original word
-     * @param backslashCount how many '\' to remove from a word
      * @return A word without backslashes
      */
-    public char[] removeBackSlashes(char[] original, int backslashCount){
-    final char[] result = new char[original.length - backslashCount];
+    public char[] removeBackSlashes(char... original){    
+    final char[] result = new char[original.length - countBackSlashes(original)];
     int resultIndex = 0;
     boolean flagForDoubleBackslash = false;
     for (Character letter: original) {
@@ -298,6 +290,27 @@ public class MyCSVReaderDeluxe implements CSVReader{
                     count++;
                 
                 flag = !flag;
+            }
+        }
+        return count;
+    }
+    
+    /**
+     * counting all backSlashes from array.
+     * @param original char array
+     * @return count int 
+     */
+    private int countBackSlashes(char... original) {
+        int count = 0;
+        boolean flag = false;
+        for(char letter : original){
+            if(letter == '\\'){
+                 if (!flag)              // only counting doublebackslash once
+                    count++;
+                
+                flag = !flag;
+            }else{
+                flag = false;
             }
         }
         return count;

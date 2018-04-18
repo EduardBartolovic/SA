@@ -584,12 +584,10 @@ public class MyCSVReaderDeluxeTest {
     @Test(timeout = 1000, expected = IllegalArgumentException.class)
     public void testStuff52() throws IOException {
         final String sut = "\"\"a\n\"\\\"\\\"\\\"\\\"\\\"\\\"\n";
-        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        new MyCSVReaderDeluxe().read(new StringReader(sut));
     }
     
-    
-    
-    @Test(timeout = 1000, expected = IllegalArgumentException.class)
+    @Test(timeout = 1000)
     public void testStuff53() throws IOException {
         final String sut = "Abra,\"ka\\dabra\"\n";
         final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
@@ -597,4 +595,7 @@ public class MyCSVReaderDeluxeTest {
        
         Assert.assertArrayEquals(expResult, result);
     }
+    
+    
+    
 }
