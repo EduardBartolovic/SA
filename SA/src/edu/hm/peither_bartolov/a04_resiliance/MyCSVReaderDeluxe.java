@@ -61,8 +61,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * @return gefuelltes String[][] Array
      */
     private String[][] fillLines(char[] dataArray, int heightCounter) {
-        
-        
+
         // allokate a big enough outer array
         final String[][] csvText = new String[heightCounter][0]; 
         int lineCounter = 0;                                //to keep track which line needs to be filled
@@ -81,11 +80,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 
                 flagForBackslash = !flagForBackslash; 
                 
-            }else if(character == ',' && !flagForBackslash && !flagForQuotes){
+            }else if(flagChecker(character,',',flagForBackslash,flagForQuotes)){
                 
                 commaCounter++;
                 
-            }else if(character == '\n' && !flagForBackslash && !flagForQuotes) {
+            }else if(flagChecker(character,'\n',flagForBackslash,flagForQuotes)){
                 
                 final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
                 System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
@@ -160,7 +159,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 
                 flagForBackslash = !flagForBackslash;
 
-            }else if(character == ',' && !flagForBackslash && !flagForQuotes) {
+            }else if(flagChecker(character,',',flagForBackslash,flagForQuotes)){
                 
                 final char[] word =  new char[counter - startOfNextLine ]; 
                 System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
@@ -193,17 +192,17 @@ public class MyCSVReaderDeluxe implements CSVReader{
         boolean flagForQuotes = false;
         for(char letter : allData){
             
-            if(letter == '"' && !flagForBackslash){
+            if(letter == '"'){
                 flagForQuotes = !flagForQuotes;
                 flagForBackslash = false;
-            } else if(letter == '\\' && !flagForQuotes){
+            } else if(flagChecker(letter,'\\',flagForQuotes,false)){
                 flagForBackslash = !flagForBackslash;
                 flagForEndLine = false;
-            } else if(letter == '\n' && !flagForBackslash && !flagForQuotes){
+            } else if(flagChecker(letter,'\n',flagForBackslash,flagForQuotes)){
                 numberOfLines++;
                 flagForBackslash = false;
                 flagForEndLine = true;
-            }else if(letter == 0){
+            } else if(letter == 0){
                 flagForBackslash = false;
             } else {
                 flagForBackslash = false;
@@ -252,7 +251,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * @param original char array
      * @return result char array
      */
-    public char[] removeQuotes(char[] original) {
+    public char[] removeQuotes(char... original) {
         
        if(original.length == 0)
            return original;
@@ -289,11 +288,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * @param original char array
      * @return count int 
      */
-    private int countQuotes(char[] original) {
+    private int countQuotes(char... original) {
         int count = 2;
         boolean flag = false;
         for(int counter = 1 ; counter < original.length-1 ; counter++){
-            char letter = original[counter];
+            final char letter = original[counter];
             if(letter == '"'){ // possible error if '"' is behind a \  or two " are more behind each other
                 if(flag)
                     count++;
@@ -302,6 +301,18 @@ public class MyCSVReaderDeluxe implements CSVReader{
             }
         }
         return count;
+    }
+    
+    /**
+     * checking the expression.
+     * @param letterToCheck char
+     * @param character char
+     * @param firstBool bool
+     * @param secBool bool
+     * @return boolean from expression
+     */
+    private boolean flagChecker(char letterToCheck , char character ,boolean firstBool , boolean secBool){
+        return letterToCheck == character && !firstBool && !secBool;
     }
 }
 

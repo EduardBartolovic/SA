@@ -588,5 +588,13 @@ public class MyCSVReaderDeluxeTest {
     }
     
     
-
+    
+    @Test(timeout = 1000, expected = IllegalArgumentException.class)
+    public void testStuff53() throws IOException {
+        final String sut = "Abra,\"ka\\dabra\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{"Abra","ka\\dabra"}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
 }
