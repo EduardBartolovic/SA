@@ -4,8 +4,6 @@ import edu.hm.cs.rs.arch.a01_kiss.CSVReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Diese Klasse konvertiert Text im CSV Format in ein 
@@ -257,43 +255,40 @@ public class MyCSVReaderDeluxe implements CSVReader{
         if(original[0] != '"')
             return original;
         
-        List<Character> result = new ArrayList<>();
+        
+        final char[] resultArray = new char[original.length-countQuotes(original)]; 
         
         boolean flagForQuote = false;
         
+        int counter = 0;
         for (int originalIndex = 1; originalIndex < original.length-1; originalIndex++) {
             final char letter = original[originalIndex];
             
             if(letter == '"' && flagForQuote){
                 flagForQuote = false;
-                result.add(letter);
+                resultArray[counter] = letter;
+                counter++;
             }else if(letter == '"'){
                 flagForQuote = true;
             }else{
-                result.add(letter);
+                resultArray[counter] = letter;
+                counter++;
             }
             
         }
         
         if(original[original.length-1] != '"')
             throw new IllegalArgumentException();
-        
-        
-        final char[] returnValue = new char[result.size()];
-        for(int counter = 0; counter < returnValue.length ; counter++)
-            returnValue[counter] = result.get(counter);
-        
-        if(returnValue.length != (original.length-countQuotes(original)) )
-            throw new IllegalArgumentException("++" + returnValue.length+"+++++ "+(countQuotes(original)));
-        return returnValue;
+
+        return resultArray;
     }
     
     private int countQuotes(char[] original) {
         int count = 2;
         boolean flag = false;
-        for(char letter : original){
-            
-            if(letter == '"'){
+        for(int counter = 1 ; counter < original.length-1 ; counter++){
+            char letter = original[counter];
+            if(letter == '"'){ // possible error if '"' is behind a \
                 if(flag)
                     count++;
                 
