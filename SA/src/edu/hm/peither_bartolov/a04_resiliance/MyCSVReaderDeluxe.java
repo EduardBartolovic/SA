@@ -155,14 +155,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
 
             }else if(flagChecker(character,',',flagForBackslash,flagForQuotes)){
                 
-                final char[] word =  new char[counter - startOfNextLine ]; 
-                System.arraycopy(line, startOfNextLine, word, 0, counter - startOfNextLine );
+                csvLine[cellCounter] = buildWord(line,startOfNextLine,counter);
                 startOfNextLine = counter+1;
-                
-                csvLine[cellCounter] = new String(removeQuotes(removeBackSlashes(word)));
-                                
                 cellCounter++;
                 flagForBackslash = false;
+                
             }else{
                 flagForBackslash = false;
             } 
@@ -170,6 +167,23 @@ public class MyCSVReaderDeluxe implements CSVReader{
         }
         
         return csvLine;
+    }
+    
+    /**
+     * building words.
+     * @param line
+     * @param start
+     * @param end
+     * @return the word modified.
+     */
+    private String buildWord(char[] line, int start, int end){
+        final char[] word =  new char[end-start]; 
+        System.arraycopy(line, start, word, 0, end-start );
+        
+        if(word.length == 0)
+           return new String(word);
+        
+        return removeBackslashAndQuotes(word);
     }
     
     /**
@@ -209,111 +223,44 @@ public class MyCSVReaderDeluxe implements CSVReader{
          return numberOfLines;  
          
     }
-    
-    /**
-     * Removes all anacceptable backslashes from a word.
-     * 
-     * @param original the original word
-     * @return A word without backslashes
-     */
-    public char[] removeBackSlashes(char... original){    
-    final char[] result = new char[original.length - countBackSlashes(original)];
-    int resultIndex = 0;
-    boolean flagForDoubleBackslash = false;
-    for (Character letter: original) {
 
-        if (flagForDoubleBackslash) {
-            result[resultIndex] = letter;
-            resultIndex++;
-            flagForDoubleBackslash = false;
-        } else if (letter == '\\'){
-            flagForDoubleBackslash = true;
-        } else {
-            result[resultIndex] = letter;
-            resultIndex++;
-            flagForDoubleBackslash = false;
+    public String removeBackslashAndQuotes(char... original) {
+        
+        int originalIndex;
+        final int limit;
+        if(original[0] == '"'){
+            if(original[original.length-1] != '"')
+                throw new IllegalArgumentException();
+            originalIndex = 1;
+            limit = original.length-1;
+        }else{
+            originalIndex = 0;
+            limit = original.length;
         }
-    }
-    
-    return result;
-    }
-    
-    /**
-     * removing all neccesary quotes from array.
-     * @param original char array
-     * @return result char array
-     */
-    public char[] removeQuotes(char... original) {
-        
-       if(original.length == 0)
-           return original;
-        
-        if(original[0] != '"')
-            return original;
-        
-        final char[] resultArray = new char[original.length-countQuotes(original)]; 
-        
         boolean flagForQuote = false;
-        int counter = 0;
-        for (int originalIndex = 1; originalIndex < original.length-1; originalIndex++) {
+        boolean flagForBackslash = false;
+        final StringBuilder word = new StringBuilder();        
+        while(originalIndex < limit) {
             final char letter = original[originalIndex];
-            if(letter == '"' && flagForQuote){
+            if (flagForBackslash) {
+                word.append(letter);
+                flagForBackslash = false;
+            } else if (letter == '\\'){
+                flagForBackslash = true;
+            }else if(flagChecker(letter,'"',!flagForQuote,false)){
                 flagForQuote = false;
-                resultArray[counter] = letter;
-                counter++;
+                word.append(letter);
             }else if(letter == '"'){
                 flagForQuote = true;
             }else{
-                resultArray[counter] = letter;
-                counter++;
+                word.append(letter);
+                flagForBackslash = false;
             }
+            
+            originalIndex++;
         }
-        
-        if(original[original.length-1] != '"')
-            throw new IllegalArgumentException();
 
-        return resultArray;
-    }
-    
-    /**
-     * counting all quotes from array.
-     * @param original char array
-     * @return count int 
-     */
-    private int countQuotes(char... original) {
-        int count = 2;
-        boolean flag = false;
-        for(int counter = 1 ; counter < original.length-1 ; counter++){
-            final char letter = original[counter];
-            if(letter == '"'){ // possible error if '"' is behind a \  or two " are more behind each other
-                if(flag)
-                    count++;
-                
-                flag = !flag;
-            }
-        }
-        return count;
-    }
-    
-    /**
-     * counting all backSlashes from array.
-     * @param original char array
-     * @return count int 
-     */
-    private int countBackSlashes(char... original) {
-        int count = 0;
-        boolean flag = false;
-        for(char letter : original){
-            if(letter == '\\'){
-                 if (!flag)              // only counting doublebackslash once
-                    count++;
-                
-                flag = !flag;
-            }else{
-                flag = false;
-            }
-        }
-        return count;
+        return word.toString();
     }
     
     /**
