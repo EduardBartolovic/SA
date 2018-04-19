@@ -171,9 +171,9 @@ public class MyCSVReaderDeluxe implements CSVReader{
     
     /**
      * building words.
-     * @param line
-     * @param start
-     * @param end
+     * @param line line of words
+     * @param start start pos of word
+     * @param end end pos of word
      * @return the word modified.
      */
     private String buildWord(char[] line, int start, int end){
@@ -183,7 +183,19 @@ public class MyCSVReaderDeluxe implements CSVReader{
         if(word.length == 0)
            return new String(word);
         
-        return removeBackslashAndQuotes(word);
+        final int begin;
+        final int limit;
+        if(word[0] == '"'){
+            if(word[word.length-1] != '"')
+                throw new IllegalArgumentException();
+            begin = 1;
+            limit = word.length-1;
+        }else{
+            begin = 0;
+            limit = word.length;
+        }
+        
+        return removeBackslashAndQuotes(begin,limit,word);
     }
     
     /**
@@ -224,23 +236,19 @@ public class MyCSVReaderDeluxe implements CSVReader{
          
     }
 
-    public String removeBackslashAndQuotes(char... original) {
+    /**
+     * removing all backslashes and quotes which are wrong.
+     * @param start start of loop
+     * @param end   end of loop
+     * @param original word to be modified
+     * @return modified word 
+     */
+    public String removeBackslashAndQuotes(int start ,int end ,char... original) {
         
-        int originalIndex;
-        final int limit;
-        if(original[0] == '"'){
-            if(original[original.length-1] != '"')
-                throw new IllegalArgumentException();
-            originalIndex = 1;
-            limit = original.length-1;
-        }else{
-            originalIndex = 0;
-            limit = original.length;
-        }
         boolean flagForQuote = false;
         boolean flagForBackslash = false;
         final StringBuilder word = new StringBuilder();        
-        while(originalIndex < limit) {
+        for(int originalIndex = start ;originalIndex < end ; originalIndex++) {
             final char letter = original[originalIndex];
             if (flagForBackslash) {
                 word.append(letter);
@@ -256,8 +264,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 word.append(letter);
                 flagForBackslash = false;
             }
-            
-            originalIndex++;
         }
 
         return word.toString();
