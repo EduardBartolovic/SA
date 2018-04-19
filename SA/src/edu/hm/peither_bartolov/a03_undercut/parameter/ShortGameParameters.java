@@ -25,7 +25,7 @@ public class ShortGameParameters implements Parameters{
     /**
      * the chooseRange.
      */
-    public static final List<Integer> CHOOSERANGE = Arrays.asList(1,2,3);
+    private static final List<Integer> CHOOSERANGE = Arrays.asList(1,2,3);
 
     @Override
     public int getScoreToWin() {

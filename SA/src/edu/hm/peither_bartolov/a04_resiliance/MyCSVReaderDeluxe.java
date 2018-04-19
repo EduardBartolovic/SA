@@ -33,17 +33,24 @@ public class MyCSVReaderDeluxe implements CSVReader{
         
         final BufferedReader bufReader = new BufferedReader(reader);
         
-        char[] data = new char[LENGTHOFBUF];
-        int fileSize = bufReader.read(data);// read data out of file 
-        
-        if(fileSize == 0) 
-            throw new IllegalArgumentException("text should not be empty");
+//        char[] data = new char[LENGTHOFBUF];
+//        int fileSize = bufReader.read(data);// read data out of file 
+//        
+//        if(fileSize == 0) 
+//            throw new IllegalArgumentException("text should not be empty");
         
         final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
-        while(fileSize > 0){
-            allData.append(new String(data)); 
-            data = new char[LENGTHOFBUF];
-            fileSize = bufReader.read(data);
+        int readChar = 0;
+        boolean firstIn = true;
+        while(readChar != -1){
+            readChar = bufReader.read();
+            if (readChar == -1 && firstIn) {
+                throw new IllegalArgumentException("text should not be empty");
+            }
+            firstIn = false;
+            allData.append((char)readChar); 
+//            data = new char[LENGTHOFBUF];
+//            fileSize = bufReader.read(data);
         }
         
         final char[] dataArray = allData.toString().toCharArray();
