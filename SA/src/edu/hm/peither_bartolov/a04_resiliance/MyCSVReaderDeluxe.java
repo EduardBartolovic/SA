@@ -248,12 +248,14 @@ public class MyCSVReaderDeluxe implements CSVReader{
         boolean flagForQuote = false;
         boolean flagForBackslash = false;
         final StringBuilder word = new StringBuilder();        
-        for(int originalIndex = start ;originalIndex < end ; originalIndex++) {
+        for(int originalIndex = start ;originalIndex < end; originalIndex++) {
             final char letter = original[originalIndex];
             if (flagForBackslash) {
                 word.append(letter);
                 flagForBackslash = false;
-            } else if (letter == '\\' ){
+            } else if (letter == '\\' && original[0] == '"') {
+                word.append(letter);
+            } else if (letter == '\\'){
                 flagForBackslash = true;
             }else if(flagChecker(letter,'"',!flagForQuote,false)){
                 flagForQuote = false;
