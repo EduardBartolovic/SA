@@ -32,25 +32,16 @@ public class MyCSVReaderDeluxe implements CSVReader{
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         
         final BufferedReader bufReader = new BufferedReader(reader);
-        
-//        char[] data = new char[LENGTHOFBUF];
-//        int fileSize = bufReader.read(data);// read data out of file 
-//        
-//        if(fileSize == 0) 
-//            throw new IllegalArgumentException("text should not be empty");
-        
+
         final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
-        int readChar = 0;
-        boolean firstIn = true;
-        while(readChar != -1){
-            readChar = bufReader.read();
-            if (readChar == -1 && firstIn) {
+        int readChar = bufReader.read();
+        if (readChar < 0) {
                 throw new IllegalArgumentException("text should not be empty");
-            }
-            firstIn = false;
+        }
+
+        while(readChar > 0){     
             allData.append((char)readChar); 
-//            data = new char[LENGTHOFBUF];
-//            fileSize = bufReader.read(data);
+            readChar = bufReader.read();
         }
         
         final char[] dataArray = allData.toString().toCharArray();
@@ -228,8 +219,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 numberOfLines++;
                 flagForBackslash = false;
                 flagForEndLine = true;
-            } else if(letter == 0){
-                flagForBackslash = false;
             } else {
                 flagForBackslash = false;
                 flagForEndLine = false;
