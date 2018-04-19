@@ -14,10 +14,6 @@ import java.io.Reader;
  */
 public class MyCSVReaderDeluxe implements CSVReader{
 
-    /** 
-     * this is a constant for the length of the char array in the buffered reader.
-     */
-    public static final int LENGTHOFBUF = 10000;
     /**
      * Die Methode read liest einen Text in einem vereinfachten CSV-Format
      * von einem Reader und gibt die Zeilen und Spalten in einem neuen,
@@ -32,13 +28,13 @@ public class MyCSVReaderDeluxe implements CSVReader{
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         
         final BufferedReader bufReader = new BufferedReader(reader);
-
-        final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
+        
         int readChar = bufReader.read();
-        if (readChar < 0) {
+        if(readChar < 0) {
                 throw new IllegalArgumentException("text should not be empty");
         }
 
+        final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
         while(readChar > 0){     
             allData.append((char)readChar); 
             readChar = bufReader.read();
@@ -58,8 +54,44 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * @return gefuelltes String[][] Array
      */
     private String[][] fillLines(char[] dataArray, int heightCounter) {
-
+//
+//        final String[][] csvText = new String[heightCounter][];
+//        int startOfWord = 0;
+//        int lineCounter = 0;                                //to keep track which line needs to be filled
+//        int wordCounter = 0;                               //keep track how many commas are in one line
+//        boolean flagForBackslash = false;                   //to remember that the last element was a '\'
+//        boolean flagForQuotes = false;
+//        for (int counter = 0; counter < dataArray.length ; counter++) { 
+//            final char letter = dataArray[counter];
+//            
+//            if(letter == '"' ){
+//                
+//                flagForQuotes = !flagForQuotes;
+//                
+//            }else if(letter == '\\' ){
+//                
+//                flagForBackslash = !flagForBackslash;
+//                
+//            }else if(flagChecker(letter,',',flagForBackslash,flagForQuotes)){
+//                final char[] word =  new char[counter - startOfWord ]; //allokate the new line 
+//                System.arraycopy(dataArray, startOfWord, word, 0, counter - startOfWord ); //copy the line out of dataArray 
+//                
+//                csvText[lineCounter][wordCounter]= buildWord(word,startOfWord,counter); 
+//                startOfWord = counter+1;                             //the next word will start a counter position + 1
+//                wordCounter++;
+//               
+//            }else if(flagChecker(letter,'\n',flagForBackslash,flagForQuotes)){
+//                lineCounter++;
+//                flagForBackslash = false;
+//            }else{
+//                flagForBackslash = false;
+//            } 
+//            
+//            
+//        }
         
+        
+
         // allokate a big enough outer array
         final String[][] csvText = new String[heightCounter][0]; 
         int lineCounter = 0;                                //to keep track which line needs to be filled
@@ -178,13 +210,13 @@ public class MyCSVReaderDeluxe implements CSVReader{
         final char[] word =  new char[end-start]; 
         System.arraycopy(line, start, word, 0, end-start );
         
-        if(word.length == 0)
+        if(word.length == 0) // if word is empty than no changes needed
            return new String(word);
         
         final int begin;
         final int limit;
-        if(word[0] == '"'){
-            if(word[word.length-1] != '"')
+        if(word[0] == '"'){ //is this cell a quoted cell
+            if(word[word.length-1] != '"') //is this cell a valid quoted cell
                 throw new IllegalArgumentException();
             begin = 1;
             limit = word.length-1;
@@ -208,7 +240,6 @@ public class MyCSVReaderDeluxe implements CSVReader{
         boolean flagForEndLine = false;
         boolean flagForQuotes = false;
         for(char letter : allData){
-            
             if(letter == '"'){
                 flagForQuotes = !flagForQuotes;
                 flagForBackslash = false;
@@ -243,9 +274,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
         
         boolean flagForQuote = false;
         boolean flagForBackslash = false;
-        final StringBuilder word = new StringBuilder();        
-        for(int originalIndex = start ;originalIndex < end; originalIndex++) {
-            final char letter = original[originalIndex];
+        final StringBuilder word = new StringBuilder();
+        for(char letter : original) {
             if (flagForBackslash) {
                 word.append(letter);
                 flagForBackslash = false;
