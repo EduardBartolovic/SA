@@ -46,8 +46,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
             fileSize = bufReader.read(data);
         }
         
-        final char[] dataArray = new char[allData.length()];
-        allData.getChars(0, allData.length(), dataArray, 0);
+        final char[] dataArray = allData.toString().toCharArray();
         
         return fillLines(dataArray, testNumberOfLines(dataArray)); 
     }
@@ -62,6 +61,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
      */
     private String[][] fillLines(char[] dataArray, int heightCounter) {
 
+        
         // allokate a big enough outer array
         final String[][] csvText = new String[heightCounter][0]; 
         int lineCounter = 0;                                //to keep track which line needs to be filled
@@ -253,7 +253,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
             if (flagForBackslash) {
                 word.append(letter);
                 flagForBackslash = false;
-            } else if (letter == '\\'){
+            } else if (letter == '\\' ){
                 flagForBackslash = true;
             }else if(flagChecker(letter,'"',!flagForQuote,false)){
                 flagForQuote = false;
