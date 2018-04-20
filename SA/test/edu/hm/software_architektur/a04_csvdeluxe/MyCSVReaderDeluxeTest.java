@@ -596,6 +596,13 @@ public class MyCSVReaderDeluxeTest {
         Assert.assertArrayEquals(expResult, result);
     }
     
-    
+    @Test//(timeout = 1000)
+    public void testStuff54() throws IOException {
+        final String sut = "\"\"\n";
+        final String[][] result = new MyCSVReaderDeluxe().read(new StringReader(sut));
+        final String[][] expResult = new String[][]{ new String[]{}};
+       
+        Assert.assertArrayEquals(expResult, result);
+    }
     
 }
