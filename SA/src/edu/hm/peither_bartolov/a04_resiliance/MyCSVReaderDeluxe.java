@@ -42,7 +42,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
         
         final char[] dataArray = allData.toString().toCharArray();
         
-        return fillLines(dataArray, testNumberOfLines(dataArray)); 
+        if(testValidEndLine(dataArray))
+            throw new IllegalArgumentException("File ends not with \\n ");
+        
+        return fillLines(dataArray); 
     }
     
     /**
@@ -50,52 +53,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * den eingelesenen zeilen.
      * 
      * @param dataArray Alles eingelesenen Zeilen als eindimensionales array
-     * @param heightCounter hoehe des zweidimensionalen Arrays
      * @return gefuelltes String[][] Array
      */
-    private String[][] fillLines(char[] dataArray, int heightCounter) {
-//
-//        final String[][] csvText = new String[heightCounter][];
-//        int startOfWord = 0;
-//        int lineCounter = 0;                                //to keep track which line needs to be filled
-//        int wordCounter = 0;                               //keep track how many commas are in one line
-//        boolean flagForBackslash = false;                   //to remember that the last element was a '\'
-//        boolean flagForQuotes = false;
-//        for (int counter = 0; counter < dataArray.length ; counter++) { 
-//            final char letter = dataArray[counter];
-//            
-//            if(letter == '"' ){
-//                
-//                flagForQuotes = !flagForQuotes;
-//                
-//            }else if(letter == '\\' ){
-//                
-//                flagForBackslash = !flagForBackslash;
-//                
-//            }else if(flagChecker(letter,',',flagForBackslash,flagForQuotes)){
-//                final char[] word =  new char[counter - startOfWord ]; //allokate the new line 
-//                System.arraycopy(dataArray, startOfWord, word, 0, counter - startOfWord ); //copy the line out of dataArray 
-//                
-//                csvText[lineCounter][wordCounter]= buildWord(word,startOfWord,counter); 
-//                startOfWord = counter+1;                             //the next word will start a counter position + 1
-//                wordCounter++;
-//               
-//            }else if(flagChecker(letter,'\n',flagForBackslash,flagForQuotes)){
-//                lineCounter++;
-//                flagForBackslash = false;
-//            }else{
-//                flagForBackslash = false;
-//            } 
-//            
-//            
-//        }
-        
-        
-
+    private String[][] fillLines(char... dataArray) {
         // allokate a big enough outer array
-        final String[][] csvText = new String[heightCounter][0]; 
-        int lineCounter = 0;                                //to keep track which line needs to be filled
-        int commaCounter = 0;                               //keep track how many commas are in one line
+        String[][] csvText = new String[0][0];
         int startOfNextLine = 0;                            //keep track where evry line starts 
         boolean flagForBackslash = false;                   //to remember that the last element was a '\'
         boolean flagForQuotes = false;
@@ -109,22 +71,15 @@ public class MyCSVReaderDeluxe implements CSVReader{
             }else if(character == '\\' ){
                 
                 flagForBackslash = !flagForBackslash; 
+                  
+            }else if(flagChecker(character == '\n',flagForBackslash,flagForQuotes)){
                 
-            }else if(flagChecker(character,',',flagForBackslash,flagForQuotes)){
+                csvText = buildBiggerDoubleArray( csvText);
                 
-                commaCounter++;
+                csvText[csvText.length-1] = buildLine(dataArray,counter,startOfNextLine);//toStringArray(line); //generate the line with cells
                 
-            }else if(flagChecker(character,'\n',flagForBackslash,flagForQuotes)){
-                
-                final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
-                System.arraycopy(dataArray, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
                 startOfNextLine = counter+1; //the next line will start a counter position + 1
-
-                if (isReallyEmpty(line))
-                    csvText[lineCounter] = toStringArray(line,commaCounter); //generate the line with cells
                 
-                lineCounter++; 
-                commaCounter = 0;
                 flagForBackslash = false;
             }else{
                 flagForBackslash = false;
@@ -133,6 +88,22 @@ public class MyCSVReaderDeluxe implements CSVReader{
         }
         
         return csvText;
+    }
+    
+    /**
+     * building a new Line.
+     * @param text
+     * @param counter
+     * @param startOfNextLine
+     * @return 
+     */
+    private String[] buildLine(char[] text, int counter, int startOfNextLine){
+        final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
+        System.arraycopy(text, startOfNextLine, line, 0, counter - startOfNextLine ); //copy the line out of dataArray 
+        if(isReallyEmpty(line))
+            return new String[]{};
+        
+        return toStringArray(line); //generate the line with cells
     }
     
     /**
@@ -150,11 +121,11 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 isAfterEnd = false;
             }
         }
-    
+        
         final char[] trimmedLine = new char[endOfLine];
         System.arraycopy(line, 0, trimmedLine, 0, endOfLine);
         
-        return !new String(trimmedLine).isEmpty();
+        return new String(trimmedLine).isEmpty();
     }
     
     /**
@@ -162,15 +133,12 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * Die Worte werden an ',' getrennt.
      * 
      * @param line Die anzuschauende Zeile als String
-     * @param commaCount die anzahl der gefundenen kommas
      * @return Zeile als String[]
      */
-    private String[] toStringArray(char[] line, int commaCount) {
-        int cellCounter = commaCount+1;  //there is a minimum of one cell   
+    private String[] toStringArray(char... line) {
         line[line.length-1] = ',';  //adding a ',' at the end to mark the end of the line
 
-        final String[] csvLine = new String[cellCounter];
-        cellCounter = 0;    
+        String[] csvLine = new String[0];  
         int startOfNextLine = 0;
         boolean flagForBackslash = false;
         boolean flagForQuotes = false;
@@ -179,15 +147,16 @@ public class MyCSVReaderDeluxe implements CSVReader{
             
             if(character == '"'){
                 flagForQuotes = !flagForQuotes;
-            } else if(flagChecker(character,'\\',flagForQuotes,false)){
+            } else if(flagChecker(character == '\\',flagForQuotes,false)){
                 
                 flagForBackslash = !flagForBackslash;
 
-            }else if(flagChecker(character,',',flagForBackslash,flagForQuotes)){
+            }else if(flagChecker(character == ',',flagForBackslash,flagForQuotes)){
                 
-                csvLine[cellCounter] = buildWord(line,startOfNextLine,counter);
+                csvLine = buildBiggerLine( csvLine);
+                
+                csvLine[csvLine.length-1] = buildWord(line,startOfNextLine,counter);
                 startOfNextLine = counter+1;
-                cellCounter++;
                 flagForBackslash = false;
                 
             }else{
@@ -197,6 +166,28 @@ public class MyCSVReaderDeluxe implements CSVReader{
         }
         
         return csvLine;
+    }
+    
+    /**
+     * making arrays bigger.
+     * @param line old array
+     * @return String array
+     */
+    private String[] buildBiggerLine(String... line){
+        final String[] biggerLine = new String[line.length+1];
+        System.arraycopy(line, 0, biggerLine, 0, line.length );        
+        return biggerLine;
+    }
+    
+    /**
+     * making arrays bigger.
+     * @param array old array
+     * @return String array
+     */
+    private String[][] buildBiggerDoubleArray(String[]... array){
+        final String[][] biggerLine = new String[array.length+1][0];
+        System.arraycopy(array, 0, biggerLine, 0, array.length );        
+        return biggerLine;
     }
     
     /**
@@ -233,9 +224,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * @param allData String
      * @return number of lines as int
      */
-    private int testNumberOfLines(char... allData){
-        
-        int numberOfLines = 0;
+    private boolean testValidEndLine(char... allData){
+
         boolean flagForBackslash = false;
         boolean flagForEndLine = false;
         boolean flagForQuotes = false;
@@ -243,11 +233,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
             if(letter == '"'){
                 flagForQuotes = !flagForQuotes;
                 flagForBackslash = false;
-            } else if(flagChecker(letter,'\\',flagForQuotes,false)){
+            } else if(flagChecker(letter == '\\',flagForQuotes,false)){
                 flagForBackslash = !flagForBackslash;
                 flagForEndLine = false;
-            } else if(flagChecker(letter,'\n',flagForBackslash,flagForQuotes)){
-                numberOfLines++;
+            } else if(flagChecker(letter == '\n',flagForBackslash,flagForQuotes)){
                 flagForBackslash = false;
                 flagForEndLine = true;
             } else {
@@ -255,11 +244,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 flagForEndLine = false;
             }
         }
-            
-        if(!flagForEndLine)
-            throw new IllegalArgumentException("File ends not with \\n ");
-            
-         return numberOfLines;  
+        
+        return !flagForEndLine;  
          
     }
 
@@ -275,15 +261,13 @@ public class MyCSVReaderDeluxe implements CSVReader{
         boolean flagForQuote = false;
         boolean flagForBackslash = false;
         final StringBuilder word = new StringBuilder();
-        for(char letter : original) {
-            if (flagForBackslash) {
+        for(int counter = start ; counter < end ; counter++) {
+            final char letter = original[counter];
+            if (letter == '\\' && original[0] == '"') {
                 word.append(letter);
-                flagForBackslash = false;
-            } else if (letter == '\\' && original[0] == '"') {
-                word.append(letter);
-            } else if (letter == '\\'){
+            } else if (flagChecker(letter == '\\',flagForBackslash , false)){
                 flagForBackslash = true;
-            }else if(flagChecker(letter,'"',!flagForQuote,false)){
+            }else if(flagChecker(letter == '"',!flagForQuote,false)){
                 flagForQuote = false;
                 word.append(letter);
             }else if(letter == '"'){
@@ -299,14 +283,13 @@ public class MyCSVReaderDeluxe implements CSVReader{
     
     /**
      * checking the expression.
-     * @param letterToCheck char
-     * @param character char
      * @param firstBool bool
      * @param secBool bool
+     * @param thirdBool bool
      * @return boolean from expression
      */
-    private boolean flagChecker(char letterToCheck , char character ,boolean firstBool , boolean secBool){
-        return letterToCheck == character && !firstBool && !secBool;
+    private boolean flagChecker(boolean firstBool , boolean secBool , boolean thirdBool){
+        return  firstBool && !secBool && !thirdBool;
     }
 }
 

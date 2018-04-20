@@ -31,20 +31,20 @@ public class CSVReaderDeluxe implements CSVReader{
     @Override
     public String[][] read(Reader reader) throws IOException, IllegalArgumentException {   
         final BufferedReader bufReader = new BufferedReader(reader);
-        char[] data = new char[LENGTHOFBUF];
-        int fileSize = bufReader.read(data);// read data out of file 
         
-        if(fileSize == 0) 
-            throw new IllegalArgumentException("text should not be empty");
-        
-        final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
-        while(fileSize > 0){
-            allData.append(new String(data)); 
-            data = new char[LENGTHOFBUF];
-            fileSize = bufReader.read(data);
+        int readChar = bufReader.read();
+        if(readChar < 0) {
+                throw new IllegalArgumentException("text should not be empty");
         }
-        final char[] dataArray = new char[allData.length()];
-        allData.getChars(0, allData.length(), dataArray, 0);
+
+        final StringBuilder allData = new StringBuilder();   // whole file will be saved to this string
+        while(readChar > 0){     
+            allData.append((char)readChar); 
+            readChar = bufReader.read();
+        }
+        
+        final char[] dataArray = allData.toString().toCharArray();
+        
         
         return fillLines(dataArray, testNumberOfLines(dataArray)); 
     }
@@ -194,12 +194,6 @@ public class CSVReaderDeluxe implements CSVReader{
         }
         
         notRightFormat(flagForQuoteStart, flagForEndLine);
-        
-//        if (flagForQuoteStart) 
-//            throw new IllegalArgumentException("wrong quotation");
-//        if(!flagForEndLine)
-//            throw new IllegalArgumentException("File ends not with \\n ");
-        System.out.println(numberOfLines);
         return numberOfLines;  
          
     }
@@ -224,7 +218,7 @@ public class CSVReaderDeluxe implements CSVReader{
      * @param original the original word
      * @throws IllegalArgumentException
      */
-    private void failIfNotCorrectlyQuoted(char...original) throws IllegalArgumentException {
+    private void failIfNotCorrectlyQuoted(char... original) throws IllegalArgumentException {
         boolean notCorrectlyQuoted;
         try {
             notCorrectlyQuoted = original[0] == '"' && original[original.length-1] != '"';
@@ -242,12 +236,11 @@ public class CSVReaderDeluxe implements CSVReader{
      * @param original the original word
      * @return A word without backslashes
      */
-    public char[] removeBackSlashesAndQuotes(char...original/*, int backslashCount*/){
+    public char[] removeBackSlashesAndQuotes(char...original){
     
         failIfNotCorrectlyQuoted(original);
         
         final StringBuilder resultString = new StringBuilder();
-//        int resultIndex = 0;
         boolean flagForDoubleBackslash = false;
         boolean flagForQuoteStart = false;
         boolean flagForQuoteEnd = false;
@@ -290,21 +283,15 @@ public class CSVReaderDeluxe implements CSVReader{
      */
     private boolean[] addQuotes(boolean flagForQuoteStart, boolean flagForQuoteEnd, boolean flagForDoubleBackslash) {
         boolean[] addQuotes = new boolean[]{false, flagForQuoteStart, flagForQuoteEnd, flagForDoubleBackslash};
-        
-//        System.out.println(flagForDoubleBackslash + " back " + flagForQuoteEnd + " end " + flagForQuoteStart + " start ");
         if (flagForQuoteStart && !flagForQuoteEnd) {
-//            System.out.println("im here 1");
             addQuotes[2] = true;
         } else if (flagForQuoteEnd && flagForQuoteStart) {
-//            System.out.println("im here 2");
             addQuotes[0] = true;
             addQuotes[2] = false;
         } else if (flagForDoubleBackslash) {
-//            System.out.println("im here 3");
             addQuotes[0] = true;
             addQuotes[3] = false;
         } else {
-//            System.out.println("im here 4");
             addQuotes[1] = true;
         }
         
