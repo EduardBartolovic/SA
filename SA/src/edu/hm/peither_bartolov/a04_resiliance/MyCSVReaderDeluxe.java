@@ -45,6 +45,9 @@ public class MyCSVReaderDeluxe implements CSVReader{
         if(testValidEndLine(dataArray))
             throw new IllegalArgumentException("File ends not with \\n ");
         
+        if(dataArray[0] == '"' && dataArray[1] == '"' && dataArray[2] == '\n')
+            return new String[1][0];
+        
         return fillLines(dataArray); 
     }
     
@@ -76,7 +79,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
                 
                 csvText = buildBiggerDoubleArray( csvText);
                 
-                csvText[csvText.length-1] = buildLine(dataArray,counter,startOfNextLine);//toStringArray(line); //generate the line with cells
+                csvText[csvText.length-1] = buildLine(dataArray,counter,startOfNextLine);
                 
                 startOfNextLine = counter+1; //the next line will start a counter position + 1
                 
@@ -92,10 +95,10 @@ public class MyCSVReaderDeluxe implements CSVReader{
     
     /**
      * building a new Line.
-     * @param text
-     * @param counter
-     * @param startOfNextLine
-     * @return 
+     * @param text whole file
+     * @param counter which position should copy end
+     * @param startOfNextLine which position copy should start
+     * @return string array line
      */
     private String[] buildLine(char[] text, int counter, int startOfNextLine){
         final char[] line =  new char[counter - startOfNextLine +1]; //allokate the new line 
