@@ -13,14 +13,18 @@ public class SlowCounter extends Filter{
     
     public SlowCounter(Counter counter,int delay) {
         super(counter);
+        if(delay <= 0)
+            throw new IllegalArgumentException();
         this.delay = delay;
     }
 
     @Override
     public Counter tick() {
         if(counter == delay){
-            counter = (counter+1)%delay;
-            return super.tick();
+            counter = 0;
+            super.tick();
+        }else{
+            counter++;
         }
         
         return this;

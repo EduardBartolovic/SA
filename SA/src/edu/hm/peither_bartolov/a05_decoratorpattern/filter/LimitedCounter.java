@@ -22,7 +22,7 @@ public class LimitedCounter extends Filter{
     @Override
     public Counter tick() {
         if(super.read() < limit)
-            return super.tick();
+            super.tick();
         return this;
     }
     

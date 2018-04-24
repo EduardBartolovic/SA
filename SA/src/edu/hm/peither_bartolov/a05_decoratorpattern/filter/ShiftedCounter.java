@@ -23,6 +23,14 @@ public class ShiftedCounter extends Filter{
     public int read() {
         return super.read()+shift;
     }
+
+    @Override
+    public Counter tick() {
+        super.tick();
+        return this;
+    }
+    
+    
     
     
     
