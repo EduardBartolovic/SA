@@ -45,6 +45,7 @@ public class NaryCounterTest {
         final Counter counter = new NaryCounter(2);
         assertEquals(0, counter.read());
         assertEquals(1, counter.tick().read());
+        assertEquals(10, counter.tick().read());
         assertEquals(11, counter.tick().read());
     }
     

@@ -9,7 +9,7 @@ import java.util.function.IntPredicate;
  */
 public class SelectedCounter extends Filter{
     
-    final IntPredicate predicate;
+    private final IntPredicate predicate;
     
     public SelectedCounter(Counter counter , IntPredicate predicate) {
         super(counter);
