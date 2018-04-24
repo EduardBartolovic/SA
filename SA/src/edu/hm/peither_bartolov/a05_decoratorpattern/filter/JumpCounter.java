@@ -21,7 +21,7 @@ public class JumpCounter extends Filter{
 
     @Override
     public Counter tick() {
-        for(int counter = 0; counter <= jump ; counter++)
+        for(int counter = 0; counter < jump ; counter++)
             super.tick();
         return this;
     }

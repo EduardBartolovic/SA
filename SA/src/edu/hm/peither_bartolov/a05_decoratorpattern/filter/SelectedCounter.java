@@ -20,12 +20,17 @@ public class SelectedCounter extends Filter{
         this.predicate = predicate;
     }
 
+
     @Override
-    public int read() {
-        if(predicate.test(super.read()))
-            return super.read();
-        return 0;
+    public Counter tick() {
+        do{
+            super.tick();
+        }while(!predicate.test(super.read()));
+        
+        return this;
     }
+    
+    
     
     
     

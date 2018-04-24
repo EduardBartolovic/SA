@@ -14,7 +14,8 @@ public class PrintCounter extends Filter{
     @Override
     public Counter tick() {
         System.out.print(super.read() + character);
-        return super.tick();
+        super.tick();
+        return this;
     }
     
 }
