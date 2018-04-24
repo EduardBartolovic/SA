@@ -10,6 +10,9 @@ public class NaryCounter implements Counter{
     private int currentValue = 0;
     
     public NaryCounter(int numberSystem) {
+        if (numberSystem < 2 || numberSystem > 9) {
+            throw new IllegalArgumentException("Please choose a number system between 2 and 9!");
+        }
         this.numberSystem =  numberSystem;
     }
     
