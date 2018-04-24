@@ -52,12 +52,12 @@ public class SelectedCounterTest {
     
     @Test
     public void testTick4() {
-        final Counter counter = new SelectedCounter(new UCounter(),n-> n%1000==0);
+        final Counter counter = new SelectedCounter(new UCounter(),n-> true);
         assertEquals(0,counter.read());
-        assertEquals(1000,counter.tick().read());
-        assertEquals(2000,counter.tick().read());
-        assertEquals(3000,counter.tick().read());
-        assertEquals(4000,counter.tick().read());
+        assertEquals(1,counter.tick().read());
+        assertEquals(2,counter.tick().read());
+        assertEquals(3,counter.tick().read());
+        assertEquals(4,counter.tick().read());
     }
     
 }
