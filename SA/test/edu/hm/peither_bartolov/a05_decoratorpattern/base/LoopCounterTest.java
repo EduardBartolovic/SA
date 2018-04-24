@@ -1,6 +1,7 @@
 
-package edu.hm.peither_bartolov.a05_decoratorpattern;
+package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
+import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
@@ -43,6 +44,19 @@ public class LoopCounterTest {
         assertEquals(counter.tick().read(),1);
         assertEquals(counter.tick().read(),2);
         assertEquals(counter.tick().read(),3);
+    }
+    
+    @Test
+    public void testSomeMethod4() {
+        final int[] array = new int[]{1,2,3};
+        final Counter counter = new LoopCounter(array);
+        assertEquals(1,counter.read());
+        assertEquals(2,counter.tick().read());
+        assertEquals(3,counter.tick().read());
+        array[0] = 4;
+        assertEquals(1,counter.tick().read());
+        assertEquals(2,counter.tick().read());
+        assertEquals(3,counter.tick().read());
     }
     
 }
