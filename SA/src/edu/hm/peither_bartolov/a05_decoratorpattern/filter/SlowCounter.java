@@ -1,16 +1,26 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 
 /**
- *
- * @author Edo
+ * slowing the lower Counter down.
+ * @author Eduard
  */
 public class SlowCounter extends Filter{
-    
+    /**
+     * specified delay.
+     */
     private final int delay;
-    private int counter = 0;
+    /**
+     * the save how much delayed the class is
+     */
+    private int counter = 1;
     
+    /**
+     * Constructor.
+     * @param counter Counter
+     * @param delay int
+     */
     public SlowCounter(Counter counter,int delay) {
         super(counter);
         if(delay <= 0)
@@ -21,7 +31,7 @@ public class SlowCounter extends Filter{
     @Override
     public Counter tick() {
         if(counter == delay){
-            counter = 0;
+            counter = 1;
             super.tick();
         }else{
             counter++;

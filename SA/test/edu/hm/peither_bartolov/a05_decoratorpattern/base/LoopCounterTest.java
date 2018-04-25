@@ -1,8 +1,8 @@
 
 package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
+import java.util.NoSuchElementException;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -15,6 +15,11 @@ public class LoopCounterTest {
     public LoopCounterTest() {
     }
 
+    @Test(expected = NoSuchElementException.class)
+    public void testSomeMethod0() {
+        final Counter counter = new LoopCounter();
+    }
+    
     @Test
     public void testSomeMethod1() {
         final Counter counter = new LoopCounter(1);

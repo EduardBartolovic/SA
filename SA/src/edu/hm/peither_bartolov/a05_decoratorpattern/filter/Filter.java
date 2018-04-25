@@ -1,11 +1,21 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 
+/**
+ * abstract filterclass to minimize Code from Filters.
+ * @author Eduard
+ */
 public abstract class Filter implements Counter{
-    
+    /**
+     * saving the upper counter.
+     */
     private final Counter counter;
     
+    /**
+     * Constructor.
+     * @param counter 
+     */
     public Filter(Counter counter){
         this.counter = counter;
     }

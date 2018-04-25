@@ -1,15 +1,22 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 
 /**
- *
- * @author Edo
+ * Counter which is always skipping a definded amount of numbers.
+ * @author Eduard
  */
 public class JumpCounter extends Filter{
-    
+    /**
+     * amount of values to skip.
+     */
     private final int jump;
     
+    /**
+     * Constructor.
+     * @param counter a upper Counter.
+     * @param jump amount of values to skip.
+     */
     public JumpCounter(Counter counter,int jump) {
         super(counter);
         

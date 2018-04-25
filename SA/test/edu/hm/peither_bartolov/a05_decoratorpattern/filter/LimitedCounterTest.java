@@ -1,8 +1,8 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.UCounter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -32,11 +32,11 @@ public class LimitedCounterTest {
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
+        assertEquals(0,counter.tick().read());
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
-        assertEquals(1,counter.tick().read());
-        assertEquals(1,counter.tick().read());
+        assertEquals(0,counter.tick().read());
     }
     
     @Test
@@ -48,7 +48,7 @@ public class LimitedCounterTest {
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
-        assertEquals(1,counter.tick().read());
+        assertEquals(0,counter.tick().read());
         assertEquals(1,counter.tick().read());
         assertEquals(1,counter.tick().read());
     }

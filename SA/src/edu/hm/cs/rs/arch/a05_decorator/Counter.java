@@ -1,4 +1,4 @@
-package edu.hm.peither_bartolov.a05_decoratorpattern;
+package edu.hm.cs.rs.arch.a05_decorator;
 
 public interface Counter {
     

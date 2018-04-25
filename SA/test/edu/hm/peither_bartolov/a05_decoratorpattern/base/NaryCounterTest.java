@@ -5,7 +5,7 @@
  */
 package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -23,6 +23,10 @@ public class NaryCounterTest {
         assertEquals(2, counter.tick().read());
         assertEquals(10, counter.tick().read());
         assertEquals(11, counter.tick().read());
+        assertEquals(12, counter.tick().read());
+        assertEquals(20, counter.tick().read());
+        assertEquals(21, counter.tick().read());
+        assertEquals(22, counter.tick().read());
     }
     
     @Test(expected = IllegalArgumentException.class)
@@ -47,6 +51,16 @@ public class NaryCounterTest {
         assertEquals(1, counter.tick().read());
         assertEquals(10, counter.tick().read());
         assertEquals(11, counter.tick().read());
+        assertEquals(11, counter.read());
+        assertEquals(11, counter.read());
+        assertEquals(11, counter.read());
+        assertEquals(11, counter.read());
+        assertEquals(11, counter.read());
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testNaryTick6() {
+        final Counter counter = new NaryCounter(-1);
     }
     
 }

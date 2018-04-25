@@ -1,6 +1,6 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 

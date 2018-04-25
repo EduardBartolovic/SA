@@ -1,14 +1,27 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import java.util.NoSuchElementException;
 
-
+/**
+ * Base Counter.
+ * @author Felix Peither, Eduard Bartolovic
+ */
 public class LoopCounter implements Counter{
+    /**
+     * will save the ints.
+     */
     private final int[] list;
     
+    /**
+     * saving the position which element will be red out.
+     */
     private int currentPosition = 0;
     
+    /**
+     * Constructor.
+     * @param args int varargs
+     */
     public LoopCounter(int... args){
         if(args.length == 0)
             throw new NoSuchElementException();

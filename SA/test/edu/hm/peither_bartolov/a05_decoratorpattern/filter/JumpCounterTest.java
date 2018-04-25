@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
+import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.UCounter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
