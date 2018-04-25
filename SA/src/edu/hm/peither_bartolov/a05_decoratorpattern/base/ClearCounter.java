@@ -2,13 +2,36 @@ package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 
+/**
+ * The clear counter which resets the counter after read is called
+ * three times within the same millisecond.
+ * 
+ * @author Eduard Bartolovic, Felix Peither
+ */
 public class ClearCounter implements Counter{
 
-    private int currentValue = 0;
+    /**
+     * the current value of this counter.
+     */
+    private int currentValue;
     
-    private long firstTime = 0;
+    /**
+     * the time read was called for the first time.
+     */
+    private long firstTime;
     
-    private int readCounter = 0;
+    /**
+     * number of times read was called.
+     */
+    private int readCounter;
+    
+    /**
+     * Constructor for the ClearCounter.
+     */
+    public ClearCounter() {
+        currentValue = 0;
+        readCounter = 0;
+    }
     
     @Override
     public int read() {

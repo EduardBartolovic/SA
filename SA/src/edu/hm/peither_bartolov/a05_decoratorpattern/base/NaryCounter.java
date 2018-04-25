@@ -1,12 +1,23 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
-
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 
+/**
+ * The nary counter which counts in a number system 
+ * of the users choosing.
+ * 
+ * @author Eduard Bartolovic, Felix Peither
+ */
 public class NaryCounter implements Counter{
 
+    /**
+     * an integer which indicate the used number system.
+     */
     private final int numberSystem;
     
+    /**
+     * the current value of this counter.
+     */
     private int currentValue = 0;
     
     public NaryCounter(int numberSystem) {
