@@ -3,6 +3,7 @@ package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
+import edu.hm.peither_bartolov.a05_decoratorpattern.base.NaryCounter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -86,6 +87,35 @@ public class JumpCounterTest {
         assertEquals(30,counter.tick().read());
         assertEquals(36,counter.tick().read());
         assertEquals(42,counter.tick().read());
+    }
+    
+    @Test(expected = NullPointerException.class)
+    public void testTick7() {
+        final Counter counter = new JumpCounter(null,100);
+    }
+    
+     @Test
+    public void testTick8() {
+        final Counter counter = new JumpCounter(new NaryCounter(2),2);
+        assertEquals(0,counter.read());
+        assertEquals(10,counter.tick().read());
+        assertEquals(100,counter.tick().read());
+        assertEquals(110,counter.tick().read());
+        assertEquals(1000,counter.tick().read());
+        assertEquals(1010,counter.tick().read());
+        assertEquals(1100,counter.tick().read());
+        assertEquals(1110,counter.tick().read());
+    }
+
+    @Test
+    public void testTick9() {
+        final Counter counter = new JumpCounter(new NaryCounter(2),3);
+        assertEquals(0,counter.read());
+        assertEquals(11,counter.tick().read());
+        assertEquals(110,counter.tick().read());
+        assertEquals(1001,counter.tick().read());
+        assertEquals(1100,counter.tick().read());
+        assertEquals(1111,counter.tick().read());
     }
     
 }

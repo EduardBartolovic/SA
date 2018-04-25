@@ -64,4 +64,17 @@ public class LoopCounterTest {
         assertEquals(3,counter.tick().read());
     }
     
+    @Test
+    public void testSomeMethod5() {
+        final int[] array = new int[]{5,7,1,2,5};
+        final Counter counter = new LoopCounter(array);
+        assertEquals(5,counter.read());
+        assertEquals(7,counter.tick().read());
+        assertEquals(1,counter.tick().read());
+        assertEquals(2,counter.tick().read());
+        assertEquals(5,counter.tick().read());
+        assertEquals(5,counter.tick().read());
+        assertEquals(7,counter.tick().read());
+    }
+    
 }

@@ -17,6 +17,8 @@ public abstract class Filter implements Counter{
      * @param counter 
      */
     public Filter(Counter counter){
+        if(counter == null)
+            throw new NullPointerException();
         this.counter = counter;
     }
     

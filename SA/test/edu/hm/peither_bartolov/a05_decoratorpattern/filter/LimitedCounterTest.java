@@ -3,6 +3,7 @@ package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
+import edu.hm.peither_bartolov.a05_decoratorpattern.base.NaryCounter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
@@ -87,5 +88,20 @@ public class LimitedCounterTest {
         assertEquals(2,counter.tick().read());
         assertEquals(1,counter.tick().read());
     }
+    
+    @Test(expected = NullPointerException.class)
+    public void testTick7() {
+        final Counter counter = new LimitedCounter(null,100);
+    }
+    
+    @Test
+    public void testTick8() {
+        final Counter counter = new LimitedCounter(new NaryCounter(2), 3);
+        assertEquals(0, counter.read());
+        assertEquals(1, counter.tick().read());
+        assertEquals(3, counter.tick().read());
+        assertEquals(3, counter.tick().read());
+    }
+
     
 }

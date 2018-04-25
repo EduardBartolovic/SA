@@ -48,7 +48,49 @@ public class ClearCounterTest {
         counter.read();
         counter.read();
         assertEquals(0,counter.read());
-   
+    }
+    
+    @Test
+    public void Test1() throws InterruptedException {
+        Counter counter = new ClearCounter();
+        assertEquals(0,counter.read());            // 0
+        assertEquals(1,counter.tick().read());     // 1
+        assertEquals(2,counter.tick().read());     // 2
+        assertEquals(2,counter.read());            // 2
+
+        assertEquals(0,counter.read());            // 0
+        assertEquals(1,counter.tick().read());      // 1
+        assertEquals(2,counter.tick().read());      // 2
+        assertEquals(2,counter.read());           // 2
+
+        Thread.sleep(2);
+
+        assertEquals(2,counter.read());           // 2
+        assertEquals(3,counter.tick().read());    // 3
+    }
+
+    @Test
+    public void Test2() throws InterruptedException {
+        Counter counter = new ClearCounter();
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+    }
+
+    @Test
+    public void Test3() throws InterruptedException {
+        Counter counter = new ClearCounter();
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(1,counter.tick().read());
+        assertEquals(1,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
+        assertEquals(0,counter.read());
     }
     
 }
