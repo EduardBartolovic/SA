@@ -9,7 +9,7 @@ import java.util.function.IntPredicate;
  */
 public class SelectedCounter extends Filter{
    /**
-    * filter condition
+    * filter condition.
     */
     private final IntPredicate predicate;
     

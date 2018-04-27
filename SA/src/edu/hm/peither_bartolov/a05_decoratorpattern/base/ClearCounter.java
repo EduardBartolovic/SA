@@ -13,7 +13,7 @@ public class ClearCounter implements Counter{
     /**
      * the current value of this counter.
      */
-    private int currentValue;
+    private int counterPositionAt;
     
     /**
      * the time read was called for the first time.
@@ -29,7 +29,7 @@ public class ClearCounter implements Counter{
      * Constructor for the ClearCounter.
      */
     public ClearCounter() {
-        currentValue = 0;
+        counterPositionAt = 0;
         readCounter = 0;
     }
     
@@ -43,17 +43,17 @@ public class ClearCounter implements Counter{
 //            final long deltaTime = secondTime - firstTime;
 //            if (deltaTime <= 1000) {
             if (firstTime == secondTime) {
-                currentValue = 0;
+                counterPositionAt = 0;
             }
         } else {
             readCounter++;
         }
-        return currentValue;
+        return counterPositionAt;
     }
 
     @Override
     public Counter tick() {
-        currentValue++;
+        counterPositionAt++;
         readCounter = 0;
         return this;
     }

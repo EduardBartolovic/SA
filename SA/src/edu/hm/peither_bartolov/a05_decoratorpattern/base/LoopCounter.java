@@ -16,15 +16,17 @@ public class LoopCounter implements Counter{
     /**
      * saving the position which element will be red out.
      */
-    private int currentPosition = 0;
+    private int currentPosition;
     
     /**
      * Constructor.
      * @param args int varargs
      */
     public LoopCounter(int... args){
-        if(args.length == 0)
+        currentPosition = 0;
+        if (args.length == 0) {
             throw new NoSuchElementException();
+        }
         
         list = new int[args.length];
         System.arraycopy(args,0, list,0, args.length);

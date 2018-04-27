@@ -8,7 +8,7 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
  */
 public class PrintCounter extends Filter{
     /**
-     * character to add
+     * character to add.
      */
     private final char character;
     

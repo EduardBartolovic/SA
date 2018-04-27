@@ -8,7 +8,7 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
  */
 public class LimitedCounter extends Filter{
     /**
-     * limit of counter
+     * limit of counter.
      */
     private final int limit;
     

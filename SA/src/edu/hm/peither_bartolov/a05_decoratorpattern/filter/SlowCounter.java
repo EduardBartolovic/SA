@@ -12,7 +12,7 @@ public class SlowCounter extends Filter{
      */
     private final int delay;
     /**
-     * the save how much delayed the class is
+     * the save how much delayed the class is.
      */
     private int counter = 1;
     
