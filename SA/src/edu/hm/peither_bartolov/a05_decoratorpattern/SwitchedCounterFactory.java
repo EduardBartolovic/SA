@@ -26,7 +26,6 @@ public class SwitchedCounterFactory {
             type = Class.forName(PATH+typename+"Counter");
         }
         
-        
         return Counter.class.cast(Stream.of(type.getDeclaredConstructors())
             .filter(ctor -> ctor.getParameterTypes().length == args.length)
             .peek(System.out::println)
