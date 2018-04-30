@@ -1,10 +1,10 @@
-package edu.hm.peither_bartolov.a05_decoratorpattern;
+package edu.hm.peither_bartolov.a06_factory;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import java.util.stream.Stream;
 
 
-public class SwitchedCounterFactory {
+public class ReflectiveCounterFactory {
     
     private static final String PATH = "edu.hm.peither_bartolov.a05_decoratorpattern.";
     

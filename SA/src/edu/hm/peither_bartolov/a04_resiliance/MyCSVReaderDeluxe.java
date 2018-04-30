@@ -4,6 +4,7 @@ import edu.hm.cs.rs.arch.a01_kiss.CSVReader;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.lang.reflect.Array;
 
 /**
  * Diese Klasse konvertiert Text im CSV Format in ein 
@@ -156,7 +157,7 @@ public class MyCSVReaderDeluxe implements CSVReader{
 
             }else if(flagChecker(character == ',',flagForBackslash,flagForQuotes)){
                 
-                csvLine = buildBiggerLine( csvLine);
+                csvLine = (String[])buildBiggerLine( csvLine);
                 
                 csvLine[csvLine.length-1] = buildWord(line,startOfNextLine,counter);
                 startOfNextLine = counter+1;
@@ -176,8 +177,8 @@ public class MyCSVReaderDeluxe implements CSVReader{
      * @param line old array
      * @return String array
      */
-    private String[] buildBiggerLine(String... line){
-        final String[] biggerLine = new String[line.length+1];
+    private <T> T[] buildBiggerLine(String... line){
+        final T[] biggerLine = (T[])Array.newInstance(line.getClass(), line.length+1);
         System.arraycopy(line, 0, biggerLine, 0, line.length );        
         return biggerLine;
     }

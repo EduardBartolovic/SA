@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.hm.peither_bartolov.a05_decoratorpattern;
+package edu.hm.peither_bartolov.a06_factory;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
@@ -159,6 +159,43 @@ public class SwitchedCounterFactoryTest {
         assertEquals(999,counter.tick().read());
         assertEquals(1,counter.tick().read());
     }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testMake7UFalse() throws Exception {
+        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final Counter counter = factory.make("U",5);
+        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testMake8UFalse() throws Exception {
+        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final Counter counter = factory.make("Loop");
+        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testMake9UFalse() throws Exception {
+        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final Counter counter = factory.make("Nary");
+        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testMake10False() throws Exception {
+        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final Counter counter = factory.make("42",5);
+        
+    }
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testMake18False() throws Exception {
+        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final Counter counter = factory.make(new UCounter(),"42",3);
+        
+    }
+    
+    
     
     @Test
     public void testMake20() throws Exception {
