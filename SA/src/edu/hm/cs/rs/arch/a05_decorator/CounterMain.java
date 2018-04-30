@@ -28,7 +28,7 @@ public class CounterMain {
      * 1. Typ eines elementaren Zaehlers und eine komma-getrennte Liste ganzer Zahlen,
      * die an den betreffenden Konstruktor gehen.
      * 2. und weitere: Typ eines Filterzaehlers, Komma und eine ganze Zahl,
-     * die an den betreffenden Konstruktor geht. 
+     * die an den betreffenden Konstruktor geht.
      */
     public static void main(String... args) throws ReflectiveOperationException {
         testDrive(build(args));

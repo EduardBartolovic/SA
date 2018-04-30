@@ -195,6 +195,7 @@ public class SwitchedCounterFactoryTest {
         assertEquals(24,counter.tick().read());
         assertEquals(27,counter.tick().read());
         
+        
     }
     
     
