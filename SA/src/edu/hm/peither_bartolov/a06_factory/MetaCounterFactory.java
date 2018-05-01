@@ -22,4 +22,17 @@ public class MetaCounterFactory extends CounterFactory{
         
     }
     
+    public Counter make(Counter counter,String typename, int arg) {
+        
+        final SwitchedCounterFactory sFactory = new SwitchedCounterFactory();
+        
+        try{
+            return sFactory.make(counter,typename, arg);
+        }catch(IllegalArgumentException illExce){
+            final FakeCounterFactory fFactory = new FakeCounterFactory();
+            return fFactory.make();
+        }
+        
+    }
+    
 }
