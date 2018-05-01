@@ -36,6 +36,31 @@ public class ShiftedCounter extends Filter{
         super.tick();
         return this;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 71 * hash + this.shift;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ShiftedCounter other = (ShiftedCounter) obj;
+        if (this.shift != other.shift) {
+            return false;
+        }
+        return super.equals(obj);
+    }
     
     
     

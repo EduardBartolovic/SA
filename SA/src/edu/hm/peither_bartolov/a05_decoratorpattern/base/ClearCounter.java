@@ -40,8 +40,6 @@ public class ClearCounter implements Counter{
             readCounter++;
         } else if (readCounter == 2) {
             final long secondTime = System.currentTimeMillis();
-//            final long deltaTime = secondTime - firstTime;
-//            if (deltaTime <= 1000) {
             if (firstTime == secondTime) {
                 counterPositionAt = 0;
             }
@@ -57,5 +55,37 @@ public class ClearCounter implements Counter{
         readCounter = 0;
         return this;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 97 * hash + this.counterPositionAt;
+        hash = 97 * hash + (int) (this.firstTime ^ (this.firstTime >>> 32));
+        hash = 97 * hash + this.readCounter;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ClearCounter other = (ClearCounter) obj;
+        if (this.counterPositionAt != other.counterPositionAt) {
+            return false;
+        }
+        if (this.firstTime != other.firstTime) {
+            return false;
+        }
+        return this.readCounter == other.readCounter;
+    }
+    
+    
     
 }

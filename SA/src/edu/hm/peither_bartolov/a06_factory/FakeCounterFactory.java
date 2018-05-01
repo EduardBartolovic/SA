@@ -14,6 +14,16 @@ public class FakeCounterFactory extends CounterFactory{
         return new FakeCounter();
     }
     
+    public Counter make(String string,int... args) {
+        return new FakeCounter();
+    }
+    
+    public Counter make(Counter counter,String string,int arg) {
+        return new FakeCounter();
+    }
+    
+    
+    
     private class FakeCounter implements Counter{
 
         @Override
@@ -25,6 +35,20 @@ public class FakeCounterFactory extends CounterFactory{
         public Counter tick() {
             return this;
         }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            return getClass() == obj.getClass();
+        
+        }
+
+        
     
     }
 }

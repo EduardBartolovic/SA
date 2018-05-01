@@ -14,14 +14,14 @@ import org.junit.Test;
  *
  * @author Edo
  */
-public class SwitchedCounterFactoryTest {
+public class ReflectiveCounterFactoryTest {
     
-    public SwitchedCounterFactoryTest() {
+    public ReflectiveCounterFactoryTest() throws ReflectiveOperationException {
     }
 
     @Test
     public void testMake1U() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("U");
         
@@ -40,7 +40,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake2UCounter() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("UCounter");
         
@@ -58,7 +58,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake2LoopCounter() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("LoopCounter",1,2,3);
         
@@ -76,7 +76,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake3LoopCounter() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("LoopCounter",1);
         
@@ -92,7 +92,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake4LoopCounter() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("LoopCounter",new int[]{1,2,3,4,5,7,8,9,999});
         
@@ -110,7 +110,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake5Loop() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("Loop",1,2,3);
         
@@ -128,7 +128,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake6LoopCounter() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("Loop",1);
         
@@ -144,7 +144,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake7Loop() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make("Loop",new int[]{1,2,3,4,5,7,8,9,999});
         
@@ -162,35 +162,35 @@ public class SwitchedCounterFactoryTest {
     
     @Test(expected = IllegalArgumentException.class)
     public void testMake7UFalse() throws Exception {
-        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         final Counter counter = factory.make("U",5);
         
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testMake8UFalse() throws Exception {
-        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         final Counter counter = factory.make("Loop");
         
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testMake9UFalse() throws Exception {
-        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         final Counter counter = factory.make("Nary");
         
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testMake10False() throws Exception {
-        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         final Counter counter = factory.make("42",5);
         
     }
     
     @Test(expected = IllegalArgumentException.class)
     public void testMake18False() throws Exception {
-        final SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        final ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         final Counter counter = factory.make(new UCounter(),"42",3);
         
     }
@@ -199,7 +199,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake20() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make(new UCounter(),"Jump",3);
         
@@ -217,7 +217,7 @@ public class SwitchedCounterFactoryTest {
     
     @Test
     public void testMake21() throws Exception {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter;
         counter = factory.make(new UCounter(),"JumpCounter",3);
         
@@ -236,44 +236,44 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest1() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest1() throws InterruptedException, ReflectiveOperationException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("U",0);
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest2() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest2() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Clear",0);
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest3() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest3() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop");
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest4() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest4() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary");
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest5() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest5() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",1,2);
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest6() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest6() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Except");
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void SwitchedCounterFactoryTest7() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ReflectiveCounterFactoryTest7() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("U");
         counter = factory.make(counter,"Except", 0);
     }
@@ -281,22 +281,22 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test()
-    public void LimitedCounter1() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter1() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop", 0,1,2,3);
         counter = factory.make(counter,"LimitedCounter", 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void LimitedCounter2() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter2() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop", 0,1,2,3);
         counter = factory.make(counter,"LimitedCounter", -1);
     }
 
     @Test
-    public void LimitedCounter3() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter3() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop", 0,1,2,3);
         counter = factory.make(counter,"LimitedCounter", 1);
 
@@ -312,8 +312,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LimitedCounter4() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter4() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop", 0,1,2,3);
         counter = factory.make(counter,"LimitedCounter", 1);
 
@@ -329,8 +329,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LimitedCounter5() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter5() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("U");
         counter = factory.make(counter,"LimitedCounter", 7);
 
@@ -349,8 +349,8 @@ public class SwitchedCounterFactoryTest {
         assertEquals(7,counter.tick().read());
     }
     @Test
-    public void LimitedCounter6() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter6() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop", 1,2,3);
         counter = factory.make(counter,"LimitedCounter", 2);
 
@@ -370,8 +370,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LimitedCounter7() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LimitedCounter7() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("NaryCounter",2);
         counter = factory.make(counter,"LimitedCounter", 3);
 
@@ -384,8 +384,8 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test()
-    public void JumpCounter1() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter1() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Jump", 3);
 
@@ -400,15 +400,15 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void JumpCounter2() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter2() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Jump", -1);
     }
 
     @Test
-    public void JumpCounter3() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter3() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",0,1,2,3);
         counter = factory.make(counter,"Jump", 1);
 
@@ -424,8 +424,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void JumpCounter4() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter4() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("U");
         counter = factory.make(counter,"Jump", 2);
 
@@ -441,8 +441,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void JumpCounter5() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter5() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Jump", 2);
 
@@ -458,8 +458,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void JumpCounter6() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter6() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("U");
         counter = factory.make(counter,"Jump", 3);
         counter = factory.make(counter,"Jump", 2);
@@ -475,8 +475,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void JumpCounter7() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter7() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",2);
         counter = factory.make(counter,"Jump", 2);
 
@@ -491,8 +491,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void JumpCounter8() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void JumpCounter8() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",2);
         counter = factory.make(counter,"Jump", 3);
 
@@ -507,22 +507,22 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test()
-    public void ShiftedCounter1() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ShiftedCounter1() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Shifted", 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void ShiftedCounter2() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ShiftedCounter2() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Shifted", -1);
     }
 
     @Test
-    public void ShiftedCounter3() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ShiftedCounter3() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Shifted", 1);
 
@@ -537,8 +537,8 @@ public class SwitchedCounterFactoryTest {
         assertEquals(4,counter.tick().read());
     }
     @Test
-    public void ShiftedCounter4() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ShiftedCounter4() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Shifted", 11);
 
@@ -553,8 +553,8 @@ public class SwitchedCounterFactoryTest {
         assertEquals(14,counter.tick().read());
     }
     @Test
-    public void ShiftedCounter5() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ShiftedCounter5() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",2);
         counter = factory.make(counter,"Shifted", 1);
 
@@ -572,22 +572,22 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test(expected = IllegalArgumentException.class)
-    public void SlowCounter1() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void SlowCounter1() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Slow", 0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void SlowCounter2() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void SlowCounter2() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Slow", -1);
     }
 
     @Test
-    public void SlowCounter3() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void SlowCounter3() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Slow", 2);
 
@@ -603,8 +603,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void SlowCounter4() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void SlowCounter4() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("U");
         counter = factory.make(counter,"Slow", 2);
 
@@ -620,8 +620,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void SlowCounter5() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void SlowCounter5() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Slow", 1);
 
@@ -633,8 +633,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void SlowCounter6() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void SlowCounter6() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",2);
         counter = factory.make(counter,"Slow", 2);
 
@@ -652,8 +652,8 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void ClearCounter1() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ClearCounter1() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Clear");
 
         assertEquals(0,counter.read());            // 0
@@ -673,8 +673,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void ClearCounter2() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ClearCounter2() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Clear");
 
         assertEquals(0,counter.read());
@@ -687,8 +687,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void ClearCounter3() throws InterruptedException {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void ClearCounter3() throws InterruptedException, ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Clear");
 
         assertEquals(0,counter.read());
@@ -703,8 +703,8 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void LoopCounter1() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LoopCounter1() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1);
         assertEquals(1,counter.read());
         assertEquals(1,counter.tick().read());
@@ -714,8 +714,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LoopCounter2() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LoopCounter2() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2);
         assertEquals(1,counter.read());
         assertEquals(2,counter.tick().read());
@@ -724,8 +724,8 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LoopCounter3() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void LoopCounter3() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         assertEquals(1,counter.read());
         assertEquals(2,counter.tick().read());
@@ -735,9 +735,9 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LoopCounter4() {
+    public void LoopCounter4() throws ReflectiveOperationException{
         final int[] array = new int[]{1,2,3};
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",array);
         assertEquals(1,counter.read());
         assertEquals(2,counter.tick().read());
@@ -749,9 +749,9 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test
-    public void LoopCounter5() {
+    public void LoopCounter5() throws ReflectiveOperationException{
         final int[] array = new int[]{5,7,1,2,5};
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Loop",array);
         assertEquals(5,counter.read());
         assertEquals(7,counter.tick().read());
@@ -765,8 +765,8 @@ public class SwitchedCounterFactoryTest {
     //------------------------------------------------------------------------------------------------------------------
 
     @Test
-    public void NaryCounter1() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void NaryCounter1() throws ReflectiveOperationException{
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",3);
         assertEquals(0, counter.read());
         assertEquals(1, counter.tick().read());
@@ -777,26 +777,26 @@ public class SwitchedCounterFactoryTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void NaryCounter2() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
-        Counter counter = factory.make("Nary",0);;
+    public void NaryCounter2() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
+        Counter counter = factory.make("Nary",0);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void NaryCounter3() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
-        Counter counter = factory.make("Nary",1);;
+    public void NaryCounter3()  throws ReflectiveOperationException{
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
+        Counter counter = factory.make("Nary",1);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void NaryCounter4() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
-        Counter counter = factory.make("Nary",10);;
+    public void NaryCounter4() throws ReflectiveOperationException{
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
+        Counter counter = factory.make("Nary",10);
     }
 
     @Test
-    public void NaryCounter5() {
-        SwitchedCounterFactory factory = new SwitchedCounterFactory();
+    public void NaryCounter5() throws ReflectiveOperationException {
+        ReflectiveCounterFactory factory = new ReflectiveCounterFactory();
         Counter counter = factory.make("Nary",2);
         assertEquals(0, counter.read());
         assertEquals(1, counter.tick().read());
@@ -804,9 +804,5 @@ public class SwitchedCounterFactoryTest {
         assertEquals(11, counter.tick().read());
     }
 
-
-    
-    
-    
     
 }

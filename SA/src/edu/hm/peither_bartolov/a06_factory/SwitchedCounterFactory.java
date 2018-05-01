@@ -2,6 +2,7 @@ package edu.hm.peither_bartolov.a06_factory;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
+import edu.hm.peither_bartolov.a05_decoratorpattern.base.ClearCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.base.NaryCounter;
 import edu.hm.peither_bartolov.a05_decoratorpattern.filter.JumpCounter;
@@ -44,6 +45,10 @@ public class SwitchedCounterFactory extends CounterFactory{
             if(args.length != 1)
                 throw new IllegalArgumentException();
             return new NaryCounter(args[0]);
+        }else if("ClearCounter".equals(type)){
+            if(args.length != 0)
+                throw new IllegalArgumentException();
+            return new ClearCounter();
         }
         
         throw new IllegalArgumentException();
@@ -58,6 +63,8 @@ public class SwitchedCounterFactory extends CounterFactory{
      */
     public Counter make(Counter counter,String typename, int arg) {
                 
+        
+        
         final String type;
         if(typename.contains("Counter")){
             type = typename;
