@@ -1,6 +1,5 @@
-package edu.hm.peither_bartolov.a05_decoratorpattern.base;
+package edu.hm.bartolov.a05_decoratorpattern.base;
 
-import edu.hm.peither_bartolov.a05_decoratorpattern.filter.*;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import org.junit.Test;

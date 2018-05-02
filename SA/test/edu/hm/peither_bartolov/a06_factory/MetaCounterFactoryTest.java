@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.hm.peither_bartolov.a06_factory;
+package edu.hm.bartolov.a06_factory;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;

@@ -1,5 +1,5 @@
 
-package edu.hm.peither_bartolov.a05_decoratorpattern.base;
+package edu.hm.bartolov.a05_decoratorpattern.base;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import java.util.NoSuchElementException;

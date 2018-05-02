@@ -3,11 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
+package edu.hm.bartolov.a05_decoratorpattern.filter;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.NaryCounter;
+import edu.hm.bartolov.a05_decoratorpattern.base.LoopCounter;
+import edu.hm.bartolov.a05_decoratorpattern.base.NaryCounter;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 

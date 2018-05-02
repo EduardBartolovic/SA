@@ -1,8 +1,8 @@
 
 package edu.hm.software_architektur.a03_undercut.parameter;
 
-import edu.hm.peither_bartolov.a03_undercut.parameter.ShortGameParameters;
-import edu.hm.peither_bartolov.a03_undercut.parameter.Parameters;
+import edu.hm.bartolov.a03_undercut.parameter.ShortGameParameters;
+import edu.hm.bartolov.a03_undercut.parameter.Parameters;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;

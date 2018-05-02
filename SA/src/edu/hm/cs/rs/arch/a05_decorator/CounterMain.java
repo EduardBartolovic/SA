@@ -3,7 +3,7 @@
  * emma (Intel Core i7-4790 CPU/3601 MHz, 8 Cores, 32000 MB RAM)
  **/
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
-import edu.hm.peither_bartolov.a06_factory.SwitchedCounterFactory;
+import edu.hm.bartolov.a06_factory.SwitchedCounterFactory;
 import java.util.stream.Stream;
 
 /**

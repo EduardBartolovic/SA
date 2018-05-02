@@ -1,5 +1,5 @@
 
-package edu.hm.peither_bartolov.a06_factory;
+package edu.hm.bartolov.a06_factory;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import org.junit.Assert;

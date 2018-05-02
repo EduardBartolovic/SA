@@ -1,8 +1,8 @@
 
 package edu.hm.software_architektur.a03_undercut.gamerules;
 
-import edu.hm.peither_bartolov.a03_undercut.gamerules.GameRule;
-import edu.hm.peither_bartolov.a03_undercut.gamerules.DefaultGameRules;
+import edu.hm.bartolov.a03_undercut.gamerules.GameRule;
+import edu.hm.bartolov.a03_undercut.gamerules.DefaultGameRules;
 import java.util.Arrays;
 import java.util.Collection;
 import static org.hamcrest.CoreMatchers.is;

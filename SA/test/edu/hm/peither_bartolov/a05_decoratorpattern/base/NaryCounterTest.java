@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.hm.peither_bartolov.a05_decoratorpattern.base;
+package edu.hm.bartolov.a05_decoratorpattern.base;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import static org.junit.Assert.assertEquals;

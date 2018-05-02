@@ -1,6 +1,6 @@
 package kiss;
 
-import edu.hm.peither_bartolov.a01_csvreader.MyCSVReader;
+import edu.hm.bartolov.a01_csvreader.MyCSVReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;

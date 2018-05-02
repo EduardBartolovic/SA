@@ -2,7 +2,7 @@
 package edu.hm.software_architektur.a04_csvdeluxe;
 
 
-import edu.hm.peither_bartolov.a04_resiliance.MyCSVReaderDeluxe;
+import edu.hm.bartolov.a04_resiliance.MyCSVReaderDeluxe;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;

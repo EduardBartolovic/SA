@@ -1,8 +1,8 @@
-package edu.hm.peither_bartolov.a05_decoratorpattern.filter;
+package edu.hm.bartolov.a05_decoratorpattern.filter;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.LoopCounter;
-import edu.hm.peither_bartolov.a05_decoratorpattern.base.NaryCounter;
+import edu.hm.bartolov.a05_decoratorpattern.base.LoopCounter;
+import edu.hm.bartolov.a05_decoratorpattern.base.NaryCounter;
 import org.junit.Test;
 
 import java.util.ArrayList;
