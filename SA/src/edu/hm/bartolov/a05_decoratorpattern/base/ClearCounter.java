@@ -38,14 +38,19 @@ public class ClearCounter implements Counter{
         if (readCounter == 0) {
             firstTime = System.currentTimeMillis();
             readCounter++;
-        } else if (readCounter == 2) {
-            final long secondTime = System.currentTimeMillis();
-            if (firstTime == secondTime) {
-                counterPositionAt = 0;
-            }
+        } else if (readCounter == 2 && firstTime == System.currentTimeMillis()) {
+//            final long secondTime = System.currentTimeMillis();
+//            if (firstTime == secondTime) {
+//                counterPositionAt = 0;
+//            }
+            counterPositionAt = 0;
+        } else if (readCounter == 2 && firstTime != System.currentTimeMillis()) {
+            firstTime = System.currentTimeMillis();
+            readCounter = 1;
         } else {
             readCounter++;
         }
+        
         return counterPositionAt;
     }
 

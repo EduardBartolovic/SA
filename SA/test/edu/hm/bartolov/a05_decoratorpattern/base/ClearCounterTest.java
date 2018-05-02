@@ -93,4 +93,17 @@ public class ClearCounterTest {
         assertEquals(0,counter.read());
     }
     
+    @Test
+    public void Test4() throws InterruptedException {
+        Counter counter = new ClearCounter();
+//        assertEquals(0,counter.read());
+        assertEquals(1,counter.tick().read());
+        assertEquals(1,counter.read());
+        Thread.sleep(10);
+        assertEquals(1,counter.read());
+        assertEquals(1,counter.read());
+        assertEquals(0,counter.read());
+
+    }
+    
 }
