@@ -10,13 +10,37 @@ import edu.hm.bartolov.a05_decoratorpattern.filter.LimitedCounter;
 import edu.hm.bartolov.a05_decoratorpattern.filter.PrintCounter;
 import edu.hm.bartolov.a05_decoratorpattern.filter.ShiftedCounter;
 import edu.hm.bartolov.a05_decoratorpattern.filter.SlowCounter;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
 
 public class SwitchedCounterFactory extends CounterFactory{
     
-    private static final String PATH = "edu.hm.peither_bartolov.a05_decoratorpattern.";
     
-     private static final String PATHFILTER = "edu.hm.peither_bartolov.a05_decoratorpattern.filter.";
+    
+    private final Map<String,BiFunction<Counter,Integer,Counter>> filterMap;
+    
+    private final Map<String,Function<int[],Counter>> baseMap;
+
+    public SwitchedCounterFactory() {
+        baseMap = new HashMap<>();
+        filterMap = new HashMap<>();
+        baseMap.put("UCounter",(args)->{ if(args.length != 0) throw new IllegalArgumentException(); return new UCounter();});
+        baseMap.put("LoopCounter",(args)->{if(args.length == 0) throw new IllegalArgumentException(); return new LoopCounter(args);});
+        baseMap.put("NaryCounter",(args)->{if(args.length != 1) throw new IllegalArgumentException(); return new NaryCounter(args[0]);});
+        baseMap.put("ClearCounter",(args)->{if(args.length != 0) throw new IllegalArgumentException(); return new ClearCounter();});
+        
+        filterMap.put("JumpCounter",(counter,arg)->{return new JumpCounter(counter,arg);});
+        filterMap.put("LimitedCounter",(counter,arg)->{return new LimitedCounter(counter,arg);});
+        filterMap.put("PrintCounter",(counter,arg)->{return new PrintCounter(counter,(char)arg.intValue());});
+        filterMap.put("ShiftedCounter",(counter,arg)->{return new ShiftedCounter(counter,arg);});
+        filterMap.put("SlowCounter",(counter,arg)->{return new SlowCounter(counter,arg);});
+        
+    }
+    
+    
     
      /**
       * for base Counter.
@@ -26,30 +50,10 @@ public class SwitchedCounterFactory extends CounterFactory{
       */
     public Counter make(String typename, int... args) {
         
-        final String type;
-        if(typename.contains("Counter")){
-            type = typename;
-        }else{
-            type = typename+"Counter";
-        }
+        final String type = addCounter(typename);
         
-        if("UCounter".equals(type)){
-            if(args.length != 0)
-                throw new IllegalArgumentException();
-            return new UCounter();
-        }else if("LoopCounter".equals(type)){
-            if(args.length < 1)
-                throw new IllegalArgumentException();
-            return new LoopCounter(args);
-        }else if("NaryCounter".equals(type)){
-            if(args.length != 1)
-                throw new IllegalArgumentException();
-            return new NaryCounter(args[0]);
-        }else if("ClearCounter".equals(type)){
-            if(args.length != 0)
-                throw new IllegalArgumentException();
-            return new ClearCounter();
-        }
+        if(baseMap.containsKey(type))
+            return baseMap.get(type).apply(args);
         
         throw new IllegalArgumentException();
     }
@@ -62,29 +66,20 @@ public class SwitchedCounterFactory extends CounterFactory{
      * @return
      */
     public Counter make(Counter counter,String typename, int arg) {
-                
         
+        final String type = addCounter(typename);
         
-        final String type;
-        if(typename.contains("Counter")){
-            type = typename;
-        }else{
-            type = typename+"Counter";
-        }
-        
-        if("JumpCounter".equals(type)){
-            return new JumpCounter(counter,arg);
-        }else if("LimitedCounter".equals(type)){
-            return new LimitedCounter(counter,arg);
-        }else if("PrintCounter".equals(type)){
-            return new PrintCounter(counter,(char)arg);
-        }else if("ShiftedCounter".equals(type)){
-            return new ShiftedCounter(counter,arg);
-        }else if("SlowCounter".equals(type)){
-            return new SlowCounter(counter,arg);
-        }
+        if(filterMap.containsKey(type))
+            return filterMap.get(type).apply(counter,arg);
         
         throw new IllegalArgumentException();
+    }
+    
+    private String addCounter(String typename){
+        if(typename.contains("Counter"))
+            return typename;
+        
+        return typename+"Counter";
     }
     
 }

@@ -1,5 +1,10 @@
 package edu.hm.bartolov.a05_decoratorpattern.base;
 
+import edu.hm.bartolov.a05_decoratorpattern.filter.JumpCounter;
+import edu.hm.bartolov.a05_decoratorpattern.filter.PrintCounter;
+import edu.hm.bartolov.a05_decoratorpattern.filter.SelectedCounter;
+import edu.hm.bartolov.a05_decoratorpattern.filter.ShiftedCounter;
+import edu.hm.bartolov.a05_decoratorpattern.filter.SlowCounter;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import org.junit.Test;
