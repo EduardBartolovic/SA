@@ -69,4 +69,40 @@ public class SelectedCounterTest {
         assertEquals(45,counter.tick().tick().tick().read());
         assertEquals(60,counter.tick().tick().tick().read());
     }
+    
+    @Test(expected = NullPointerException.class)
+    public void testTick0() {
+        final Counter counter = new SelectedCounter(null, n-> n%3==0);
+    }
+
+    @Test
+    public void testTick7() {
+        final Counter counter = new SelectedCounter(new UCounter(),n-> n%2 == 0);
+        System.out.println(0%2);
+
+        assertEquals(0,counter.read());
+        assertEquals(2,counter.tick().read());
+        assertEquals(4,counter.tick().read());
+        assertEquals(6,counter.tick().read());
+        assertEquals(8,counter.tick().read());
+        assertEquals(10,counter.tick().read());
+
+
+    }
+
+    @Test
+    public void testTick8() {
+        final Counter counter = new SelectedCounter(new UCounter(), n -> n > 1000);
+        assertEquals(1001, counter.read());
+        assertEquals(1002, counter.tick().read());
+    }
+
+    @Test
+    public void testTick9() {
+        final Counter counter = new SelectedCounter(new UCounter(),n-> n%3==1);
+        assertEquals(1,counter.read());
+        assertEquals(4,counter.tick().read());
+        assertEquals(7,counter.tick().read());
+        assertEquals(10,counter.tick().read());
+    }
 }

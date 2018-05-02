@@ -40,30 +40,5 @@ public class LimitedCounter extends Filter{
         return this;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.limit;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final LimitedCounter other = (LimitedCounter) obj;
-        if (this.limit != other.limit) {
-            return false;
-        }
-        return super.equals(obj);
-    }
-    
     
 }

@@ -1,7 +1,6 @@
 package edu.hm.peither_bartolov.a05_decoratorpattern.base;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
-import java.util.Arrays;
 import java.util.NoSuchElementException;
 
 /**
@@ -45,31 +44,4 @@ public class LoopCounter implements Counter{
         return this;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 47 * hash + Arrays.hashCode(this.list);
-        hash = 47 * hash + this.currentPosition;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final LoopCounter other = (LoopCounter) obj;
-        if (this.currentPosition != other.currentPosition) {
-            return false;
-        }
-        return Arrays.equals(this.list, other.list);
-    }
-    
-    
 }

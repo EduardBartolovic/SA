@@ -92,35 +92,6 @@ public class NaryCounter implements Counter{
         return currentPosition;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 5;
-        hash = 19 * hash + this.numberSystem;
-        hash = 19 * hash + this.currentPositionAt;
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final NaryCounter other = (NaryCounter) obj;
-        if (this.numberSystem != other.numberSystem) {
-            return false;
-        }
-        if (this.currentPositionAt != other.currentPositionAt) {
-            return false;
-        }
-        return true;
-    }
-    
     
     
 }

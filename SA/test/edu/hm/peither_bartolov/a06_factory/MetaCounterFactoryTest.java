@@ -160,38 +160,68 @@ public class MetaCounterFactoryTest {
         assertEquals(1,counter.tick().read());
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMake7UFalse() throws Exception {
         final MetaCounterFactory factory = new MetaCounterFactory();
         final Counter counter = factory.make("U",5);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
         
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMake8UFalse() throws Exception {
         final MetaCounterFactory factory = new MetaCounterFactory();
         final Counter counter = factory.make("Loop");
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
         
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMake9UFalse() throws Exception {
         final MetaCounterFactory factory = new MetaCounterFactory();
         final Counter counter = factory.make("Nary");
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
         
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMake10False() throws Exception {
         final MetaCounterFactory factory = new MetaCounterFactory();
         final Counter counter = factory.make("42",5);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
         
     }
     
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testMake18False() throws Exception {
         final MetaCounterFactory factory = new MetaCounterFactory();
         final Counter counter = factory.make(new UCounter(),"42",3);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
         
     }
     
@@ -235,47 +265,89 @@ public class MetaCounterFactoryTest {
         
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test 
     public void MetaCounterFactoryTest1() throws InterruptedException, ReflectiveOperationException, ReflectiveOperationException {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("U",0);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test 
     public void MetaCounterFactoryTest2() throws InterruptedException, ReflectiveOperationException {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Clear",0);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void MetaCounterFactoryTest3() throws InterruptedException, ReflectiveOperationException {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Loop");
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void MetaCounterFactoryTest4() throws InterruptedException, ReflectiveOperationException {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Nary");
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void MetaCounterFactoryTest5() throws InterruptedException, ReflectiveOperationException {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Nary",1,2);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test 
     public void MetaCounterFactoryTest6() throws InterruptedException, ReflectiveOperationException {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Except");
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test (expected = IllegalArgumentException.class)
+    @Test
     public void MetaCounterFactoryTest7()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("U");
         counter = factory.make(counter,"Except", 0);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
     //------------------------------------------------------------------------------------------------------------------
@@ -287,11 +359,17 @@ public class MetaCounterFactoryTest {
         counter = factory.make(counter,"LimitedCounter", 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void LimitedCounter2()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Loop", 0,1,2,3);
         counter = factory.make(counter,"LimitedCounter", -1);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
     @Test
@@ -399,11 +477,17 @@ public class MetaCounterFactoryTest {
 
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void JumpCounter2()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Jump", -1);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
     @Test
@@ -513,11 +597,17 @@ public class MetaCounterFactoryTest {
         counter = factory.make(counter,"Shifted", 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void ShiftedCounter2()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Shifted", -1);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
     @Test
@@ -571,18 +661,30 @@ public class MetaCounterFactoryTest {
 
     //------------------------------------------------------------------------------------------------------------------
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void SlowCounter1()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Slow", 0);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void SlowCounter2()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Loop",1,2,3);
         counter = factory.make(counter,"Slow", -1);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
     @Test
@@ -776,22 +878,40 @@ public class MetaCounterFactoryTest {
         assertEquals(12, counter.tick().read());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void NaryCounter2()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Nary",0);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void NaryCounter3()  {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Nary",1);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void NaryCounter4() {
         MetaCounterFactory factory = new MetaCounterFactory();
         Counter counter = factory.make("Nary",10);
+        assertEquals(0, counter.read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
+        assertEquals(0, counter.tick().read());
     }
 
     @Test
