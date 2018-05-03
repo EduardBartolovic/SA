@@ -36,17 +36,10 @@ public class ReflectiveCounterFactory {
         try{
             if(args.length == 0)
                 counter = Counter.class.cast(constructor.newInstance());
-            else if(args.length == 1)
-                if(constructor.isVarArgs())
-                    counter = Counter.class.cast(constructor.newInstance(args));
-                else
-                    counter = Counter.class.cast(constructor.newInstance(args[0]));
+            else if(constructor.isVarArgs())
+                counter = Counter.class.cast(constructor.newInstance(args));
             else
-                counter = Counter.class.cast(Stream.of(type.getDeclaredConstructors())
-                                .peek(ctor -> ctor.setAccessible(true))
-                                .findAny()
-                                .orElseThrow(IllegalArgumentException::new)                               
-                                .newInstance(args));
+                counter = Counter.class.cast(constructor.newInstance(args[0]));
             
         }catch(ReflectiveOperationException exe){
             throw new IllegalArgumentException();
@@ -65,24 +58,16 @@ public class ReflectiveCounterFactory {
      */
     public Counter make(Counter counter,String typename, int arg) throws ReflectiveOperationException {
         
-        final Class<?> type;
-        try{
-            if(typename.contains("Counter")){
-                type = Class.forName(PATHFILTER+typename);
-            }else{
-                type = Class.forName(PATHFILTER+typename+"Counter");
-            }
-        }catch(ClassNotFoundException exce){
-            throw new IllegalArgumentException("class does not exist");
-        }
+        final Class<?> type = getClassType(typename);
+        
         final Counter newCounter;
         try{
             newCounter = Counter.class.cast(Stream.of(type.getDeclaredConstructors())
+                                    .filter(ctor -> ctor.getParameterTypes().length == 2)
                                     .peek(ctor -> ctor.setAccessible(true))
                                     .findAny()
                                     .orElseThrow(IllegalArgumentException::new)                               
-                                    .newInstance(counter,arg)
-        );
+                                    .newInstance(counter,arg));
         
         }catch(ReflectiveOperationException exe){
             throw new IllegalArgumentException();
@@ -90,4 +75,19 @@ public class ReflectiveCounterFactory {
         return newCounter;
     }
     
+    
+    private Class<?> getClassType(String typename){
+        final Class<?> type;
+        try{
+            if(typename.contains("Counter"))
+                type =  Class.forName(PATHFILTER+typename);
+            else
+                type = Class.forName(PATHFILTER+typename+"Counter");
+            
+        }catch(ClassNotFoundException exce){
+            throw new IllegalArgumentException("class does not exist");
+        }
+        
+        return type;
+    }
 }
