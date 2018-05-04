@@ -8,7 +8,7 @@ import java.util.stream.Stream;
  * A reflection Factory.
  * @author Felix Peither, Eduard Bartolovic
  */
-public class ReflectiveCounterFactory {
+public class ReflectiveCounterFactory extends CounterFactory{
     
     private static final String PATH = "edu.hm.peither_bartolov.a05_decoratorpattern.base.";
     

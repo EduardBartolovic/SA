@@ -17,9 +17,7 @@ import java.util.function.Function;
 
 
 public class SwitchedCounterFactory extends CounterFactory{
-    
-    
-    
+
     private final Map<String,BiFunction<Counter,Integer,Counter>> filterMap;
     
     private final Map<String,Function<int[],Counter>> baseMap;
@@ -55,7 +53,7 @@ public class SwitchedCounterFactory extends CounterFactory{
         if(baseMap.containsKey(type))
             return baseMap.get(type).apply(args);
         
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("" + args[0]);
     }
     
     /**
