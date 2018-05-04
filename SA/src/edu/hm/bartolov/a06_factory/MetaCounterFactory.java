@@ -23,7 +23,7 @@ public class MetaCounterFactory extends CounterFactory{
                 counter = rFactory.make(typename,args);
             }catch(ReflectiveOperationException | IllegalArgumentException refIllExce){
                 final FakeCounterFactory fFactory = new FakeCounterFactory();
-                counter = fFactory.make();
+                counter = fFactory.make("");
             }
             
         }
@@ -38,7 +38,7 @@ public class MetaCounterFactory extends CounterFactory{
             return sFactory.make(counter,typename, arg);
         }catch(IllegalArgumentException illExce){
             final FakeCounterFactory fFactory = new FakeCounterFactory();
-            return fFactory.make();
+            return fFactory.make("");
         }
         
     }

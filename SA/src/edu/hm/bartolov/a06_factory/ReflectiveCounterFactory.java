@@ -4,12 +4,15 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import java.lang.reflect.Constructor;
 import java.util.stream.Stream;
 
-
+/**
+ * A reflection Factory.
+ * @author Felix Peither, Eduard Bartolovic
+ */
 public class ReflectiveCounterFactory {
     
     private static final String PATH = "edu.hm.peither_bartolov.a05_decoratorpattern.base.";
     
-     private static final String PATHFILTER = "edu.hm.peither_bartolov.a05_decoratorpattern.filter.";
+    private static final String PATHFILTER = "edu.hm.peither_bartolov.a05_decoratorpattern.filter.";
     
      /**
       * for base Counter.

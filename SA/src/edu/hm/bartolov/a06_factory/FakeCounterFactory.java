@@ -10,10 +10,6 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
 public class FakeCounterFactory extends CounterFactory{
     
     
-    public Counter make() {
-        return new FakeCounter();
-    }
-    
     public Counter make(String string,int... args) {
         return new FakeCounter();
     }
