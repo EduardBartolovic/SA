@@ -9,6 +9,12 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
  */
 public class MetaCounterFactory extends CounterFactory{
     
+    /**
+     * trying to producing Counter.
+     * @param typename string
+     * @param args varargs
+     * @return counterCounter
+     */
     public Counter make(String typename, int... args) {
         
        
@@ -30,6 +36,13 @@ public class MetaCounterFactory extends CounterFactory{
         return counter;
     }
     
+     /**
+     * trying to producing decorated Counter.
+     * @param counter Counter
+     * @param typename string
+     * @param arg int
+     * @return counterCounter
+     */
     public Counter make(Counter counter,String typename, int arg) {
         
         final SwitchedCounterFactory sFactory = new SwitchedCounterFactory();

@@ -10,44 +10,21 @@ import java.util.List;
  */
 public abstract class CounterFactory {
     
-    private static List<CounterFactory> myFactories = new ArrayList<>();
+    private static final List<CounterFactory> myFactories = new ArrayList<>();
     
     static CounterFactory get(){
-        String type = System.getProperty("Factory.type");
+        
+        final String type = System.getProperty("Factory.type");
             
         if (type == null) {
             throw new IllegalArgumentException("no valid Factory type");
         }
         
-        type = addCounterFactory(type);
-        
-        if (!isValidFactoryType(type)) {
-            throw new IllegalArgumentException("Please enter a valid Factory type.");
-        }
-        
-        return getMyFactory(type);
-    }
-    
-    private static boolean isValidFactoryType(String typeName) {
-        boolean isValid = false;
-        
-        switch (typeName) {
-            case "FakeCounterFactory":
-                isValid = true;
-                break;
-            case "SwitchedCounterFactory":
-                isValid = true;
-                break;
-            case "ReflectiveCounterFactory":
-                isValid = true;
-                break;
-        }
-        
-        return isValid;
+        return getMyFactory(addCounterFactory(type));
     }
     
     private static CounterFactory getMyFactory(String factoryType) {
-        CounterFactory myFactory = null;
+        CounterFactory myFactory;
         
         switch (factoryType) {
             case "FakeCounterFactory":
@@ -57,22 +34,18 @@ public abstract class CounterFactory {
                 myFactory = new SwitchedCounterFactory();
                 break;
             case "ReflectiveCounterFactory":
-                myFactory = new ReflectiveCounterFactory();                
+                myFactory = new ReflectiveCounterFactory();
                 break;
+            default:
+                throw new IllegalArgumentException("Please enter a valid Factory type.");
         }
         
-        if (!myFactories.contains(myFactory)) {
-            myFactories.add(myFactory);
-        } else {
+        
+        if (myFactories.contains(myFactory)) {
             myFactory = myFactories.get(myFactories.indexOf(myFactory));
+        } else {
+            myFactories.add(myFactory);
         }
-//        for (CounterFactory factory: myFactories) {
-//            if (myFactory.getClass() == factory.getClass()) {
-//                myFactory = factory;
-//            } else {
-//                myFactories.add(myFactory);
-//            }
-//        }
         
         return myFactory;
     }
