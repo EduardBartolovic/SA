@@ -1,5 +1,6 @@
 package edu.hm.bartolov.a06_factory;
 
+import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public abstract class CounterFactory {
     
     private static final List<CounterFactory> myFactories = new ArrayList<>();
     
-    static CounterFactory get(){
+    public static CounterFactory get(){
         
         final String type = System.getProperty("Factory.type");
             
@@ -57,5 +58,26 @@ public abstract class CounterFactory {
         return typename+"CounterFactory";
     }
             
-            
+        
+    /**
+     * producing Counter.
+     * @param string string
+     * @param args varargs
+     * @return fakeCounter
+     */
+    public Counter make(String string,int... args) throws ReflectiveOperationException {
+        return null;
+    }
+    
+    /**
+     * producing Counter.
+     * @param counter
+     * @param string
+     * @param arg
+     * @return fakeCounter
+     */
+    public Counter make(Counter counter,String string,int arg) throws ReflectiveOperationException {
+        return null;
+    }
+    
 }
