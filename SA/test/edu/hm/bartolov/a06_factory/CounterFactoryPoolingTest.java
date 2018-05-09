@@ -10,6 +10,7 @@ public class CounterFactoryPoolingTest {
     @Test (expected = IllegalArgumentException.class)
     public void CounterFactoryMissingPropertyTest(){
         //arrange
+        System.clearProperty("Factory.type");
         final CounterFactory sut = CounterFactory.get();
     }
 

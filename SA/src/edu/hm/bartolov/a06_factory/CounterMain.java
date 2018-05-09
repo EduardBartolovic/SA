@@ -20,7 +20,7 @@ import java.util.stream.Stream;
  */
 public class CounterMain {
     /** Factory fuer Counter. */
-    private static final SwitchedCounterFactory FACTORY = new SwitchedCounterFactory();
+//    private static final SwitchedCounterFactory FACTORY = new SwitchedCounterFactory();
     private static CounterFactory counterFactory; // = CounterFactory.get();
     /**
      * Entry point. Baut aus den Kommandozeilenargumenten einen Counter zusammen.
@@ -31,12 +31,12 @@ public class CounterMain {
      * 2. und weitere: Typ eines Filterzaehlers, Komma und eine ganze Zahl,
      * die an den betreffenden Konstruktor geht.
      */
-    public static void main(String... args) {
-        System.setProperty("Factory.type", "Fake");
+    public static void main(String... args) throws Exception {
+        System.setProperty("Factory.type", "Switched");
         counterFactory = CounterFactory.get();
-        args = new String[2];//{"U", "Limited,2"};
-        args[0] = "U";
-        args[1] = "Limited,2";
+        args = new String[]{"U", "Limited,2"};
+//        args[0] = "Loop";
+//        args[1] = "1,2,3";
         System.out.println("diese klasse: " + counterFactory.getClass());
         testDrive(build(args));
     }
@@ -46,7 +46,7 @@ public class CounterMain {
      * @param args Ein oder mehr Strings im Format Typname[,arg1,arg2,...].
      * @return Neuer Zaehler.
      */
-    private static Counter build(String... args) {
+    private static Counter build(String... args) throws Exception {
         if(args == null || args.length == 0)
             throw new IllegalArgumentException("no args supplied");
 
@@ -61,8 +61,8 @@ public class CounterMain {
                                   .mapToInt(Integer::parseInt)
                                   .toArray();
             counter = counter == null?
-                      FACTORY.make(typename, numbers):            // Start mit einem elementaren Zaehler
-                      FACTORY.make(counter, typename, numbers[0]); // Filterzaehler erzeugen und anfuegen
+                      counterFactory.make(typename, numbers):            // Start mit einem elementaren Zaehler
+                      counterFactory.make(counter, typename, numbers[0]); // Filterzaehler erzeugen und anfuegen
         }
 
         return counter;

@@ -61,6 +61,9 @@ public abstract class CounterFactory {
             case "ReflectiveCounterFactory":
                 myFactory = new ReflectiveCounterFactory();
                 break;
+            case "MetaCounterFactory":
+                myFactory = new MetaCounterFactory();
+                break;
             default:
                 throw new IllegalArgumentException("Please enter a valid Factory type.");
         }
