@@ -1,8 +1,12 @@
 package edu.hm.bartolov.a06_factory;
 
+import edu.hm.bartolov.a05_decoratorpattern.base.LoopCounter;
+import edu.hm.bartolov.a05_decoratorpattern.base.NaryCounter;
+import edu.hm.bartolov.a05_decoratorpattern.filter.LimitedCounter;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 import edu.hm.cs.rs.arch.a05_decorator.UCounter;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 /**
@@ -799,7 +803,176 @@ public class SwitchedCounterFactoryTest {
         assertEquals(11, counter.tick().read());
     }
 
+    /**
+     * MAIN COUNTER PARAMETER EXCEPTION TESTS
+     */
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions1(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("U",0);
+    }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions2(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("UCounter",null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions3(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("LoopCounter");
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions4(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Loop", null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions5(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("NaryCounter");
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions6(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Nary", null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions7(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("NaryCounter", 0);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions8(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("NaryCounter", 15);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions9(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("NaryCounter", 1,2);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions10(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("ClearCounter", null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions11(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Clear", 1);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions12(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Clear", 1,2);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryMainCounterExceptions13(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("U");
+        final Counter dec = sut.make(result,"asdas",3);
+    }
+
+    /**
+     * ILLEGAL CLASS NAMES
+     */
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryIllegalClassNames1(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Super");
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryIllegalClassNames2(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Duper", null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryIllegalClassNames3(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make(null, null);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void SwitchedFactoryIllegalClassNames4(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Trallalalalaaa", 2);
+    }
+
+
+    @Test
+    public void SwitchedFactory1(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("Loop", 1,2,3);
+        assertTrue(result instanceof LoopCounter);
+    }
+
+    @Test
+    public void SwitchedFactory2(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make("NaryCounter", 3);
+        assertTrue(result instanceof NaryCounter);
+    }
+
+    @Test
+    public void SwitchedFactory3(){
+        //arrange
+        final SwitchedCounterFactory sut = new SwitchedCounterFactory();
+        //act
+        final Counter result = sut.make(sut.make("Loop", 1,2,3),"LimitedCounter", 2);
+        assertTrue(result instanceof LimitedCounter);
+    }
     
     
     
