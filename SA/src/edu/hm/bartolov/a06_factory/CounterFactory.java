@@ -1,9 +1,7 @@
 package edu.hm.bartolov.a06_factory;
 
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,13 +14,14 @@ public abstract class CounterFactory {
 //    private static final List<CounterFactory> myFactories = new ArrayList<>();
     
     /**
-     * 
+     * A map where already produced Factories are stored.
      */
     private static final Map<String, CounterFactory> myFactoriesMap = new HashMap<>();
     
     /**
+     * Get a Factory with the System property Factory.type as a resource.
      * 
-     * @return 
+     * @return a new Factory or an already produced one.
      */
     public static CounterFactory get(){
         
@@ -36,9 +35,11 @@ public abstract class CounterFactory {
     }
     
     /**
+     * Gets a Factory from a factory type.
      * 
-     * @param factoryType
-     * @return 
+     * @param factoryType The type of factory which is to be get as a String
+     * @return new Factory, if there already is one in the myFactoriesMap
+     * returns the already produces Factory
      */
     private static CounterFactory getMyFactory(String factoryType) {
         CounterFactory myFactory;
@@ -74,6 +75,8 @@ public abstract class CounterFactory {
     }
     
     /**
+     * If absent, adds the suffix "CounterFactory" to the type name of the 
+     * System property.
      * 
      * @param typename
      * @return 
@@ -87,7 +90,10 @@ public abstract class CounterFactory {
             
         
     /**
-     * producing Counter.
+     * Abstract make method.
+     * 
+     * To be implemented by the child classes.
+     * 
      * @param string string
      * @param args varargs
      * @return fakeCounter
@@ -96,7 +102,10 @@ public abstract class CounterFactory {
     public abstract Counter make(String string,int... args) throws ReflectiveOperationException;
     
     /**
-     * producing Counter.
+     * Abstract make method.
+     * 
+     * To be implemented by the child classes.
+     * 
      * @param counter
      * @param string
      * @param arg
