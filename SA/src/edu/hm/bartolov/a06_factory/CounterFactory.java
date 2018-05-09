@@ -19,6 +19,31 @@ public abstract class CounterFactory {
     private static final Map<String, CounterFactory> myFactoriesMap = new HashMap<>();
     
     /**
+     * Abstract make method.
+     * 
+     * To be implemented by the child classes.
+     * 
+     * @param string string
+     * @param args varargs
+     * @return fakeCounter
+     * @throws java.lang.ReflectiveOperationException
+     */
+    public abstract Counter make(String string,int... args) throws ReflectiveOperationException;
+    
+    /**
+     * Abstract make method.
+     * 
+     * To be implemented by the child classes.
+     * 
+     * @param counter
+     * @param string
+     * @param arg
+     * @return fakeCounter
+     * @throws java.lang.ReflectiveOperationException
+     */
+    public abstract Counter make(Counter counter,String string,int arg) throws ReflectiveOperationException;
+    
+    /**
      * Get a Factory with the System property Factory.type as a resource.
      * 
      * @return a new Factory or an already produced one.
@@ -78,8 +103,8 @@ public abstract class CounterFactory {
      * If absent, adds the suffix "CounterFactory" to the type name of the 
      * System property.
      * 
-     * @param typename
-     * @return 
+     * @param typename The value of the System property Factory.type
+     * @return the exdented type name if "CounterFactory" is absend
      */
     private static String addCounterFactory(String typename){
         if(typename.contains("CounterFactory"))
@@ -87,31 +112,4 @@ public abstract class CounterFactory {
         
         return typename+"CounterFactory";
     }
-            
-        
-    /**
-     * Abstract make method.
-     * 
-     * To be implemented by the child classes.
-     * 
-     * @param string string
-     * @param args varargs
-     * @return fakeCounter
-     * @throws java.lang.ReflectiveOperationException
-     */
-    public abstract Counter make(String string,int... args) throws ReflectiveOperationException;
-    
-    /**
-     * Abstract make method.
-     * 
-     * To be implemented by the child classes.
-     * 
-     * @param counter
-     * @param string
-     * @param arg
-     * @return fakeCounter
-     * @throws java.lang.ReflectiveOperationException
-     */
-    public abstract Counter make(Counter counter,String string,int arg) throws ReflectiveOperationException;
-    
 }
