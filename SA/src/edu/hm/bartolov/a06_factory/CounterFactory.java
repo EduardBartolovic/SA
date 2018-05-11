@@ -67,11 +67,8 @@ public abstract class CounterFactory {
      * returns the already produces Factory
      */
     private static CounterFactory getMyFactory(String factoryType) {
-        CounterFactory myFactory;
+        final CounterFactory myFactory;
         
-//        if (myFactoriesMap.keySet().contains(factoryType)) {
-//            myFactory = myFactoriesMap.get(factoryType);
-//        }
 
         if (myFactoriesMap.keySet().contains(factoryType)) {
             return myFactoriesMap.get(factoryType);

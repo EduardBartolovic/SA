@@ -9,14 +9,17 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
  */
 public class FakeCounterFactory extends CounterFactory{
     
+    private final FakeCounter fCounter = new FakeCounter();
+    
     /**
      * producing Counter.
      * @param string string
      * @param args varargs
      * @return fakeCounter
      */
+    @Override
     public Counter make(String string,int... args) {
-        return new FakeCounter();
+        return fCounter;
     }
     
     /**
@@ -26,8 +29,9 @@ public class FakeCounterFactory extends CounterFactory{
      * @param arg
      * @return fakeCounter
      */
+    @Override
     public Counter make(Counter counter,String string,int arg) {
-        return new FakeCounter();
+        return fCounter;
     }
     
     

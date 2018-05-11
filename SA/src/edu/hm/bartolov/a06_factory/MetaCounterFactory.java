@@ -15,6 +15,7 @@ public class MetaCounterFactory extends CounterFactory{
      * @param args varargs
      * @return counterCounter
      */
+    @Override
     public Counter make(String typename, int... args) {
         
        
@@ -43,6 +44,7 @@ public class MetaCounterFactory extends CounterFactory{
      * @param arg int
      * @return counterCounter
      */
+    @Override
     public Counter make(Counter counter,String typename, int arg) {
         
         final SwitchedCounterFactory sFactory = new SwitchedCounterFactory();

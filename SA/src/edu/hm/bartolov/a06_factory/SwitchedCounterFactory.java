@@ -46,14 +46,17 @@ public class SwitchedCounterFactory extends CounterFactory{
       * @param args
       * @return
       */
+    @Override
     public Counter make(String typename, int... args) {
+        if(args == null)
+            throw new IllegalArgumentException();
         
         final String type = addCounter(typename);
         
         if(baseMap.containsKey(type))
             return baseMap.get(type).apply(args);
         
-        throw new IllegalArgumentException("" + args[0]);
+        throw new IllegalArgumentException();
     }
     
     /**
@@ -63,6 +66,7 @@ public class SwitchedCounterFactory extends CounterFactory{
      * @param arg
      * @return
      */
+    @Override
     public Counter make(Counter counter,String typename, int arg) {
         
         final String type = addCounter(typename);
@@ -74,6 +78,9 @@ public class SwitchedCounterFactory extends CounterFactory{
     }
     
     private String addCounter(String typename){
+        if(typename==null)
+            throw new IllegalArgumentException();
+        
         if(typename.contains("Counter"))
             return typename;
         
