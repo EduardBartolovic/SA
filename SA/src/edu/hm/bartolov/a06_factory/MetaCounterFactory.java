@@ -4,7 +4,7 @@ package edu.hm.bartolov.a06_factory;
 import edu.hm.cs.rs.arch.a05_decorator.Counter;
 
 /**
- *
+ * will always produce a factory.
  * @author Eduard
  */
 public class MetaCounterFactory extends CounterFactory{
@@ -25,13 +25,9 @@ public class MetaCounterFactory extends CounterFactory{
             counter = sFactory.make(typename, args);
             
         }catch(IllegalArgumentException illExce){
-            try{
-                final ReflectiveCounterFactory rFactory = new ReflectiveCounterFactory();
-                counter = rFactory.make(typename,args);
-            }catch(ReflectiveOperationException | IllegalArgumentException refIllExce){
+
                 final FakeCounterFactory fFactory = new FakeCounterFactory();
                 counter = fFactory.make("");
-            }
             
         }
         return counter;
@@ -47,15 +43,15 @@ public class MetaCounterFactory extends CounterFactory{
     @Override
     public Counter make(Counter counter,String typename, int arg) {
         
-        final SwitchedCounterFactory sFactory = new SwitchedCounterFactory();
+        Counter factory;
         
         try{
-            return sFactory.make(counter,typename, arg);
+            factory = new SwitchedCounterFactory().make(counter,typename, arg);
         }catch(IllegalArgumentException illExce){
-            final FakeCounterFactory fFactory = new FakeCounterFactory();
-            return fFactory.make("");
+            factory = new FakeCounterFactory().make("");
         }
         
+        return factory;
     }
     
 }

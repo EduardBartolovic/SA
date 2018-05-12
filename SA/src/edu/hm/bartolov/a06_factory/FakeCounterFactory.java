@@ -9,6 +9,9 @@ import edu.hm.cs.rs.arch.a05_decorator.Counter;
  */
 public class FakeCounterFactory extends CounterFactory{
     
+    /**
+     * FakeCounter Instance.
+     */
     private final FakeCounter fCounter = new FakeCounter();
     
     /**
@@ -36,9 +39,9 @@ public class FakeCounterFactory extends CounterFactory{
     
     
     /**
-     * private fakeCounter class
+     * private FakeCounter class.
      */
-    private class FakeCounter implements Counter{
+    private static class FakeCounter implements Counter{
 
         @Override
         public int read() {

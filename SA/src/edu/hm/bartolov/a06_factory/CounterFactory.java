@@ -10,13 +10,11 @@ import java.util.Map;
  * @author Eduard Bartolovic, Felix Peither
  */
 public abstract class CounterFactory {
-    
-//    private static final List<CounterFactory> myFactories = new ArrayList<>();
-    
+      
     /**
      * A map where already produced Factories are stored.
      */
-    private static final Map<String, CounterFactory> myFactoriesMap = new HashMap<>();
+    private static final Map<String, CounterFactory> FACTORYMAPS = new HashMap<>();
     
     /**
      * Abstract make method.
@@ -26,7 +24,7 @@ public abstract class CounterFactory {
      * @param string string
      * @param args varargs
      * @return fakeCounter
-     * @throws java.lang.ReflectiveOperationException
+     * @throws ReflectiveOperationException
      */
     public abstract Counter make(String string,int... args) throws ReflectiveOperationException;
     
@@ -35,11 +33,11 @@ public abstract class CounterFactory {
      * 
      * To be implemented by the child classes.
      * 
-     * @param counter
-     * @param string
-     * @param arg
+     * @param counter Counter
+     * @param string string
+     * @param arg int
      * @return fakeCounter
-     * @throws java.lang.ReflectiveOperationException
+     * @throws ReflectiveOperationException
      */
     public abstract Counter make(Counter counter,String string,int arg) throws ReflectiveOperationException;
     
@@ -63,17 +61,15 @@ public abstract class CounterFactory {
      * Gets a Factory from a factory type.
      * 
      * @param factoryType The type of factory which is to be get as a String
-     * @return new Factory, if there already is one in the myFactoriesMap
+     * @return new Factory, if there already is one in the FACTORYMAPS
      * returns the already produces Factory
      */
     private static CounterFactory getMyFactory(String factoryType) {
-        final CounterFactory myFactory;
-        
 
-        if (myFactoriesMap.keySet().contains(factoryType)) {
-            return myFactoriesMap.get(factoryType);
-        }
+        if (FACTORYMAPS.keySet().contains(factoryType))
+            return FACTORYMAPS.get(factoryType);
         
+        final CounterFactory myFactory;
         switch (factoryType) {
             case "FakeCounterFactory":
                 myFactory = new FakeCounterFactory();
@@ -81,9 +77,9 @@ public abstract class CounterFactory {
             case "SwitchedCounterFactory":
                 myFactory = new SwitchedCounterFactory();
                 break;
-            case "ReflectiveCounterFactory":
-                myFactory = new ReflectiveCounterFactory();
-                break;
+//            case "ReflectiveCounterFactory":
+//                myFactory = new ReflectiveCounterFactory();
+//                break;
             case "MetaCounterFactory":
                 myFactory = new MetaCounterFactory();
                 break;
@@ -91,7 +87,7 @@ public abstract class CounterFactory {
                 throw new IllegalArgumentException("Please enter a valid Factory type.");
         }
         
-        myFactoriesMap.put(factoryType, myFactory);
+        FACTORYMAPS.put(factoryType, myFactory);
         
         return myFactory;
     }
