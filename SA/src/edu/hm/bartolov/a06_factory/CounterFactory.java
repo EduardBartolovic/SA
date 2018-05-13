@@ -24,7 +24,7 @@ public abstract class CounterFactory {
      * @param string string
      * @param args varargs
      * @return fakeCounter
-     * @throws ReflectiveOperationException
+     * @throws ReflectiveOperationException for the reflective counter
      */
     public abstract Counter make(String string,int... args) throws ReflectiveOperationException;
     
@@ -37,7 +37,7 @@ public abstract class CounterFactory {
      * @param string string
      * @param arg int
      * @return fakeCounter
-     * @throws ReflectiveOperationException
+     * @throws ReflectiveOperationException for the reflective counter
      */
     public abstract Counter make(Counter counter,String string,int arg) throws ReflectiveOperationException;
     
