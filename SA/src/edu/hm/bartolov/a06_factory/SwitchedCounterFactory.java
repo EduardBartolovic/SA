@@ -22,6 +22,51 @@ import java.util.function.Function;
 public class SwitchedCounterFactory extends CounterFactory{
 
     /**
+     * Function to produce Counter.
+     */
+    private static final Function<int[],Counter> UCOUNTERFACTORY = (int... args) -> {
+        if(args.length == 0)
+            return new UCounter();
+        
+        throw new IllegalArgumentException();
+    };
+    
+    /**
+     * Function to produce Counter.
+     */
+    private static final Function<int[],Counter> LOOPCOUNTERFACTORY = (int... args) -> {
+        if(args.length != 0)
+            return new LoopCounter(args);
+        
+        throw new IllegalArgumentException();
+    };
+    
+    /**
+     * Function to produce Counter.
+     */
+    private static final Function<int[],Counter> NARYCOUNTERFACTORY = (int... args) -> {
+        if(args.length == 1)
+            return new NaryCounter(args[0]);
+        
+        throw new IllegalArgumentException();
+    };
+    
+    /**
+     * Function to produce Counter.
+     */
+    private static final Function<int[],Counter> CLEARCOUNTERFACTORY = (int... args) -> {
+        if(args.length == 0)
+            return new ClearCounter();
+        
+        throw new IllegalArgumentException();
+    };    
+    
+    /**
+     * BiFunction to produce FilterCounter.
+     */
+    private static final BiFunction<Counter,Integer,Counter> PRINTCOUNTERFACTORY = (Counter counter, Integer arg) -> new PrintCounter(counter,(char)arg.intValue());
+    
+    /**
      * filter Counters.
      */
     private final Map<String,BiFunction<Counter,Integer,Counter>> filterMap;
@@ -47,28 +92,24 @@ public class SwitchedCounterFactory extends CounterFactory{
      * filling Maps.
      */
     private void fillFilterMap(){
-        filterMap.put("JumpCounter",(counter,arg)->{return new JumpCounter(counter,arg);});
-        filterMap.put("LimitedCounter",(counter,arg)->{return new LimitedCounter(counter,arg);});
-        filterMap.put("PrintCounter",(counter,arg)->{return new PrintCounter(counter,(char)arg.intValue());});
-        filterMap.put("ShiftedCounter",(counter,arg)->{return new ShiftedCounter(counter,arg);});
-        filterMap.put("SlowCounter",(counter,arg)->{return new SlowCounter(counter,arg);});
+        filterMap.put("JumpCounter",JumpCounter::new);
+        filterMap.put("LimitedCounter",LimitedCounter::new);
+        filterMap.put("PrintCounter",PRINTCOUNTERFACTORY);
+        filterMap.put("ShiftedCounter",ShiftedCounter::new);
+        filterMap.put("SlowCounter",SlowCounter::new);
     }
     
     /**
      * filling Maps.
      */
     private void fillBaseMap(){
-        baseMap.put("UCounter",args->{ if(args.length != 0) throw new IllegalArgumentException();
-        return new UCounter();});
+        baseMap.put("UCounter",UCOUNTERFACTORY);
         
-        baseMap.put("LoopCounter",args->{if(args.length == 0) throw new IllegalArgumentException();
-        return new LoopCounter(args);});
+        baseMap.put("LoopCounter",LOOPCOUNTERFACTORY);
         
-        baseMap.put("NaryCounter",args->{if(args.length != 1) throw new IllegalArgumentException();
-        return new NaryCounter(args[0]);});
+        baseMap.put("NaryCounter",NARYCOUNTERFACTORY);
         
-        baseMap.put("ClearCounter",args->{if(args.length != 0) throw new IllegalArgumentException(); 
-        return new ClearCounter();});    
+        baseMap.put("ClearCounter",CLEARCOUNTERFACTORY);    
     }
     
     
