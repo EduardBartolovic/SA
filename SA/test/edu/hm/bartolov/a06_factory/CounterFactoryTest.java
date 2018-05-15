@@ -17,8 +17,7 @@ public class CounterFactoryTest {
     
     @Test
     public void counterFactoryGetTest1() {
-        
-//        assertEquals(0,counter.read());
+        final CounterFactory cf = CounterFactory.get();
     }
     
 }
