@@ -39,8 +39,14 @@ public class OnlineConnectionThreaded implements Connection{
      */
     private final int portB;
     
+    /**
+     * socket Of a
+     */
     private Socket socketA;
     
+    /**
+     * socket Of b
+     */
     private Socket socketB;
 
     
@@ -109,15 +115,12 @@ public class OnlineConnectionThreaded implements Connection{
         outA.newLine();
         outA.flush();
         
-        final BufferedWriter outB = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));        
+        final BufferedWriter outB = new BufferedWriter(new OutputStreamWriter(socketB.getOutputStream(),Charset.defaultCharset()));        
         outB.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
         outB.newLine();
         outB.flush();
         
     }
-    
-    
-    
     
     private class GetConnection implements Callable<Socket>{
         
