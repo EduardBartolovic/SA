@@ -10,7 +10,7 @@ import java.io.IOException;
  * the game that is played.
  * @author Edo
  */
-public class MyGame implements Game{
+public class MyGameDeluxe implements Game{
     
     /**
      * state of the game.
@@ -35,7 +35,7 @@ public class MyGame implements Game{
     /**
      * constructor.
      */
-    public MyGame() {
+    public MyGameDeluxe() {
         scoreA = 0;
         scoreB = 0;
         round = 0;
