@@ -1,9 +1,9 @@
 package edu.hm.bartolov.a07_undercut_threaded;
 
-import edu.hm.bartolov.a03_undercut.Game;
+
 import edu.hm.bartolov.a03_undercut.gamerules.GameRule;
-import edu.hm.bartolov.a03_undercut.connections.Connection;
 import edu.hm.bartolov.a03_undercut.parameter.Parameters;
+import edu.hm.bartolov.a07_undercut_threaded.connections.Connection;
 import edu.hm.bartolov.a07_undercut_threaded.connections.OnlineConnectionThreaded;
 import java.io.IOException;
 

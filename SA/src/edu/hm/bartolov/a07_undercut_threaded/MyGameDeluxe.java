@@ -1,8 +1,8 @@
 package edu.hm.bartolov.a07_undercut_threaded;
 
-import edu.hm.bartolov.a03_undercut.Game;
+
 import edu.hm.bartolov.a03_undercut.gamerules.GameRule;
-import edu.hm.bartolov.a03_undercut.connections.Connection;
+import edu.hm.bartolov.a07_undercut_threaded.connections.Connection;
 import edu.hm.bartolov.a03_undercut.parameter.Parameters;
 import java.io.IOException;
 
@@ -47,11 +47,11 @@ public class MyGameDeluxe implements Game{
         connection.openConnection();
         
         while("running".equals(state)) {
-            final int playerAChoice = connection.getUserInputA(parameter.getChooseRange());
+            
+            final int[] playerChoice = connection.getUserInput(parameter.getChooseRange(),parameter.getChooseRange());
 
-            final int playerBChoice = connection.getUserInputB(parameter.getChooseRange());
-
-            final int[] scores = gameRule.calculateScore(playerAChoice, playerBChoice);
+            final int[] scores = gameRule.calculateScore(playerChoice[0], playerChoice[1]);
+            
             if(scores[0]<0){ // if the first value is negativ => player choose 3 times the same number => tie
                 state = "tie";
             }else{

@@ -1,6 +1,5 @@
 package edu.hm.bartolov.a07_undercut_threaded.connections;
 
-import edu.hm.bartolov.a03_undercut.connections.Connection;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -10,6 +9,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  *
@@ -25,10 +29,6 @@ public class OnlineConnectionThreaded implements Connection{
      * default port for player B.
      */
     public static final int DEFAULTPORTB = 2002;
-  
-    private int userBChoice;
-    
-    private int userAChoice;
     
     /**
      * port.
@@ -39,21 +39,11 @@ public class OnlineConnectionThreaded implements Connection{
      */
     private final int portB;
     
-    private final Thread playerAThread = new Thread(new Networker());
+    private Socket socketA;
     
-    private final Thread playerBThread = new Thread(new Networker());
-    /**
-     * writer to comunicate to A.
-     */
-    private final Networker a;
-    
-    /**
-     * writer to comunicate to A.
-     */
-    private final Networker b;
-    
-    
+    private Socket socketB;
 
+    
     /**
      * to set up ports.
      * @param portA port of player A
@@ -62,8 +52,6 @@ public class OnlineConnectionThreaded implements Connection{
     public OnlineConnectionThreaded(int portA, int portB) {
         this.portA = portA;
         this.portB = portB;
-        a = new Networker();
-        b = new Networker();
     }
     
     /**
@@ -75,83 +63,105 @@ public class OnlineConnectionThreaded implements Connection{
 
     @Override
     public void openConnection() throws IOException {
-        playerAThread.start();
-        playerBThread.start();
-        a.run();
-        b.run();
+        
+        final ExecutorService executor = Executors.newFixedThreadPool(5);
+        final Callable<Socket> taskA = new GetConnection(portA);
+        final Callable<Socket> taskB = new GetConnection(portB);
+        final Future<Socket>[] sockets = new Future[2];
+        sockets[0] = executor.submit(taskA);
+        sockets[1] = executor.submit(taskB);
+        
+        try {
+            socketA = sockets[0].get();
+            socketB = sockets[1].get();
+        } catch (InterruptedException | ExecutionException ex) {
+            throw new IllegalStateException();
+        }
+        
     }
   
 
     @Override
-    public int getUserInputA(List<Integer> chooseRange) throws IOException {
-        return a.getUserInput(chooseRange);
-    }
-
-    @Override
-    public int getUserInputB(List<Integer> chooseRange) throws IOException {
-        return b.getUserInput(chooseRange);
+    public int[] getUserInput(List<Integer> chooseRangeA, List<Integer> chooseRangeB) throws IOException {
+        
+        final ExecutorService executor = Executors.newFixedThreadPool(5);
+        final Callable<Integer> taskA = new GetUserInput(chooseRangeA,socketA);
+        final Callable<Integer> taskB = new GetUserInput(chooseRangeB,socketB);
+        final Future<Integer>[] answers = new Future[2];
+        answers[0] = executor.submit(taskA);
+        answers[1] = executor.submit(taskB);
+        
+        final int[] answer;
+        try {
+            answer = new int[]{answers[0].get(),answers[1].get()};
+        } catch (InterruptedException | ExecutionException ex) {
+            throw new IllegalStateException();
+        }
+        
+        return answer;
     }
 
     @Override
     public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
-       a.printState(state, round, scoreA, scoreB);
-       b.printState(state, round, scoreA, scoreB);
+        
+        final BufferedWriter outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
+        outA.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        outA.newLine();
+        outA.flush();
+        
+        final BufferedWriter outB = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));        
+        outB.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
+        outB.newLine();
+        outB.flush();
+        
     }
     
     
-    private class Networker implements Runnable{
+    
+    
+    private class GetConnection implements Callable<Socket>{
+        
+        final int port;
 
-        /**
-        * writer to comunicate to A.
-        */
-        private BufferedWriter outA;
-
-        /**
-        * reader to comunicate to A.
-        */
-        private BufferedReader inA;
-       
-        @Override
-        public void run() {
-            int choice = 0;
-            
-            try (ServerSocket ss = new ServerSocket(DEFAULTPORTB);
-                    Socket socket = ss.accept();
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Charset.defaultCharset()));
-                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Charset.defaultCharset()))) {
-                
-                writer.write("Hello Player!");
-                
-                userBChoice = choice;
-            } catch (Exception e) {
-                
-            }
+        public GetConnection(int port) {
+            this.port = port;
         }
-//       
-//        @Override
-//        public void run() {
-//            final Socket socketA;
-//            try {
-//                socketA = new ServerSocket(portA).accept();
-//                outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
-//                inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
-//                outA.write("Welcome Player!\r\n");
-//                outA.flush();
-//            } catch (IOException ex) {
-//                System.out.println("+++++ERROR+++++");
-//            }
-//            
-//        }
+
+        @Override
+        public Socket call() throws Exception {
+            final Socket socket = new ServerSocket(port).accept();
+            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),Charset.defaultCharset()));
+            writer.write("Welcome Player!\r\n The game will start soon ...\r\n");
+            writer.flush();
+            return socket;
+        }
         
+    }
+    
+    private class GetUserInput implements Callable<Integer>{
         
-        public int getUserInput(List<Integer> chooseRange) throws IOException {
-            outA.write("Player, you can choose:"+chooseRange);
-            outA.newLine();
-            outA.flush();
+        final List<Integer> chooseRange;
+
+        final Socket socket;
+
+        public GetUserInput(List<Integer> chooseRange, Socket socket) {
+            this.chooseRange = chooseRange;
+            this.socket = socket;
+        }
+
+        @Override
+        public Integer call() throws Exception {
+            
+            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),Charset.defaultCharset()));
+            writer.write("Player! You can choose:"+chooseRange);
+            writer.flush();
+             
+            final BufferedReader buffReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),Charset.defaultCharset()));
+        
             int playerChoice;
             // read player's choices; if invalid, discard and retry
             do {
-                final int input = Integer.parseInt(inA.readLine());
+                final int input = Integer.parseInt(buffReader.readLine());
                 if(input < 0) {
                     throw new IOException(); // bomb out on end of input
                 }
@@ -160,14 +170,9 @@ public class OnlineConnectionThreaded implements Connection{
             while(!chooseRange.contains(playerChoice));
             return playerChoice;
         }
-       
-       public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
-        outA.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
-        outA.newLine();
-        outA.flush();
-        }
-       
-       
+        
     }
+
+       
     
 }
