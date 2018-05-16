@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package edu.hm.bartolov.a07_threading;
+package edu.hm.bartolov.a07_undercut_threaded;
 
 import edu.hm.bartolov.a03_undercut.connections.Connection;
 import java.io.IOException;

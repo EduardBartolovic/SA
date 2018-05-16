@@ -83,7 +83,6 @@ public class SwitchedCounterFactory extends CounterFactory{
         baseMap = new HashMap<>();
         filterMap = new HashMap<>();
         
-        
         fillBaseMap();
         fillFilterMap();
     }
