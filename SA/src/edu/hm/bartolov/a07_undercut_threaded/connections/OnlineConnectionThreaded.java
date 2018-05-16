@@ -25,6 +25,11 @@ public class OnlineConnectionThreaded implements Connection{
      * default port for player B.
      */
     public static final int DEFAULTPORTB = 2002;
+  
+    private int userBChoice;
+    
+    private int userAChoice;
+    
     /**
      * port.
      */
@@ -34,6 +39,9 @@ public class OnlineConnectionThreaded implements Connection{
      */
     private final int portB;
     
+    private final Thread playerAThread = new Thread(new Networker());
+    
+    private final Thread playerBThread = new Thread(new Networker());
     /**
      * writer to comunicate to A.
      */
@@ -67,6 +75,8 @@ public class OnlineConnectionThreaded implements Connection{
 
     @Override
     public void openConnection() throws IOException {
+        playerAThread.start();
+        playerBThread.start();
         a.run();
         b.run();
     }
@@ -74,7 +84,6 @@ public class OnlineConnectionThreaded implements Connection{
 
     @Override
     public int getUserInputA(List<Integer> chooseRange) throws IOException {
-
         return a.getUserInput(chooseRange);
     }
 
@@ -95,27 +104,44 @@ public class OnlineConnectionThreaded implements Connection{
         /**
         * writer to comunicate to A.
         */
-       private BufferedWriter outA;
+        private BufferedWriter outA;
 
-       /**
+        /**
         * reader to comunicate to A.
         */
-       private BufferedReader inA;
+        private BufferedReader inA;
        
         @Override
         public void run() {
-            final Socket socketA;
-            try {
-                socketA = new ServerSocket(portA).accept();
-                outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
-                inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
-                outA.write("Welcome Player!\r\n");
-                outA.flush();
-            } catch (IOException ex) {
-                System.out.println("+++++ERROR+++++");
-            }
+            int choice = 0;
             
+            try (ServerSocket ss = new ServerSocket(DEFAULTPORTB);
+                    Socket socket = ss.accept();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), Charset.defaultCharset()));
+                    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), Charset.defaultCharset()))) {
+                
+                writer.write("Hello Player!");
+                
+                userBChoice = choice;
+            } catch (Exception e) {
+                
+            }
         }
+//       
+//        @Override
+//        public void run() {
+//            final Socket socketA;
+//            try {
+//                socketA = new ServerSocket(portA).accept();
+//                outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
+//                inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
+//                outA.write("Welcome Player!\r\n");
+//                outA.flush();
+//            } catch (IOException ex) {
+//                System.out.println("+++++ERROR+++++");
+//            }
+//            
+//        }
         
         
         public int getUserInput(List<Integer> chooseRange) throws IOException {
