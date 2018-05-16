@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Computer
  */
-public class OnlineConnectionThreaded implements Connection,Runnable{
+public class OnlineConnectionThreaded implements Connection{
 
     /**
      * default port for player A.
@@ -37,21 +37,14 @@ public class OnlineConnectionThreaded implements Connection,Runnable{
     /**
      * writer to comunicate to A.
      */
-    private BufferedWriter outA;
+    private final Networker a;
     
     /**
-     * writer to comunicate to B.
+     * writer to comunicate to A.
      */
-    private BufferedWriter outB;
+    private final Networker b;
     
-    /**
-     * reader to comunicate to A.
-     */
-    private BufferedReader inA;
-    /**
-     * reader to comunicate to A.
-     */
-    private BufferedReader inB;
+    
 
     /**
      * to set up ports.
@@ -61,6 +54,8 @@ public class OnlineConnectionThreaded implements Connection,Runnable{
     public OnlineConnectionThreaded(int portA, int portB) {
         this.portA = portA;
         this.portB = portB;
+        a = new Networker();
+        b = new Networker();
     }
     
     /**
@@ -72,93 +67,81 @@ public class OnlineConnectionThreaded implements Connection,Runnable{
 
     @Override
     public void openConnection() throws IOException {
-        
-        final Socket socketA = new ServerSocket(portA).accept();
-        outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
-        inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
-        
-        outA.write("Welcome Player A!\r\nPlease wait for Player B...\r\n");
-        outA.flush();
-        
-        final Socket socketB = new ServerSocket(portB).accept();
-        outB = new BufferedWriter(new OutputStreamWriter(socketB.getOutputStream(),Charset.defaultCharset()));
-        inB = new BufferedReader(new InputStreamReader(socketB.getInputStream(),Charset.defaultCharset()));
-        
-        startGameMessages(outA, outB);
+        a.run();
+        b.run();
     }
-   
-    /**
-     * Informs both players that the game is starting.
-     * @param bwA writer for A
-     * @param bwB writer for B
-     * @throws IOException 
-     */
-    private void startGameMessages(BufferedWriter bwA, BufferedWriter bwB) throws IOException {
-        bwB.write("Welcome Player B!");
-        bwB.newLine();
-        
-        bwA.write("Game starting!");
-        bwA.newLine();
-        bwA.flush();
-        
-        bwB.write("Game starting!");
-        bwB.newLine();
-        bwB.flush();
-    }
+  
 
     @Override
     public int getUserInputA(List<Integer> chooseRange) throws IOException {
-        outA.write("Player A, you can choose:"+chooseRange);
-        outA.newLine();
-        outA.flush();
-        return getUserInput(chooseRange, inA );
+
+        return a.getUserInput(chooseRange);
     }
 
     @Override
     public int getUserInputB(List<Integer> chooseRange) throws IOException {
-        outB.write("Player B, you can choose:"+chooseRange);
-        outB.newLine();
-        outB.flush();
-        return getUserInput(chooseRange, inB);
-    }
-    
-    /**
-     * comuncating with player. and getting a number.
-     * @param chooseRange which numbers the user can choose from
-     * @param buffReader the reader which reads the input
-     * @return int the chosen input from the user
-     * @throws IOException if the input was not valid
-     */
-    private int getUserInput(List<Integer> chooseRange,BufferedReader buffReader)throws IOException{
-        int playerChoice;
-        // read player's choices; if invalid, discard and retry
-        do {
-            final int input = Integer.parseInt(buffReader.readLine());
-            if(input < 0) {
-                throw new IOException(); // bomb out on end of input
-            }
-            playerChoice = input;
-        }
-        while(!chooseRange.contains(playerChoice));
-        return playerChoice;
+        return b.getUserInput(chooseRange);
     }
 
     @Override
     public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
+       a.printState(state, round, scoreA, scoreB);
+       b.printState(state, round, scoreA, scoreB);
+    }
+    
+    
+    private class Networker implements Runnable{
+
+        /**
+        * writer to comunicate to A.
+        */
+       private BufferedWriter outA;
+
+       /**
+        * reader to comunicate to A.
+        */
+       private BufferedReader inA;
+       
+        @Override
+        public void run() {
+            final Socket socketA;
+            try {
+                socketA = new ServerSocket(portA).accept();
+                outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
+                inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
+                outA.write("Welcome Player!\r\n");
+                outA.flush();
+            } catch (IOException ex) {
+                System.out.println("+++++ERROR+++++");
+            }
+            
+        }
+        
+        
+        public int getUserInput(List<Integer> chooseRange) throws IOException {
+            outA.write("Player, you can choose:"+chooseRange);
+            outA.newLine();
+            outA.flush();
+            int playerChoice;
+            // read player's choices; if invalid, discard and retry
+            do {
+                final int input = Integer.parseInt(inA.readLine());
+                if(input < 0) {
+                    throw new IOException(); // bomb out on end of input
+                }
+                playerChoice = input;
+            }
+            while(!chooseRange.contains(playerChoice));
+            return playerChoice;
+        }
+       
+       public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
         outA.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
         outA.newLine();
         outA.flush();
-        outB.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
-        outB.newLine();
-        outB.flush();
-    }
-    @Override
-    public void run() {
-        try {
-            openConnection();
-        } catch (IOException ex) {
-            System.out.println("+++++++++++++++++++++++ERROR++++++++++++++++++++++++++++++");
         }
+       
+       
     }
     
 }
