@@ -19,17 +19,7 @@ import java.util.concurrent.Future;
  *
  * @author Computer
  */
-public class OnlineConnectionThreaded implements Connection{
-
-    /**
-     * default port for player A.
-     */
-    public static final int DEFAULTPORTA = 2001;
-    /**
-     * default port for player B.
-     */
-    public static final int DEFAULTPORTB = 2002;
-    
+public class OnlineConnectionThreaded extends OnlineConnection{
     /**
      * port.
      */
@@ -40,14 +30,23 @@ public class OnlineConnectionThreaded implements Connection{
     private final int portB;
     
     /**
-     * socket Of a
+     * writer to comunicate to A.
      */
-    private Socket socketA;
+    private BufferedWriter outA;
     
     /**
-     * socket Of b
+     * writer to comunicate to B.
      */
-    private Socket socketB;
+    private BufferedWriter outB;
+    
+    /**
+     * reader to comunicate to A.
+     */
+    private BufferedReader inA;
+    /**
+     * reader to comunicate to A.
+     */
+    private BufferedReader inB;
 
     
     /**
@@ -70,30 +69,43 @@ public class OnlineConnectionThreaded implements Connection{
     @Override
     public void openConnection() throws IOException {
         
-        final ExecutorService executor = Executors.newFixedThreadPool(5);
-        final Callable<Socket> taskA = new GetConnection(portA);
-        final Callable<Socket> taskB = new GetConnection(portB);
-        final Future<Socket>[] sockets = new Future[2];
-        sockets[0] = executor.submit(taskA);
-        sockets[1] = executor.submit(taskB);
+//        final ExecutorService executor = Executors.newFixedThreadPool(2);
+//        final Callable<Socket> taskA = new GetConnection(portA);
+//        final Callable<Socket> taskB = new GetConnection(portB);
+//        final Future<Socket>[] sockets = new Future[2];
+//        sockets[0] = executor.submit(taskA);
+//        sockets[1] = executor.submit(taskB);
+//        
+//        try {
+//            socketA = sockets[0].get();
+//            socketB = sockets[1].get();
+//        } catch (InterruptedException | ExecutionException ex) {
+//            throw new IllegalStateException();
+//        }
+//        
+//        
+        final Socket socketA = new ServerSocket(portA).accept();
+        outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
+        inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
         
-        try {
-            socketA = sockets[0].get();
-            socketB = sockets[1].get();
-        } catch (InterruptedException | ExecutionException ex) {
-            throw new IllegalStateException();
-        }
+        outA.write("Welcome Player A!\r\nPlease wait for Player B...\r\n");
+        outA.flush();
         
+        final Socket socketB = new ServerSocket(portB).accept();
+        outB = new BufferedWriter(new OutputStreamWriter(socketB.getOutputStream(),Charset.defaultCharset()));
+        inB = new BufferedReader(new InputStreamReader(socketB.getInputStream(),Charset.defaultCharset()));
+        
+        startGameMessages(outA, outB);
     }
   
 
     @Override
     public int[] getUserInput(List<Integer> chooseRangeA, List<Integer> chooseRangeB) throws IOException {
         
-        final ExecutorService executor = Executors.newFixedThreadPool(5);
-        final Callable<Integer> taskA = new GetUserInput(chooseRangeA,socketA);
-        final Callable<Integer> taskB = new GetUserInput(chooseRangeB,socketB);
+        final Callable<Integer> taskA = new GetUserInput(chooseRangeA,outA,inA);
+        final Callable<Integer> taskB = new GetUserInput(chooseRangeB,outB,inB);
         final Future<Integer>[] answers = new Future[2];
+        final ExecutorService executor = Executors.newFixedThreadPool(2);
         answers[0] = executor.submit(taskA);
         answers[1] = executor.submit(taskB);
         
@@ -110,61 +122,60 @@ public class OnlineConnectionThreaded implements Connection{
     @Override
     public void printState(String state, int round, int scoreA, int scoreB) throws IOException {
         
-        final BufferedWriter outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
         outA.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
         outA.newLine();
         outA.flush();
         
-        final BufferedWriter outB = new BufferedWriter(new OutputStreamWriter(socketB.getOutputStream(),Charset.defaultCharset()));        
         outB.write("State: "+state+", Round "+round+", Player A: "+scoreA+", Player B: "+ scoreB);
         outB.newLine();
         outB.flush();
         
     }
     
-    private class GetConnection implements Callable<Socket>{
-        
-        final int port;
-
-        public GetConnection(int port) {
-            this.port = port;
-        }
-
-        @Override
-        public Socket call() throws Exception {
-            final Socket socket = new ServerSocket(port).accept();
-            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),Charset.defaultCharset()));
-            writer.write("Welcome Player!\r\n The game will start soon ...\r\n");
-            writer.flush();
-            return socket;
-        }
-        
-    }
+//    private class GetConnection implements Callable<Socket>{
+//        
+//        final int port;
+//
+//        public GetConnection(int port) {
+//            this.port = port;
+//        }
+//
+//        @Override
+//        public Socket call() throws Exception {
+//            final Socket socket = new ServerSocket(port).accept();
+//            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),Charset.defaultCharset()));
+//            writer.write("Welcome Player!\r\n The game will start soon ...\r\n");
+//            writer.flush();
+//            return socket;
+//        }
+//        
+//    }
     
     private class GetUserInput implements Callable<Integer>{
         
         final List<Integer> chooseRange;
 
-        final Socket socket;
+        final BufferedWriter writer;
+        
+        final BufferedReader reader;
 
-        public GetUserInput(List<Integer> chooseRange, Socket socket) {
+        public GetUserInput(List<Integer> chooseRange, BufferedWriter bufOut, BufferedReader bufIn) {
             this.chooseRange = chooseRange;
-            this.socket = socket;
+            writer = bufOut;
+            reader = bufIn;
         }
+
 
         @Override
         public Integer call() throws Exception {
             
-            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),Charset.defaultCharset()));
             writer.write("Player! You can choose:"+chooseRange);
             writer.flush();
              
-            final BufferedReader buffReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),Charset.defaultCharset()));
-        
             int playerChoice;
             // read player's choices; if invalid, discard and retry
             do {
-                final int input = Integer.parseInt(buffReader.readLine());
+                final int input = Integer.parseInt(reader.readLine());
                 if(input < 0) {
                     throw new IOException(); // bomb out on end of input
                 }

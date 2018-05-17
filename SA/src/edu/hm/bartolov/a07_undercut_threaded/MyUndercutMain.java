@@ -45,7 +45,7 @@ public class MyUndercutMain {
         final Connection connection = new OnlineConnectionThreaded();
         
         //final Game game = Game.make(gameSpecification);
-        final Game game = new MyGameDeluxe();
+        final Game game = new MyGame();
         final Parameters parameter = Parameters.make(parameterSpecification);
         final GameRule gameRule = GameRule.make(gameRuleSpecification);
 
