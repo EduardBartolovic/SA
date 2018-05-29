@@ -8,6 +8,7 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -68,25 +69,8 @@ public class OnlineConnectionThreaded extends OnlineConnection{
     }
 
     @Override
-    public void openConnection() throws IOException {
-        
-        
-//        final ExecutorService executor = Executors.newFixedThreadPool(2);
-//        final Callable<Socket> taskA = new GetConnection(portA);
-//        final Callable<Socket> taskB = new GetConnection(portB);
-//        final Future<Socket>[] sockets = new Future[2];
-//        sockets[0] = executor.submit(taskA);
-//        sockets[1] = executor.submit(taskB);
-//        
-//        try {
-//            socketA = sockets[0].get();
-//            socketB = sockets[1].get();
-//        } catch (InterruptedException | ExecutionException ex) {
-//            throw new IllegalStateException();
-//        }
-//        executor.shutdown();
-//        
-//        
+    public void openConnection() throws IOException {          
+
         final Socket socketA = new ServerSocket(portA).accept();
         outA = new BufferedWriter(new OutputStreamWriter(socketA.getOutputStream(),Charset.defaultCharset()));
         inA = new BufferedReader(new InputStreamReader(socketA.getInputStream(),Charset.defaultCharset()));
@@ -107,14 +91,15 @@ public class OnlineConnectionThreaded extends OnlineConnection{
         
         final Callable<Integer> taskA = new GetUserInput(chooseRangeA,outA,inA);
         final Callable<Integer> taskB = new GetUserInput(chooseRangeB,outB,inB);
-        final Future<Integer>[] answers = new Future[2];
         final ExecutorService executor = Executors.newFixedThreadPool(2);
-        answers[0] = executor.submit(taskA);
-        answers[1] = executor.submit(taskB);
+        
+        final List<Future<Integer>> answers = new ArrayList<>(2);
+        answers.add(executor.submit(taskA));
+        answers.add(executor.submit(taskB));
         
         final int[] answer;
         try {
-            answer = new int[]{answers[0].get(),answers[1].get()};
+            answer = new int[]{answers.get(0).get(),answers.get(1).get()};
         } catch (InterruptedException | ExecutionException exception) {
             throw new IllegalStateException();
         }
@@ -135,25 +120,6 @@ public class OnlineConnectionThreaded extends OnlineConnection{
         outB.flush();
         
     }
-    
-//    private class GetConnection implements Callable<Socket>{
-//        
-//        final int port;
-//
-//        public GetConnection(int port) {
-//            this.port = port;
-//        }
-//
-//        @Override
-//        public Socket call() throws Exception {
-//            final Socket socket = new ServerSocket(port).accept();
-//            final BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),Charset.defaultCharset()));
-//            writer.write("Welcome Player!\r\n The game will start soon ...\r\n");
-//            writer.flush();
-//            return socket;
-//        }
-//        
-//    }
     
     /**
      * Private class to get the input of each player.

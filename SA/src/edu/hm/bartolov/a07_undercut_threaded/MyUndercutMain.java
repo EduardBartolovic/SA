@@ -41,13 +41,11 @@ public class MyUndercutMain {
         final Connection connection = Connection.make(connectionSpecification);
         //final Connection connection = //new OnlineConnectionThreaded();
         
-        final Game game = new MyGame();//Game.make(gameSpecification);
-        //final Game game = new MyGame();
+        //final Game game =Game.make(gameSpecification);
+        final Game game = new MyGame();
         final Parameters parameter = Parameters.make(parameterSpecification);
         final GameRule gameRule = GameRule.make(gameRuleSpecification);
 
         game.play(gameRule,parameter,connection);
-
-//        System.out.println(Integer.parseInt("23"));
     }
 }
