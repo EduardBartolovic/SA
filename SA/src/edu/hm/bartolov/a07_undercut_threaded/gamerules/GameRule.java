@@ -1,6 +1,7 @@
 package edu.hm.bartolov.a07_undercut_threaded.gamerules;
 
-import edu.hm.bartolov.a03_undercut.Factory;
+import edu.hm.bartolov.a07_undercut_threaded.Factory;
+
 
 /**
  * Interface for all game Rules.

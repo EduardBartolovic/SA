@@ -1,6 +1,6 @@
 package edu.hm.bartolov.a07_undercut_threaded.connections;
 
-import edu.hm.bartolov.a03_undercut.Factory;
+import edu.hm.bartolov.a07_undercut_threaded.Factory;
 import java.io.IOException;
 import java.util.List;
 

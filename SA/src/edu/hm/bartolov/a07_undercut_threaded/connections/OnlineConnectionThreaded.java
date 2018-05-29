@@ -70,6 +70,7 @@ public class OnlineConnectionThreaded extends OnlineConnection{
     @Override
     public void openConnection() throws IOException {
         
+        
 //        final ExecutorService executor = Executors.newFixedThreadPool(2);
 //        final Callable<Socket> taskA = new GetConnection(portA);
 //        final Callable<Socket> taskB = new GetConnection(portB);
@@ -83,6 +84,7 @@ public class OnlineConnectionThreaded extends OnlineConnection{
 //        } catch (InterruptedException | ExecutionException ex) {
 //            throw new IllegalStateException();
 //        }
+//        executor.shutdown();
 //        
 //        
         final Socket socketA = new ServerSocket(portA).accept();
@@ -116,6 +118,7 @@ public class OnlineConnectionThreaded extends OnlineConnection{
         } catch (InterruptedException | ExecutionException exception) {
             throw new IllegalStateException();
         }
+        executor.shutdown();
         
         return answer;
     }

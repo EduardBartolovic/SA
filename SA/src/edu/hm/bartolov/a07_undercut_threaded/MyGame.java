@@ -1,9 +1,9 @@
 package edu.hm.bartolov.a07_undercut_threaded;
 
 
-import edu.hm.bartolov.a03_undercut.gamerules.GameRule;
 import edu.hm.bartolov.a07_undercut_threaded.connections.Connection;
-import edu.hm.bartolov.a03_undercut.parameter.Parameters;
+import edu.hm.bartolov.a07_undercut_threaded.gamerules.GameRule;
+import edu.hm.bartolov.a07_undercut_threaded.parameter.Parameters;
 import java.io.IOException;
 
 /**
@@ -47,7 +47,6 @@ public class MyGame implements Game{
         connection.openConnection();
         
         while("running".equals(state)) {
-            
             final int[] playerChoice = connection.getUserInput(parameter.getChooseRange(),parameter.getChooseRange());
 
             final int[] scores = gameRule.calculateScore(playerChoice[0], playerChoice[1]);
@@ -70,7 +69,7 @@ public class MyGame implements Game{
             round++;
             connection.printState(state,round,scoreA,scoreB);
         }
- 
+        
     }
     
 }
