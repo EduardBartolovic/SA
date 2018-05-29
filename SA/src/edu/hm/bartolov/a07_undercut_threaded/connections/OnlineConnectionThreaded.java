@@ -16,8 +16,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
 /**
- *
- * @author Computer
+ * Online connection with threads, each player is one thread.
+ * 
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class OnlineConnectionThreaded extends OnlineConnection{
     /**
@@ -112,7 +113,7 @@ public class OnlineConnectionThreaded extends OnlineConnection{
         final int[] answer;
         try {
             answer = new int[]{answers[0].get(),answers[1].get()};
-        } catch (InterruptedException | ExecutionException ex) {
+        } catch (InterruptedException | ExecutionException exception) {
             throw new IllegalStateException();
         }
         
@@ -151,15 +152,34 @@ public class OnlineConnectionThreaded extends OnlineConnection{
 //        
 //    }
     
+    /**
+     * Private class to get the input of each player.
+     */
     private class GetUserInput implements Callable<Integer>{
         
-        final List<Integer> chooseRange;
+        /**
+         * Choose range of the current round or rules.
+         */
+        private final List<Integer> chooseRange;
 
-        final BufferedWriter writer;
+        /**
+         * Writer who writes output stuff.
+         */
+        private final BufferedWriter writer;
         
-        final BufferedReader reader;
+        /**
+         * Reader thet reads the user input.
+         */
+        private final BufferedReader reader;
 
-        public GetUserInput(List<Integer> chooseRange, BufferedWriter bufOut, BufferedReader bufIn) {
+        /**
+         * Getter for the user input.
+         * 
+         * @param chooseRange the momentairy choose range
+         * @param bufOut output writer
+         * @param bufIn input reader
+         */
+        GetUserInput(List<Integer> chooseRange, BufferedWriter bufOut, BufferedReader bufIn) {
             this.chooseRange = chooseRange;
             writer = bufOut;
             reader = bufIn;
@@ -185,8 +205,6 @@ public class OnlineConnectionThreaded extends OnlineConnection{
             return playerChoice;
         }
         
-    }
-
-       
+    } 
     
 }

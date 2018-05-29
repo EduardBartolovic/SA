@@ -1,6 +1,5 @@
 package edu.hm.bartolov.a07_undercut_threaded;
 
-import edu.hm.bartolov.a03_undercut.*;
 import edu.hm.bartolov.a03_undercut.gamerules.GameRule;
 import edu.hm.bartolov.a03_undercut.parameter.Parameters;
 import edu.hm.bartolov.a07_undercut_threaded.connections.Connection;
