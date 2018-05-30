@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-public class OfferingsData implements MutableOfferings{
+public class OfferingsData extends MutableOfferings{
     
     private final Set<ArtworkData> artworks;
     

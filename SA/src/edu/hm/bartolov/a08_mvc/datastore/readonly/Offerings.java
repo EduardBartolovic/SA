@@ -1,17 +1,16 @@
-
 package edu.hm.bartolov.a08_mvc.datastore.readonly;
 
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import java.util.stream.Stream;
 
 
-public abstract class Offerings {
+public interface Offerings {
     
-    abstract Stream<MutableArtwork> getArtworks();
+    Stream<MutableArtwork> getArtworks();
 
-    abstract int getStepsRemaining();
+    int getStepsRemaining();
 
-    abstract String getBidder();
+    String getBidder();
 
-    abstract int getBid();
+    int getBid();
 }

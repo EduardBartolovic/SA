@@ -11,7 +11,7 @@ public interface Viewer extends Observer{
         if(typekey.equals("dummy"))
             return (Observable o, Object arg) -> {};
         if(typekey.equals("spectator"))
-            return new Spectator();
+            return new Spectator(args);
         
         return null;
     }

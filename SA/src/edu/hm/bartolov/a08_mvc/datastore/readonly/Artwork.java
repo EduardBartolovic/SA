@@ -1,15 +1,15 @@
 package edu.hm.bartolov.a08_mvc.datastore.readonly;
 
-public abstract class Artwork {
+public interface Artwork {
     
-   abstract String getTitle();
+   String getTitle();
    
-   abstract int getInitialPrice();
+   int getInitialPrice();
    
-   abstract boolean isAuctioned();
+   boolean isAuctioned();
    
-   abstract String getBuyer();
+   String getBuyer();
    
-   abstract int getSoldPrice();
+   int getSoldPrice();
     
 }

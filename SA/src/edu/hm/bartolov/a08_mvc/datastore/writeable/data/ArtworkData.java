@@ -3,7 +3,7 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable.data;
 
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 
-public class ArtworkData implements MutableArtwork{
+public class ArtworkData extends MutableArtwork{
     
     
     private final String title;
