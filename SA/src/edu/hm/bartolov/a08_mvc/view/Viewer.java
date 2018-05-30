@@ -1,16 +1,19 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package edu.hm.bartolov.a08_mvc.view;
 
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
+import java.util.Observable;
 import java.util.Observer;
 
-/**
- *
- * @author Computer
- */
+
 public interface Viewer extends Observer{
+    
+    public static Viewer make(String typekey,Offerings offerings,Object... args){
+        if(typekey.equals("dummy"))
+            return (Observable o, Object arg) -> {};
+        if(typekey.equals("spectator"))
+            return new Spectator();
+        
+        return null;
+    }
     
 }

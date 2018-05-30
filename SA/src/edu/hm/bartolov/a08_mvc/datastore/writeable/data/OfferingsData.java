@@ -1,5 +1,7 @@
-package edu.hm.bartolov.a08_mvc.datastore.writeable;
+package edu.hm.bartolov.a08_mvc.datastore.writeable.data;
 
+import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
+import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -15,13 +17,14 @@ public class OfferingsData implements MutableOfferings{
     
     private int bid;
 
-    public OfferingsData(Collection<ArtworkData> artworks) {
+    public OfferingsData(Collection<MutableArtwork> artworks) {
         this.artworks = new HashSet(artworks);
     }
+    
 
     @Override
-    public Stream<ArtworkData> getArtworks() {
-        return Stream.of(ArtworkData.class.cast(artworks));
+    public Stream<MutableArtwork> getArtworks() {
+        return Stream.of(MutableArtwork.class.cast(artworks));
     }
 
     @Override

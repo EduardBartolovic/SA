@@ -1,5 +1,7 @@
 
-package edu.hm.bartolov.a08_mvc.datastore.writeable;
+package edu.hm.bartolov.a08_mvc.datastore.writeable.data;
+
+import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 
 public class ArtworkData implements MutableArtwork{
     
