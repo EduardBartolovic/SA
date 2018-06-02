@@ -7,12 +7,12 @@ import java.util.Observable;
 public abstract class MutableArtwork extends Observable implements Artwork {
     
     public static MutableArtwork make(String title,int initialPrice){
-        return new ArtworkData(title, initialPrice);
-    } 
-
-   public abstract void setAuctioned(boolean auctioned);
+       return new ArtworkData(title, initialPrice);
+    }
+    
+    public abstract void setAuctioned(boolean auctioned);
    
-   public abstract void setBuyer(String buyer);
+    public abstract void setBuyer(String buyer);
    
-   public abstract void setSoldPrice(int soldPrice);
+    public abstract void setSoldPrice(int soldPrice);
 }
