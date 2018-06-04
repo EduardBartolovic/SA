@@ -47,11 +47,13 @@ public class OfferingsData extends MutableOfferings{
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
         this.stepsRemaining = stepsRemaining;
+        super.setChanged();
     }
 
     @Override
     public void setBidder(String bidder) {
         this.bidder = bidder;
+        super.setChanged();
     }
 
     @Override
@@ -59,6 +61,7 @@ public class OfferingsData extends MutableOfferings{
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
         this.bid = bid;
+        super.setChanged();
     }
     
     
