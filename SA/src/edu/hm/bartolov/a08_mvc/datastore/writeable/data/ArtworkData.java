@@ -56,7 +56,6 @@ public class ArtworkData extends MutableArtwork{
     public synchronized void setAuctioned(boolean auctioned) {
         synchronized(getDataStore()){
             this.auctioned = auctioned;
-            super.setChanged();
         }
     }
 
@@ -66,7 +65,6 @@ public class ArtworkData extends MutableArtwork{
             throw new IllegalArgumentException(); 
         synchronized(getDataStore()){
             this.buyer = buyer;
-            super.setChanged();
         }
     }
 
@@ -76,7 +74,6 @@ public class ArtworkData extends MutableArtwork{
             throw new IllegalArgumentException();
         synchronized(getDataStore()){
             this.soldPrice = soldPrice;
-            super.setChanged();
         }
     }
     

@@ -18,6 +18,7 @@ public class OfferingsData extends MutableOfferings{
     private int bid;
 
     public OfferingsData(Collection<MutableArtwork> artworks) {
+        super(artworks);
         this.artworks = new HashSet(artworks);
     }
     
