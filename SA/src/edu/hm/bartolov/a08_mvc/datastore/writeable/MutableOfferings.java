@@ -11,8 +11,13 @@ import java.util.Observable;
  */
 public abstract class MutableOfferings extends Observable implements Offerings{
     
+    
     public static MutableOfferings make(MutableArtwork... artworks){
         return new OfferingsData(Arrays.asList(artworks));
+    }
+    
+    public MutableOfferings getDataStore(){
+        return null;
     }
 
     public abstract void setStepsRemaining(int stepsRemaining);

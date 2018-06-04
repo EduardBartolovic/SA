@@ -6,7 +6,11 @@ import java.util.Observable;
  *
  * @author Computer
  */
-public class Dummy implements Viewer{
+public class Dummy extends Viewer{
+
+    public Dummy() {
+        super(null);
+    }
     
     @Override
     public void update(Observable o, Object arg) {}

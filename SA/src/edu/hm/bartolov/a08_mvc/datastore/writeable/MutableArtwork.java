@@ -10,6 +10,10 @@ public abstract class MutableArtwork extends Observable implements Artwork {
        return new ArtworkData(title, initialPrice);
     }
     
+    public MutableArtwork getDataStore(){
+        return null;
+    }
+    
     public abstract void setAuctioned(boolean auctioned);
    
     public abstract void setBuyer(String buyer);

@@ -6,10 +6,10 @@ import java.util.Observable;
  *
  * @author Computer
  */
-public class Logger implements Viewer{
+public class Logger extends Viewer{
     
     Logger(Object... args) {
-        
+        super(null);
     }
 
     @Override

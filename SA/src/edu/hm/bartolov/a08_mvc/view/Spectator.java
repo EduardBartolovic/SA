@@ -2,17 +2,26 @@
 package edu.hm.bartolov.a08_mvc.view;
 
 import java.util.Observable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Edo
  */
-public class Spectator implements Viewer{
-
-    private final Object object;
+public class Spectator extends Viewer{
 
     Spectator(Object object) {
-        this.object = object;
+        super(null);
+        
+        new Thread(()-> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Spectator.class.getName()).log(Level.SEVERE, null, ex);
+            }
+           update(null,null);
+        }).start();
     }
     
     @Override

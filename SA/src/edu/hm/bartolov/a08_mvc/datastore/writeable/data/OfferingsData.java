@@ -23,45 +23,52 @@ public class OfferingsData extends MutableOfferings{
     
 
     @Override
-    public Stream<MutableArtwork> getArtworks() {
+    public synchronized  Stream<MutableArtwork> getArtworks() {
         return Stream.of(MutableArtwork.class.cast(artworks));
     }
 
     @Override
-    public int getStepsRemaining() {
+    public synchronized  int getStepsRemaining() {
         return stepsRemaining;
     }
 
     @Override
-    public String getBidder() {
+    public synchronized String getBidder() {
         return bidder;
     }
 
     @Override
-    public int getBid() {
+    public synchronized int getBid() {
         return bid;
     }
 
     @Override
-    public void setStepsRemaining(int stepsRemaining) {
+    public synchronized void setStepsRemaining(int stepsRemaining) {
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
-        this.stepsRemaining = stepsRemaining;
-        super.setChanged();
+        synchronized(getDataStore()){
+            this.stepsRemaining = stepsRemaining;
+            super.setChanged();
+        }
     }
 
     @Override
-    public void setBidder(String bidder) {
-        this.bidder = bidder;
-        super.setChanged();
+    public synchronized void setBidder(String bidder) {
+        synchronized(getDataStore()){
+            this.bidder = bidder;
+            super.setChanged();
+        }
     }
 
     @Override
-    public void setBid(int bid) {
+    public synchronized void setBid(int bid) {
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
-        this.bid = bid;
-        super.setChanged();
+        synchronized(getDataStore()){
+            this.bid = bid;
+            super.setChanged();
+        }
+        
     }
     
     
