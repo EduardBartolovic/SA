@@ -5,7 +5,6 @@ import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 
 public class ArtworkData extends MutableArtwork{
     
-    
     private final String title;
     
     private final int initialPrice;

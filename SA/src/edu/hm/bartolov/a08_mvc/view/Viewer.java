@@ -14,25 +14,25 @@ public abstract class Viewer implements Observer{
         dataStore.addObserver(this);
     }
 
-    protected MutableOfferings getDataStore() {
+    protected Offerings getDataStore() {
         return dataStore;
     }
 
     
     public static Viewer make(String typekey,Offerings offerings,Object... args){
-        switch (typekey) {
-            case "dummy":
-                return new Dummy();
-            case "spectator":
-                return new Spectator(args);
-            case "logger":
-                return new Logger(args);
-            default:
-                break;
+        final Viewer viewer;
+        if(typekey.equals("dummy")){
+            viewer = new Dummy();
+        }else if(typekey.equals("spectator")){
+            viewer = new Spectator(args);
+        }else if(typekey.equals("logger")){
+            viewer = new Logger(args);
+        }else{
+            return null;
         }
         
         
-        return null;
+        return viewer;
     }
     
 }

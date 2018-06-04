@@ -3,7 +3,6 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable;
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.data.OfferingsData;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Observable;
 
 /**
@@ -11,10 +10,8 @@ import java.util.Observable;
  * @author Edo
  */
 public abstract class MutableOfferings extends Observable implements Offerings{
-    
-    
-    
-    public MutableOfferings(Collection<MutableArtwork> artworks){
+
+    public MutableOfferings(){
         
     }
     
@@ -23,7 +20,7 @@ public abstract class MutableOfferings extends Observable implements Offerings{
     }
     
     public MutableOfferings getDataStore(){
-        return null;
+        return this;
     }
 
     public abstract void setStepsRemaining(int stepsRemaining);

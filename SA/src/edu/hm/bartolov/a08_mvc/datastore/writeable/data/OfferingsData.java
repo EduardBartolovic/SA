@@ -2,8 +2,8 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable.data;
 
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
-import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -17,14 +17,19 @@ public class OfferingsData extends MutableOfferings{
     
     private int bid;
 
-    public OfferingsData(Collection<MutableArtwork> artworks) {
-        super(artworks);
+    public OfferingsData(Set<MutableArtwork> artworks) {
+        super();
+        this.artworks = new HashSet(artworks);
+    }
+    
+    public OfferingsData(List<MutableArtwork> artworks) {
+        super();
         this.artworks = new HashSet(artworks);
     }
     
 
     @Override
-    public synchronized  Stream<MutableArtwork> getArtworks() {
+    public synchronized Stream<MutableArtwork> getArtworks() {
         return Stream.of(MutableArtwork.class.cast(artworks));
     }
 
