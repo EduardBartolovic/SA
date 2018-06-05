@@ -33,7 +33,7 @@ public class Main {
        
         final OfferingsData offerings = new OfferingsData(artworks);
         
-        final Viewer view1 = Viewer.make("Spectator", offerings, (Object) null);
+        final Viewer view1 = Viewer.make("spectator", offerings, (Object) null);
         offerings.addObserver(view1);
         
     }
