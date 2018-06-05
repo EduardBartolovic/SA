@@ -1,4 +1,4 @@
-package edu.hm.bartolov.a08_mvc.datastore.writeable.data;
+package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
@@ -17,12 +17,12 @@ public class OfferingsData extends MutableOfferings{
     
     private int bid;
 
-    public OfferingsData(Set<MutableArtwork> artworks) {
+    OfferingsData(Set<MutableArtwork> artworks) {
         super();
         this.artworks = new HashSet(artworks);
     }
     
-    public OfferingsData(List<MutableArtwork> artworks) {
+    OfferingsData(List<MutableArtwork> artworks) {
         super();
         this.artworks = new HashSet(artworks);
     }

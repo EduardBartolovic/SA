@@ -1,7 +1,6 @@
 
-package edu.hm.bartolov.a08_mvc.datastore.writeable.data;
+package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
-import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 
 public class ArtworkData extends MutableArtwork{
     
@@ -15,7 +14,7 @@ public class ArtworkData extends MutableArtwork{
     
     private int soldPrice;
 
-    public ArtworkData(String title, int initialPrice) {
+    ArtworkData(String title, int initialPrice) {
         if(initialPrice < 0 || title == null || "".equals(title)) 
             throw new IllegalArgumentException(); 
         

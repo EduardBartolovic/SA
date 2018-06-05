@@ -1,7 +1,6 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
-import edu.hm.bartolov.a08_mvc.datastore.writeable.data.OfferingsData;
 import java.util.Arrays;
 
 /**

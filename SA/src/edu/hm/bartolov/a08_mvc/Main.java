@@ -1,8 +1,7 @@
 package edu.hm.bartolov.a08_mvc;
 
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
-import edu.hm.bartolov.a08_mvc.datastore.writeable.data.ArtworkData;
-import edu.hm.bartolov.a08_mvc.datastore.writeable.data.OfferingsData;
+import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 import edu.hm.bartolov.a08_mvc.view.Viewer;
 import java.util.HashSet;
 import java.util.Set;
@@ -17,21 +16,20 @@ public class Main {
         
         
         final Set<MutableArtwork> artworks = new HashSet<>();
-        final ArtworkData art1 = new ArtworkData("1", 1);
+        final MutableArtwork art1 = MutableArtwork.make("1", 1);
         artworks.add(art1);
-        final ArtworkData art2 = new ArtworkData("2", 2);
+        final MutableArtwork art2 = MutableArtwork.make("2", 2);
         artworks.add(art2);
-        final ArtworkData art3 = new ArtworkData("3", 3);
+        final MutableArtwork art3 = MutableArtwork.make("3", 3);
         artworks.add(art3);
-        final ArtworkData art4 = new ArtworkData("4", 4);
+        final MutableArtwork art4 = MutableArtwork.make("4", 4);
         artworks.add(art4);
-        final ArtworkData art5 = new ArtworkData("5", 5);
+        final MutableArtwork art5 = MutableArtwork.make("5", 5);
         artworks.add(art5);
-        final ArtworkData art6 = new ArtworkData("6", 6);
+        final MutableArtwork art6 = MutableArtwork.make("6", 6);
         artworks.add(art6);
-        
        
-        final OfferingsData offerings = new OfferingsData(artworks);
+        final MutableOfferings offerings = MutableOfferings.make(artworks.toArray(new MutableArtwork[6]));
         
         final Viewer view1 = Viewer.make("spectator", offerings, (Object) null);
         offerings.addObserver(view1);
