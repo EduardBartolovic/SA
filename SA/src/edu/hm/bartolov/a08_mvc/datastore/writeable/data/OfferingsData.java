@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 public class OfferingsData extends MutableOfferings{
     
-    private final Set<ArtworkData> artworks;
+    private final Set<MutableArtwork> artworks;
     
     private int stepsRemaining;
     
@@ -29,7 +29,7 @@ public class OfferingsData extends MutableOfferings{
     
 
     @Override
-    public synchronized Stream<MutableArtwork> getArtworks() {
+    public Stream<MutableArtwork> getArtworks() {
         return Stream.of(MutableArtwork.class.cast(artworks));
     }
 
@@ -52,28 +52,28 @@ public class OfferingsData extends MutableOfferings{
     public synchronized void setStepsRemaining(int stepsRemaining) {
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
-        synchronized(getDataStore()){
-            this.stepsRemaining = stepsRemaining;
-            super.setChanged();
-        }
+      
+        this.stepsRemaining = stepsRemaining;
+        super.setChanged();
+        
     }
 
     @Override
     public synchronized void setBidder(String bidder) {
-        synchronized(getDataStore()){
-            this.bidder = bidder;
-            super.setChanged();
-        }
+      
+        this.bidder = bidder;
+        super.setChanged();
+        
     }
 
     @Override
     public synchronized void setBid(int bid) {
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
-        synchronized(getDataStore()){
-            this.bid = bid;
-            super.setChanged();
-        }
+      
+        this.bid = bid;
+        super.setChanged();
+        
         
     }
     

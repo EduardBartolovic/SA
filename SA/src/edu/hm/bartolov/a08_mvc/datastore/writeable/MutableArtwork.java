@@ -8,11 +8,7 @@ public abstract class MutableArtwork implements Artwork {
     public static MutableArtwork make(String title,int initialPrice){
        return new ArtworkData(title, initialPrice);
     }
-    
-    public MutableOfferings getDataStore(){
-        return null;
-    }
-    
+
     public abstract void setAuctioned(boolean auctioned);
    
     public abstract void setBuyer(String buyer);

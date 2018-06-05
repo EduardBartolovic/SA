@@ -1,15 +1,14 @@
 package edu.hm.bartolov.a08_mvc.view;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
-import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 import java.util.Observer;
 
 
 public abstract class Viewer implements Observer{
     
-    private final MutableOfferings dataStore;
+    private final Offerings dataStore;
 
-    public Viewer(MutableOfferings dataStore) {
+    public Viewer(Offerings dataStore) {
         this.dataStore = dataStore;
         dataStore.addObserver(this);
     }

@@ -53,27 +53,24 @@ public class ArtworkData extends MutableArtwork{
 
     @Override
     public synchronized void setAuctioned(boolean auctioned) {
-        synchronized(getDataStore()){
-            this.auctioned = auctioned;
-        }
+        this.auctioned = auctioned;
+        
     }
 
     @Override
     public synchronized void setBuyer(String buyer) {
         if( buyer == null || "".equals(buyer)) 
             throw new IllegalArgumentException(); 
-        synchronized(getDataStore()){
-            this.buyer = buyer;
-        }
+        this.buyer = buyer;
+        
     }
 
     @Override
     public synchronized void setSoldPrice(int soldPrice) {
         if( soldPrice < 0) 
             throw new IllegalArgumentException();
-        synchronized(getDataStore()){
-            this.soldPrice = soldPrice;
-        }
+        this.soldPrice = soldPrice;
+        
     }
     
     

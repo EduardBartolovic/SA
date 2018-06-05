@@ -1,15 +1,16 @@
 package edu.hm.bartolov.a08_mvc.datastore.readonly;
 
+import java.util.Observable;
 import java.util.stream.Stream;
 
 
-public interface Offerings {
+public abstract class Offerings extends Observable{
     
-    Stream<? extends Artwork> getArtworks();
+    public abstract Stream<? extends Artwork> getArtworks();
 
-    int getStepsRemaining();
+    public abstract int getStepsRemaining();
 
-    String getBidder();
+    public abstract String getBidder();
 
-    int getBid();
+    public abstract int getBid();
 }

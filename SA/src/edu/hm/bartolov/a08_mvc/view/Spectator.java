@@ -1,7 +1,12 @@
 
 package edu.hm.bartolov.a08_mvc.view;
 
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
+import java.util.function.BiConsumer;
 
 /**
  *
@@ -9,52 +14,50 @@ import java.util.Observable;
  */
 public class Spectator extends Viewer{
 
-    private int counter = 5;
+    private static final Map<Integer,BiConsumer<String,Integer>> NOBID = new HashMap<>();
+    private static final Map<Integer,BiConsumer<String,Integer>> BID = new HashMap<>();
+    
+    
+    final Offerings offerings;
     
     Spectator(Object object) {
         super(null);
+        offerings = (Offerings) object;
         
-//        new Thread(()-> {
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException ex) {
-//                Logger.getLogger(Spectator.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//           update(null,null);
-//        }).start();
+        NOBID.put(0,(String title , Integer price) -> {System.out.printf(title+Callout.Done.getFormatNobid(),price);});
+        NOBID.put(1,(String title , Integer price) -> {System.out.printf(title+Callout.Going2nd.getFormatNobid(),price);});
+        NOBID.put(2,(String title , Integer price) -> {System.out.printf(title+Callout.Going1st.getFormatNobid(),price);});
+        NOBID.put(3,(String title , Integer price) -> {System.out.printf(title+Callout.Remaining3.getFormatNobid(),price);});
+        NOBID.put(4,(String title , Integer price) -> {System.out.printf(title+Callout.Remaining4.getFormatNobid(),price);});
+        NOBID.put(5,(String title , Integer price) -> {System.out.printf(title+Callout.NewBid.getFormatNobid(),price);});
+        
+        
+        BID.put(0,(String title , Integer price) -> {System.out.printf(title+Callout.Done.getFormatBid(),price);});
+        BID.put(1,(String title , Integer price) -> {System.out.printf(title+Callout.Going2nd.getFormatBid(),price);});
+        BID.put(2,(String title , Integer price) -> {System.out.printf(title+Callout.Going1st.getFormatBid(),price);});
+        BID.put(3,(String title , Integer price) -> {System.out.printf(title+Callout.Remaining3.getFormatBid(),price);});
+        BID.put(4,(String title , Integer price) -> {System.out.printf(title+Callout.Remaining4.getFormatBid(),price);});
+        BID.put(5,(String title , Integer price) -> {System.out.printf(title+Callout.NewBid.getFormatBid(),price);});
+        
+        
     }
     
     @Override
     public void update(Observable o, Object arg) {
-        if(getDataStore().getBidder()==null){
-            if(getDataStore().getStepsRemaining()==5){
-                System.out.println(": Mindestangebot ");
-            }else if(getDataStore().getStepsRemaining()==4){
-                System.out.println(": Mindestangebot "+"bietet jemand?");
-            }else if(getDataStore().getStepsRemaining()==3){
-                System.out.println(": Mindestangebot noch "+"bietet jemand?");
-            }else if(getDataStore().getStepsRemaining()==2){
-                System.out.println(": zum Ersten...");
-            }else if(getDataStore().getStepsRemaining()==1){
-                System.out.println(": zum Zweiten...");
-            }else if(getDataStore().getStepsRemaining()==0){
-                System.out.println(": keine Gebote, nicht verkauft.");
-            }
-                
+        
+        final Artwork artwork = offerings.getArtworks()
+                .filter( art -> art.isAuctioned())
+                .findFirst()
+                .orElseThrow(IllegalStateException::new);
+        
+        final String title = artwork.getTitle();
+        final int initialPrice = artwork.getInitialPrice();
+        
+        if(offerings.getBidder()==null){  
+            NOBID.get(offerings.getStepsRemaining()).accept(title,initialPrice);
         }else{
-            if(getDataStore().getStepsRemaining()==5){
-                System.out.println(": "+getDataStore().getBid() + " geboten!");
-            }else if(getDataStore().getStepsRemaining()==4){
-                System.out.println(": "+getDataStore().getBid() + " geboten, hoere ich mehr?");
-            }else if(getDataStore().getStepsRemaining()==3){
-                System.out.println(": noch "+getDataStore().getBid() + " geboten, hoere ich mehr?");
-            }else if(getDataStore().getStepsRemaining()==2){
-                System.out.println(": "+getDataStore().getBid() + " zum Ersten...");
-            }else if(getDataStore().getStepsRemaining()==1){
-                System.out.println(": "+getDataStore().getBid() + " zum Zweiten...");
-            }else if(getDataStore().getStepsRemaining()==0){
-                System.out.println(": "+getDataStore().getBid() + " zum Dritten, verkauft!");
-            }
+            BID.get(offerings.getStepsRemaining()).accept(title,initialPrice);
+        
         }
            
     }
