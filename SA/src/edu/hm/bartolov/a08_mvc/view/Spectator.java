@@ -15,14 +15,11 @@ import java.util.function.BiConsumer;
 public class Spectator extends Viewer{
 
     private static final Map<Integer,BiConsumer<String,Integer>> NOBID = new HashMap<>();
+    
     private static final Map<Integer,BiConsumer<String,Integer>> BID = new HashMap<>();
     
-    
-    final Offerings offerings;
-    
     Spectator(Object object) {
-        super(null);
-        offerings = (Offerings) object;
+        super((Offerings)object);
         
         NOBID.put(0,(String title , Integer price) -> {System.out.printf(title+Callout.Done.getFormatNobid(),price);});
         NOBID.put(1,(String title , Integer price) -> {System.out.printf(title+Callout.Going2nd.getFormatNobid(),price);});
@@ -38,25 +35,24 @@ public class Spectator extends Viewer{
         BID.put(3,(String title , Integer price) -> {System.out.printf(title+Callout.Remaining3.getFormatBid(),price);});
         BID.put(4,(String title , Integer price) -> {System.out.printf(title+Callout.Remaining4.getFormatBid(),price);});
         BID.put(5,(String title , Integer price) -> {System.out.printf(title+Callout.NewBid.getFormatBid(),price);});
-        
-        
+          
     }
     
     @Override
     public void update(Observable o, Object arg) {
         
-        final Artwork artwork = offerings.getArtworks()
-                .filter( art -> art.isAuctioned())
-                .findFirst()
-                .orElseThrow(IllegalStateException::new);
+        final Artwork artwork = getDataStore().getArtworks() //get all Artworks in offerings
+                .filter( art -> art.isAuctioned())           //only get Artworks which arent sold yet
+                .findFirst()                                 //get the first you find
+                .orElseThrow(IllegalStateException::new);    //if nothing is found then throw exception
         
         final String title = artwork.getTitle();
         final int initialPrice = artwork.getInitialPrice();
         
-        if(offerings.getBidder()==null){  
-            NOBID.get(offerings.getStepsRemaining()).accept(title,initialPrice);
+        if(getDataStore().getBidder()==null){  
+            NOBID.get(getDataStore().getStepsRemaining()).accept(title,initialPrice);
         }else{
-            BID.get(offerings.getStepsRemaining()).accept(title,initialPrice);
+            BID.get(getDataStore().getStepsRemaining()).accept(title,initialPrice);
         
         }
            

@@ -16,7 +16,6 @@ public abstract class Viewer implements Observer{
     protected Offerings getDataStore() {
         return dataStore;
     }
-
     
     public static Viewer make(String typekey,Offerings offerings,Object... args){
         final Viewer viewer;

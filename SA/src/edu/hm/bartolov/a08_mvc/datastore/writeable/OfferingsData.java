@@ -30,7 +30,7 @@ public class OfferingsData extends MutableOfferings{
 
     @Override
     public Stream<MutableArtwork> getArtworks() {
-        return Stream.of(MutableArtwork.class.cast(artworks));
+        return artworks.stream();
     }
 
     @Override
