@@ -17,12 +17,12 @@ public class OfferingsData extends MutableOfferings{
 
     OfferingsData(Set<MutableArtwork> artworks) {
         super();
-        this.artworks = new HashSet(artworks);
+        this.artworks = new HashSet<MutableArtwork>(artworks);
     }
     
     OfferingsData(List<MutableArtwork> artworks) {
         super();
-        this.artworks = new HashSet(artworks);
+        this.artworks = new HashSet<MutableArtwork>(artworks);
     }
     
     @Override

@@ -4,6 +4,8 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
@@ -121,7 +123,7 @@ public class Logger extends Viewer{
         
         File file = new File(DIR + "\\auction." + Integer.toString(updates) + ".log");
         
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(file));) {
+        try (BufferedWriter bw = Files.newBufferedWriter(file.toPath(), Charset.defaultCharset());) {
             
             final Artwork artwork = getDataStore().getArtworks() //get all Artworks in offerings
                 .filter( art -> art.isAuctioned())           //only get Artworks which arent sold yet
