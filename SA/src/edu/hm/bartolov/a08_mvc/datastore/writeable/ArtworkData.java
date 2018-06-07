@@ -1,6 +1,8 @@
 
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
+import java.util.Objects;
+
 
 public class ArtworkData extends MutableArtwork implements Changable{
     
@@ -16,7 +18,7 @@ public class ArtworkData extends MutableArtwork implements Changable{
     
     private Changable changable;
 
-    ArtworkData(String title, int initialPrice) {
+    protected ArtworkData(String title, int initialPrice) {
         if(initialPrice < 0 || title == null || "".equals(title)) 
             throw new IllegalArgumentException(); 
         
@@ -82,6 +84,46 @@ public class ArtworkData extends MutableArtwork implements Changable{
     void setChangable(Changable changable){
         this.changable = changable;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 97 * hash + Objects.hashCode(this.title);
+        hash = 97 * hash + this.initialPrice;
+        hash = 97 * hash + (this.auctioned ? 1 : 0);
+        hash = 97 * hash + Objects.hashCode(this.buyer);
+        hash = 97 * hash + this.soldPrice;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ArtworkData other = (ArtworkData) obj;
+        if (this.initialPrice != other.initialPrice) {
+            return false;
+        }
+        if (this.auctioned != other.auctioned) {
+            return false;
+        }
+        if (this.soldPrice != other.soldPrice) {
+            return false;
+        }
+        if (!Objects.equals(this.title, other.title)) {
+            return false;
+        }
+        return Objects.equals(this.buyer, other.buyer);
+    }
+    
+    
     
     
 }

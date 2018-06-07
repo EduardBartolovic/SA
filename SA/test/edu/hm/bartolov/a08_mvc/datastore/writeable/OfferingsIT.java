@@ -1,6 +1,5 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
-import edu.hm.bartolov.a08_mvc.view.Viewer;
 import java.util.HashSet;
 import java.util.Set;
 import static org.junit.Assert.assertEquals;
@@ -96,7 +95,7 @@ public class OfferingsIT {
     
     
     @Test(timeout = 2000)
-    public void test4NewBidderViewer() { // not ready+++++++++++++++++++++++++++++++++++++++++++
+    public void test4() { // not ready+++++++++++++++++++++++++++++++++++++++++++
         final Set<MutableArtwork> artworks = new HashSet<>();
         final MutableArtwork art1 = MutableArtwork.make("1", 1);
         artworks.add(art1);
@@ -113,19 +112,7 @@ public class OfferingsIT {
        
         final MutableOfferings offerings = MutableOfferings.make(artworks.toArray(new MutableArtwork[6]));
         
-        final Viewer viewer1 = Viewer.make("spectator", offerings, (Object) null);
-        offerings.addObserver(viewer1);
-        
-        
-        offerings.setBid(1);
-        offerings.setBidder("Hans");
-        
-        
-        offerings.setBid(5);
-        offerings.setBidder("Markus");
-        
-        assertEquals(offerings.getBid(),5);
-        assertEquals(offerings.getBidder(),"Markus");
+        MutableArtwork a1 = offerings.getArtworks().findFirst().get();
         
     }
     

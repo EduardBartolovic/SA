@@ -2,6 +2,7 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -15,12 +16,12 @@ public class OfferingsData extends MutableOfferings{
     
     private int bid;
 
-    OfferingsData(Set<MutableArtwork> artworks) {
+    protected OfferingsData(Set<MutableArtwork> artworks) {
         super();
         this.artworks = new HashSet<MutableArtwork>(artworks);
     }
     
-    OfferingsData(List<MutableArtwork> artworks) {
+    protected OfferingsData(List<MutableArtwork> artworks) {
         super();
         this.artworks = new HashSet<MutableArtwork>(artworks);
     }
@@ -70,6 +71,40 @@ public class OfferingsData extends MutableOfferings{
       
         this.bid = bid;
         super.setChanged();  
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.artworks);
+        hash = 53 * hash + this.stepsRemaining;
+        hash = 53 * hash + Objects.hashCode(this.bidder);
+        hash = 53 * hash + this.bid;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final OfferingsData other = (OfferingsData) obj;
+        if (this.stepsRemaining != other.stepsRemaining) {
+            return false;
+        }
+        if (this.bid != other.bid) {
+            return false;
+        }
+        if (!Objects.equals(this.bidder, other.bidder)) {
+            return false;
+        }
+        return Objects.equals(this.artworks, other.artworks);
     }
     
     
