@@ -52,7 +52,7 @@ public class Spectator extends Viewer{
         if(getDataStore().getBidder()==null){  
             NOBID.get(getDataStore().getStepsRemaining()).accept(title,initialPrice);
         }else{
-            BID.get(getDataStore().getStepsRemaining()).accept(title,initialPrice);
+            BID.get(getDataStore().getStepsRemaining()).accept(title,getDataStore().getBid());
         
         }
            
