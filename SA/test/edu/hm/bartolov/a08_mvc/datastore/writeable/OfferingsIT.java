@@ -167,6 +167,19 @@ public class OfferingsIT {
         assertEquals(a1.isAuctioned(),true);
     }
     
+    @Test(timeout = 2000)
+    public void test7EmptySet() {
+        final Set<MutableArtwork> artworks = new HashSet<>();
+       
+        final MutableOfferings offerings = MutableOfferings.make(artworks.toArray(new MutableArtwork[0]));
+        
+        final long count = offerings.getArtworks().count();
+        
+       
+        
+        assertEquals(count,0);
+    }
+    
 //    @Test(timeout = 2000)
 //    public void test7BuyingAndViewer() {
 //        
@@ -210,6 +223,55 @@ public class OfferingsIT {
     
     
     
-    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@Test(timeout = 1000)
+    public void testArt1Setter() {
+        final MutableArtwork art1 = MutableArtwork.make("1", 1);
+        art1.setBuyer("George");
+        
+        assertEquals(art1.getBuyer(),"George");
+    }    
     
 }

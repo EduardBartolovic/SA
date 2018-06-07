@@ -8,7 +8,7 @@ public abstract class Viewer implements Observer{
     
     private final Offerings dataStore;
 
-    public Viewer(Offerings dataStore) {
+    protected Viewer(Offerings dataStore) {
         this.dataStore = dataStore;
         dataStore.addObserver(this);
     }

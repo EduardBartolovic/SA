@@ -1,5 +1,6 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -16,14 +17,16 @@ public class OfferingsData extends MutableOfferings{
     
     private int bid;
 
+    protected OfferingsData(MutableArtwork... artworks) {
+        this.artworks = new HashSet<>(Arrays.asList(artworks));
+    }
+    
     protected OfferingsData(Set<MutableArtwork> artworks) {
-        super();
-        this.artworks = new HashSet<MutableArtwork>(artworks);
+        this.artworks = new HashSet<>(artworks);
     }
     
     protected OfferingsData(List<MutableArtwork> artworks) {
-        super();
-        this.artworks = new HashSet<MutableArtwork>(artworks);
+        this.artworks = new HashSet<>(artworks);
     }
     
     @Override

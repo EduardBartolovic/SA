@@ -58,8 +58,7 @@ public class ArtworkData extends MutableArtwork implements Changable{
     @Override
     public void setAuctioned(boolean auctioned) {
         this.auctioned = auctioned;
-        if(changable!=null)
-            setChanged();
+        setChanged();
     }
 
     @Override
@@ -67,8 +66,7 @@ public class ArtworkData extends MutableArtwork implements Changable{
         if( buyer == null || "".equals(buyer)) 
             throw new IllegalArgumentException(); 
         this.buyer = buyer;
-        if(changable!=null)
-            setChanged();
+        setChanged();
     }
 
     @Override
@@ -76,13 +74,13 @@ public class ArtworkData extends MutableArtwork implements Changable{
         if( soldPrice < 0) 
             throw new IllegalArgumentException();
         this.soldPrice = soldPrice;
-        if(changable!=null)
-            setChanged();
+        setChanged();
     }
 
     @Override
     public void setChanged() {
-        changable.setChanged();
+        if(changable != null)
+            changable.setChanged();
     }
     
     void setChangable(Changable changable){

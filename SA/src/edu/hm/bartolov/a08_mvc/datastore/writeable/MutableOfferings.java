@@ -1,7 +1,6 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 /**
@@ -11,11 +10,11 @@ import java.util.stream.Stream;
 public abstract class MutableOfferings extends Offerings implements Changable{
 
     protected MutableOfferings(){
-        
+     
     }
     
     public static MutableOfferings make(MutableArtwork... artworks){
-        return new OfferingsData(Arrays.asList(artworks));
+        return new OfferingsData(artworks);
     }
 
     public abstract void setStepsRemaining(int stepsRemaining);

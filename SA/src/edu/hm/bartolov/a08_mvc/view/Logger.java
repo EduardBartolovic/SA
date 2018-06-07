@@ -78,7 +78,7 @@ public class Logger extends Viewer{
         
         final File file = new File(DIR + "\\auction." + Integer.toString(updates) + ".log");
         
-        try (final BufferedWriter bw = Files.newBufferedWriter(file.toPath(), Charset.defaultCharset())) {
+        try (BufferedWriter bw = Files.newBufferedWriter(file.toPath(), Charset.defaultCharset())) {
             
             getDataStore()
                     .getArtworks()
