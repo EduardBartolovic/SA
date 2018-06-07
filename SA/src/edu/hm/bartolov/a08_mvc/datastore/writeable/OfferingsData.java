@@ -65,7 +65,7 @@ public class OfferingsData extends MutableOfferings{
 
     @Override
     public synchronized void setBid(int bid) {
-        if(stepsRemaining<0)
+        if(bid<0)
             throw new IllegalArgumentException();
       
         this.bid = bid;
