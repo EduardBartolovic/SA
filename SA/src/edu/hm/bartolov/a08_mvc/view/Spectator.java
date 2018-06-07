@@ -46,13 +46,10 @@ public class Spectator extends Viewer{
                 .findFirst()                                 //get the first you find
                 .orElseThrow(IllegalStateException::new);    //if nothing is found then throw exception
         
-        final String title = artwork.getTitle();
-        final int initialPrice = artwork.getInitialPrice();
-        
         if(getDataStore().getBidder()==null){  
-            NOBID.get(getDataStore().getStepsRemaining()).accept(title,initialPrice);
+            NOBID.get(getDataStore().getStepsRemaining()).accept(artwork.getTitle(),artwork.getInitialPrice());
         }else{
-            BID.get(getDataStore().getStepsRemaining()).accept(title,getDataStore().getBid());
+            BID.get(getDataStore().getStepsRemaining()).accept(artwork.getTitle(),getDataStore().getBid());
         
         }
            
