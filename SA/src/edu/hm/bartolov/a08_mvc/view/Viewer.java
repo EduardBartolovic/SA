@@ -19,14 +19,18 @@ public abstract class Viewer implements Observer{
     
     public static Viewer make(String typekey,Offerings offerings,Object... args){
         final Viewer viewer;
-        if(typekey.equals("dummy")){
-            viewer = new Dummy();
-        }else if(typekey.equals("spectator")){
-            viewer = new Spectator(args);
-        }else if(typekey.equals("logger")){
-            viewer = new Logger(args);
-        }else{
-            return null;
+        switch (typekey) {
+            case "dummy":
+                viewer = new Dummy();
+                break;
+            case "spectator":
+                viewer = new Spectator(args);
+                break;
+            case "logger":
+                viewer = new Logger(args);
+                break;
+            default:
+                return null;
         }
         
         

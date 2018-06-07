@@ -32,22 +32,22 @@ public class OfferingsData extends MutableOfferings{
     }
 
     @Override
-    public synchronized  int getStepsRemaining() {
+    public  int getStepsRemaining() {
         return stepsRemaining;
     }
 
     @Override
-    public synchronized String getBidder() {
+    public String getBidder() {
         return bidder;
     }
 
     @Override
-    public synchronized int getBid() {
+    public int getBid() {
         return bid;
     }
 
     @Override
-    public synchronized void setStepsRemaining(int stepsRemaining) {
+    public void setStepsRemaining(int stepsRemaining) {
         if(stepsRemaining<0)
             throw new IllegalArgumentException();
       
@@ -57,15 +57,15 @@ public class OfferingsData extends MutableOfferings{
     }
 
     @Override
-    public synchronized void setBidder(String bidder) {
-      
+    public void setBidder(String bidder) {
+
         this.bidder = bidder;
         super.setChanged();
         
     }
 
     @Override
-    public synchronized void setBid(int bid) {
+    public void setBid(int bid) {
         if(bid<0)
             throw new IllegalArgumentException();
       

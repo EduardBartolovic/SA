@@ -27,53 +27,57 @@ public class ArtworkData extends MutableArtwork implements Changable{
         auctioned = false;
         buyer = null;
         soldPrice = 0;
+        changable = null;
     }
 
     @Override
-    public synchronized String getTitle() {
+    public String getTitle() {
         return title;
     }
 
     @Override
-    public synchronized int getInitialPrice() {
+    public int getInitialPrice() {
         return initialPrice;
     }
 
     @Override
-    public synchronized boolean isAuctioned() {
+    public boolean isAuctioned() {
         return auctioned;
     }
 
     @Override
-    public synchronized String getBuyer() {
+    public String getBuyer() {
         return buyer;
     }
 
     @Override
-    public synchronized int getSoldPrice() {
+    public int getSoldPrice() {
         return soldPrice;
     }
 
     @Override
-    public synchronized void setAuctioned(boolean auctioned) {
+    public void setAuctioned(boolean auctioned) {
         this.auctioned = auctioned;
-        setChanged();
+        if(changable!=null)
+            setChanged();
     }
 
     @Override
-    public synchronized void setBuyer(String buyer) {
+    public void setBuyer(String buyer) {
         if( buyer == null || "".equals(buyer)) 
             throw new IllegalArgumentException(); 
         this.buyer = buyer;
-        setChanged();
+        if(changable!=null)
+            setChanged();
     }
 
     @Override
-    public synchronized void setSoldPrice(int soldPrice) {
+    public void setSoldPrice(int soldPrice) {
         if( soldPrice < 0) 
             throw new IllegalArgumentException();
         this.soldPrice = soldPrice;
-        setChanged();
+        if(changable!=null)
+            setChanged();
     }
 
     @Override
