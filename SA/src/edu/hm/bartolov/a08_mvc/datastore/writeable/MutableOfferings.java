@@ -7,7 +7,7 @@ import java.util.Arrays;
  *
  * @author Edo
  */
-public abstract class MutableOfferings extends Offerings{
+public abstract class MutableOfferings extends Offerings implements Changable{
 
     public MutableOfferings(){
         
@@ -22,4 +22,9 @@ public abstract class MutableOfferings extends Offerings{
     public abstract void setBidder(String bidder);
 
     public abstract void setBid(int bid);
+    
+    @Override
+    public void setChanged(){
+        super.setChanged();
+    }
 }

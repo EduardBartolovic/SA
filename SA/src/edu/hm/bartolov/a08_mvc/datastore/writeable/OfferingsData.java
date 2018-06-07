@@ -1,7 +1,5 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
-import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
-import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -27,7 +25,6 @@ public class OfferingsData extends MutableOfferings{
         this.artworks = new HashSet(artworks);
     }
     
-
     @Override
     public Stream<MutableArtwork> getArtworks() {
         return artworks.stream();
@@ -72,9 +69,7 @@ public class OfferingsData extends MutableOfferings{
             throw new IllegalArgumentException();
       
         this.bid = bid;
-        super.setChanged();
-        
-        
+        super.setChanged();  
     }
     
     

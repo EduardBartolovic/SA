@@ -2,7 +2,7 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 
-public abstract class MutableArtwork implements Artwork {
+public abstract class MutableArtwork implements Artwork{
     
     public static MutableArtwork make(String title,int initialPrice){
        return new ArtworkData(title, initialPrice);

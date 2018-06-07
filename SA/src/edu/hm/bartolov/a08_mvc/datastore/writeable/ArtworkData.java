@@ -2,7 +2,7 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 
-public class ArtworkData extends MutableArtwork{
+public class ArtworkData extends MutableArtwork implements Changable{
     
     private final String title;
     
@@ -13,6 +13,8 @@ public class ArtworkData extends MutableArtwork{
     private String buyer;
     
     private int soldPrice;
+    
+    private Changable changable;
 
     ArtworkData(String title, int initialPrice) {
         if(initialPrice < 0 || title == null || "".equals(title)) 
@@ -53,7 +55,7 @@ public class ArtworkData extends MutableArtwork{
     @Override
     public synchronized void setAuctioned(boolean auctioned) {
         this.auctioned = auctioned;
-        
+        setChanged();
     }
 
     @Override
@@ -61,7 +63,7 @@ public class ArtworkData extends MutableArtwork{
         if( buyer == null || "".equals(buyer)) 
             throw new IllegalArgumentException(); 
         this.buyer = buyer;
-        
+        setChanged();
     }
 
     @Override
@@ -69,10 +71,17 @@ public class ArtworkData extends MutableArtwork{
         if( soldPrice < 0) 
             throw new IllegalArgumentException();
         this.soldPrice = soldPrice;
-        
+        setChanged();
+    }
+
+    @Override
+    public void setChanged() {
+        changable.setChanged();
     }
     
-    
+    void setChangable(Changable changable){
+        this.changable = changable;
+    }
     
     
 }
