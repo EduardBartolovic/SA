@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/datastore/readonly/Offerings.java</file>
+            <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/view/Dummy.java</file>
             <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/datastore/writeable/OfferingsData.java</file>
-            <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/Viewers.java</file>
+            <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/datastore/readonly/Artwork.java</file>
             <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/view/Spectator.java</file>
-            <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/view/Logger.java</file>
+            <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/Main.java</file>
             <file>file:/C:/Users/Computer/Documents/NetBeansProjects/SA/SA/src/edu/hm/bartolov/a08_mvc/view/Viewer.java</file>
         </group>
     </open-files>
