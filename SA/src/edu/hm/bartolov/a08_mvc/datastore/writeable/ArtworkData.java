@@ -127,28 +127,28 @@ public class ArtworkData extends MutableArtwork {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
+        if (this == obj)
             return true;
-        }
-        if (obj == null) {
+        
+        if (obj == null)
             return false;
-        }
-        if (getClass() != obj.getClass()) {
+        
+        if (getClass() != obj.getClass())
             return false;
-        }
+        
         final ArtworkData other = (ArtworkData) obj;
-        if (this.initialPrice != other.initialPrice) {
+        if (this.initialPrice != other.initialPrice)
             return false;
-        }
-        if (this.auctioned != other.auctioned) {
+        
+        if (this.auctioned != other.auctioned)
             return false;
-        }
-        if (this.soldPrice != other.soldPrice) {
+       
+        if (this.soldPrice != other.soldPrice) 
             return false;
-        }
-        if (!Objects.equals(this.title, other.title)) {
+        
+        if (!Objects.equals(this.title, other.title))
             return false;
-        }
+        
         return Objects.equals(this.buyer, other.buyer);
     }
     
