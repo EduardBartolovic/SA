@@ -10,34 +10,29 @@ import java.util.stream.Stream;
 public abstract class Offerings extends Observable{
     
     /**
-     * 
-     * @return 
+     * getter.
+     * @return artworks
      */
     public abstract Stream<? extends Artwork> getArtworks();
 
     /**
-     * 
-     * @return 
+     * getter.
+     * @return artworks remainingSteps
      */
     public abstract int getStepsRemaining();
 
     /**
-     * 
-     * @return 
+     * getter.
+     * @return bidder
      */
     public abstract String getBidder();
 
     /**
-     * 
-     * @return 
+     * getter.
+     * @return bid
      */
     public abstract int getBid();
 
-    @Override
-    public void notifyObservers() {
-        super.notifyObservers();
-    }
-    
     
     
 }

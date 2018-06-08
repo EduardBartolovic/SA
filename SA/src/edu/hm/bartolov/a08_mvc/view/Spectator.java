@@ -46,12 +46,10 @@ public class Spectator extends Viewer{
             
             if(offerings.getBidder() == null){
                 printer.printf(artwork.getTitle() + ": " + callout.getFormatNobid() + "\n", artwork.getInitialPrice());
-                printer.flush();
             }else{
-                printer.printf(artwork.getTitle() + ": " + callout.getFormatBid() + "\n", offerings.getBid());
-                printer.flush();
-
+                printer.printf(artwork.getTitle() + ": " + callout.getFormatBid() + "\n", offerings.getBid());     
             }
+            printer.flush();
         }
     }
     

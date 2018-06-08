@@ -9,7 +9,7 @@ public interface Changable {
     /**
      * set if there has been a change.
      */
-    void setChanged();
+    void modified();
     
     /**
      * setting changable.

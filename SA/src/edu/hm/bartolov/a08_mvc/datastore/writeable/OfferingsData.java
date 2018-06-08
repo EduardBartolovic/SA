@@ -93,7 +93,7 @@ public class OfferingsData extends MutableOfferings{
         this.bid = bid;
         setChanged();  
     }
-
+    
     @Override
     public int hashCode() {
         int hash = 5;
@@ -127,8 +127,7 @@ public class OfferingsData extends MutableOfferings{
         
         return Objects.equals(this.artworks, other.artworks);
     }
-    
-    
+
     
     
     

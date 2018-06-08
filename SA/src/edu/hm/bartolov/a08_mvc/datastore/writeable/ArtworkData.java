@@ -84,7 +84,7 @@ public class ArtworkData extends MutableArtwork {
     @Override
     public void setAuctioned(boolean auctioned) {
         this.auctioned = auctioned;
-        setChanged();
+        modified();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class ArtworkData extends MutableArtwork {
         if( buyer == null || "".equals(buyer)) 
             throw new IllegalArgumentException(); 
         this.buyer = buyer;
-        setChanged();
+        modified();
     }
 
     @Override
@@ -100,13 +100,13 @@ public class ArtworkData extends MutableArtwork {
         if( soldPrice < 0) 
             throw new IllegalArgumentException();
         this.soldPrice = soldPrice;
-        setChanged();
+        modified();
     }
 
     @Override
-    public void setChanged() {
+    public void modified() {
         if(changable != null)
-            changable.setChanged();
+            changable.modified();
     }
     
     @Override

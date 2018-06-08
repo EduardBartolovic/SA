@@ -7,14 +7,7 @@ import java.util.stream.Stream;
  *
  * @author Eduard Bartolovic, Felix Peither
  */
-public abstract class MutableOfferings extends Offerings{
-
-    /**
-     * default constructor.
-     */
-    protected MutableOfferings(){
-     
-    }
+public abstract class MutableOfferings extends Offerings {
     
     /**
      * Factory method for offerings.
@@ -45,9 +38,10 @@ public abstract class MutableOfferings extends Offerings{
 
     @Override
     public abstract Stream<MutableArtwork> getArtworks();
+
     
-    @Override
-    public synchronized void setChanged(){
+    public void modified(){
         super.setChanged();
     }
+    
 }

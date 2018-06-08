@@ -2,12 +2,9 @@ package edu.hm.bartolov.a08_mvc.view;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import static java.nio.charset.StandardCharsets.UTF_8;
 import java.util.Iterator;
 import java.util.Observer;
 import java.util.Properties;
@@ -26,14 +23,13 @@ public abstract class Viewer implements Observer{
      * @return 
      */
     public static Viewer make(String typekey,Offerings offerings,Object... args){
-        final PrintWriter printw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out, UTF_8)));;
         final Viewer viewer;
         switch (typekey) {
             case "dummy":
                 viewer = new Dummy();
                 break;
             case "spectator":
-                viewer = new Spectator(offerings, printw);
+                viewer = new Spectator(offerings, (PrintWriter) args[0]);
                 break;
             case "logger":
                 viewer = new Logger(offerings);

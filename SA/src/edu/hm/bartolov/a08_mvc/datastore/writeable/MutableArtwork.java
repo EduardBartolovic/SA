@@ -38,7 +38,7 @@ public abstract class MutableArtwork implements Artwork, Changable{
     public abstract void setSoldPrice(int soldPrice);
 
     @Override
-    public abstract void setChanged();
+    public abstract void modified();
 
     @Override
     public abstract void setChangable(MutableOfferings changeable);
