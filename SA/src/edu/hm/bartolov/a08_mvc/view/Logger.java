@@ -30,8 +30,10 @@ public class Logger extends Viewer{
      */
     private int updates = 0;
     
-    Logger(Object arg) {
-        super((Offerings)arg);
+    private final Offerings offer;
+    
+    Logger(Offerings offerings) {
+        offer = offerings;
     }
 
     @Override
@@ -43,8 +45,7 @@ public class Logger extends Viewer{
         
         try (BufferedWriter bw = Files.newBufferedWriter(file.toPath(), Charset.defaultCharset())) {
             
-            final long count = super.getDataStore()
-                                        .getArtworks()
+            final long count = offer.getArtworks()
                                         .peek((Artwork art)->{
                                             try {
                                                 bw.write("Title: "+art.getTitle()+" Sold: "+art.isAuctioned()+" InitialPrice: "+art.getInitialPrice()+" Buyer: "+art.getBuyer()+" SoldPrice: "+art.getSoldPrice());

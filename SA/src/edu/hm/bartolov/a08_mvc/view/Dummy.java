@@ -9,7 +9,7 @@ import java.util.Observable;
 public class Dummy extends Viewer{
 
     public Dummy() {
-        super(null);
+       
     }
     
     @Override

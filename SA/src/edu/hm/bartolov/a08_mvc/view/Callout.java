@@ -23,6 +23,11 @@ enum Callout {
     /** Nachrichtentext ohne Gebot. */
     private final String formatNobid;
 
+    /**
+     * 
+     * @param formatBid
+     * @param formatNobid 
+     */
     Callout(String formatBid, String formatNobid) {
         this.formatBid = formatBid;
         this.formatNobid = formatNobid;
