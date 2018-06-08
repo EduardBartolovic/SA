@@ -126,25 +126,25 @@ public class OfferingsData extends MutableOfferings{
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        
-        if (obj == null) 
+        }
+        if (obj == null) {
             return false;
-        
-        if (getClass() != obj.getClass()) 
+        }
+        if (getClass() != obj.getClass()) {
             return false;
-        
+        }
         final OfferingsData other = (OfferingsData) obj;
-        if (this.stepsRemaining != other.stepsRemaining) 
+        if (this.stepsRemaining != other.stepsRemaining) {
             return false;
-        
-        if (this.bid != other.bid) 
+        }
+        if (this.bid != other.bid) {
             return false;
-        
-        if (!Objects.equals(this.bidder, other.bidder)) 
+        }
+        if (!Objects.equals(this.bidder, other.bidder)) {
             return false;
-        
+        }
         return Objects.equals(this.artworks, other.artworks);
     }
     
