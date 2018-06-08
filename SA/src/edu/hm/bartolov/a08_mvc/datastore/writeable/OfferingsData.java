@@ -40,6 +40,9 @@ public class OfferingsData extends MutableOfferings{
      */
     protected OfferingsData(MutableArtwork... artworks) {
         this.artworks = new HashSet<>(Arrays.asList(artworks));
+        this.artworks.forEach((art) -> {
+            art.setChangable(this);
+        });
     }
     
     /**
@@ -48,6 +51,9 @@ public class OfferingsData extends MutableOfferings{
      */
     protected OfferingsData(Set<MutableArtwork> artworks) {
         this.artworks = new HashSet<>(artworks);
+        this.artworks.forEach((art) -> {
+            art.setChangable(this);
+        });
     }
     
     /**
@@ -56,6 +62,9 @@ public class OfferingsData extends MutableOfferings{
      */
     protected OfferingsData(List<MutableArtwork> artworks) {
         this.artworks = new HashSet<>(artworks);
+        this.artworks.forEach((art) -> {
+            art.setChangable(this);
+        });
     }
     
     @Override

@@ -7,7 +7,7 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
  * 
  * @author Eduard Bartolovic, Felix Peither
  */
-public abstract class MutableArtwork implements Artwork{
+public abstract class MutableArtwork implements Artwork, Changable{
     
     /**
      * Factory method for Artworks.
@@ -36,4 +36,10 @@ public abstract class MutableArtwork implements Artwork{
      * @param soldPrice the price this artwork has been sold for1
      */
     public abstract void setSoldPrice(int soldPrice);
+
+    @Override
+    public abstract void setChanged();
+
+    @Override
+    public abstract void setChangable(MutableOfferings changeable);
 }

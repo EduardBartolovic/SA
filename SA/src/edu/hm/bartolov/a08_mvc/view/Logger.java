@@ -7,10 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Observable;
-import java.util.function.BiConsumer;
 
 /**
  *
@@ -55,9 +52,11 @@ public class Logger extends Viewer{
                                                 System.out.println(ERROR);
                                             }})
                                         .count();
+            System.out.println(count);
             
         } catch (IOException ex) {
             System.out.println(ERROR);
         }
     }
+    
 }

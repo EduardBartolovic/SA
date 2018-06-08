@@ -6,6 +6,7 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Optional;
 import java.util.function.BiConsumer;
 
 /**
@@ -41,18 +42,25 @@ public class Spectator extends Viewer{
     @Override
     public void update(Observable o, Object arg) {
         
-        final Artwork artwork = getDataStore().getArtworks() //get all Artworks in offerings
+        message(getDataStore().getArtworks() //get all Artworks in offerings
                 .filter( art -> art.isAuctioned())           //only get Artworks which arent sold yet
-                .findFirst()                                 //get the first you find
-                .orElseThrow(IllegalStateException::new);    //if nothing is found then throw exception
+                .findFirst());                                 //get the first you find
         
-        if(getDataStore().getBidder()==null){  
-            NOBID.get(getDataStore().getStepsRemaining()).accept(artwork.getTitle(),artwork.getInitialPrice());
-        }else{
-            BID.get(getDataStore().getStepsRemaining()).accept(artwork.getTitle(),getDataStore().getBid());
+    }
+    
+    private void message(Optional<? extends Artwork> optionalArtwork){
         
+        if(optionalArtwork.isPresent()){
+            final Artwork artwork = optionalArtwork.get();
+        
+            if(getDataStore().getBidder() == null){  
+                NOBID.get(getDataStore().getStepsRemaining()).accept(artwork.getTitle(),artwork.getInitialPrice());
+            }else{
+                BID.get(getDataStore().getStepsRemaining()).accept(artwork.getTitle(),getDataStore().getBid());
+
+            }
         }
-           
+        
     }
     
 }

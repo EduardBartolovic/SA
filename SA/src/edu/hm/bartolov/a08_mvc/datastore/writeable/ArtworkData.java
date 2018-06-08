@@ -7,7 +7,7 @@ import java.util.Objects;
  * Artwork.
  * @author Felix, Eduard
  */
-public class ArtworkData extends MutableArtwork implements Changable{
+public class ArtworkData extends MutableArtwork {
     
     /**
      * Title of the artwork.
@@ -35,9 +35,9 @@ public class ArtworkData extends MutableArtwork implements Changable{
     private int soldPrice;
     
     /**
-     * Changeable.
+     * Object to communicate changes.
      */
-    private Changable changable;
+    private MutableOfferings changable;
 
     /**
      * Contructor.
@@ -109,7 +109,8 @@ public class ArtworkData extends MutableArtwork implements Changable{
             changable.setChanged();
     }
     
-    void setChangable(Changable changable){
+    @Override
+    public void setChangable(MutableOfferings changable){
         this.changable = changable;
     }
 

@@ -24,10 +24,10 @@ public abstract class Viewer implements Observer{
                 viewer = new Dummy();
                 break;
             case "spectator":
-                viewer = new Spectator(args);
+                viewer = new Spectator(offerings);
                 break;
             case "logger":
-                viewer = new Logger(args);
+                viewer = new Logger(offerings);
                 break;
             default:
                 return null;

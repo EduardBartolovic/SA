@@ -7,7 +7,7 @@ import java.util.stream.Stream;
  *
  * @author Eduard Bartolovic, Felix Peither
  */
-public abstract class MutableOfferings extends Offerings implements Changable{
+public abstract class MutableOfferings extends Offerings{
 
     /**
      * default constructor.
