@@ -3,7 +3,10 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
 import java.util.Objects;
 
-
+/**
+ * Artwork.
+ * @author Felix, Eduard
+ */
 public class ArtworkData extends MutableArtwork implements Changable{
     
     /**
