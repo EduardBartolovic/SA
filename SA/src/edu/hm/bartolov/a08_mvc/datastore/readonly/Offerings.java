@@ -32,4 +32,12 @@ public abstract class Offerings extends Observable{
      * @return 
      */
     public abstract int getBid();
+
+    @Override
+    public void notifyObservers() {
+        super.notifyObservers();
+    }
+    
+    
+    
 }

@@ -8,11 +8,8 @@ import java.util.Observable;
  */
 public class Dummy extends Viewer{
 
-    public Dummy() {
-       
-    }
-    
+
     @Override
-    public void update(Observable o, Object arg) {}
+    public void update(Observable obser, Object arg) {}
     
 }

@@ -8,36 +8,39 @@ import java.util.Observable;
 import java.util.Optional;
 
 /**
- *
- * @author Edo
+ * Oberserver.
+ * @author Eduard
  */
 public class Spectator extends Viewer{
    
+    /**
+     * Offerings is Observable.
+     */
     private final Offerings offerings;
     
+    /**
+     * Printwriter.
+     */
     private final PrintWriter printer;
     
-    Spectator(Offerings offerings, PrintWriter pw) {
+    Spectator(Offerings offerings, PrintWriter printw) {
         
         this.offerings = offerings;
-        printer = pw;
+        printer = printw;
         offerings.addObserver(this);
         
     }
     
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable obser, Object arg) {
         
-        message(offerings.getArtworks()                         //get all Artworks in offerings
-                .filter( art -> art.isAuctioned())           //only get Artworks which arent sold yet
-                .findFirst());                                 //get the first you find
+        final Optional<? extends Artwork> optArt = offerings.getArtworks()             //get all Artworks in offerings
+                                                    .filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+                                                    .findFirst();                      //get the first you find
+                
         
-    }
-    
-    private void message(Optional<? extends Artwork> optionalArtwork){
-        
-        if(optionalArtwork.isPresent()){
-            final Artwork artwork = optionalArtwork.get();
+        if(optArt.isPresent()){
+            final Artwork artwork = optArt.get();
             final Callout callout = Callout.values()[offerings.getStepsRemaining()];
             
             
@@ -50,7 +53,7 @@ public class Spectator extends Viewer{
 
             }
         }
-        
     }
+    
     
 }

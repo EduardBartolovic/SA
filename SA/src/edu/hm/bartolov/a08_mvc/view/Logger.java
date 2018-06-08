@@ -25,16 +25,20 @@ public class Logger extends Viewer{
     /**
      * Number of updates that have been made. For the file name.
      */
-    private int updates = 0;
+    private int updates;
     
+    /**
+     * Offerings as observable.
+     */
     private final Offerings offer;
     
     Logger(Offerings offerings) {
         offer = offerings;
+        updates = 0;
     }
 
     @Override
-    public void update(Observable o, Object arg) {
+    public void update(Observable obser, Object arg) {
   
         final File file = new File(DIR + "\\auction." + Integer.toString(updates) + ".log");
         
@@ -42,7 +46,7 @@ public class Logger extends Viewer{
             
             printProperties(offer, out);
             
-        } catch (IOException ex) {
+        } catch (IOException exception) {
             System.out.println(ERROR);
         }
         

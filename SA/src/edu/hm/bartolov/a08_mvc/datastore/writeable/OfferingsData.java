@@ -1,10 +1,9 @@
 package edu.hm.bartolov.a08_mvc.datastore.writeable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Stream;
 
 
@@ -17,7 +16,7 @@ public class OfferingsData extends MutableOfferings{
     /**
      * All artworks which are offered.
      */
-    private final Set<MutableArtwork> artworks;
+    private final List<MutableArtwork> artworks;
     
     /**
      * The steps remaining for the momentairy auction.
@@ -39,32 +38,13 @@ public class OfferingsData extends MutableOfferings{
      * @param artworks a number of artworks
      */
     protected OfferingsData(MutableArtwork... artworks) {
-        this.artworks = new HashSet<>(Arrays.asList(artworks));
+        
+        this.artworks = new ArrayList<>(Arrays.asList(artworks));
         this.artworks.forEach((art) -> {
             art.setChangable(this);
         });
-    }
-    
-    /**
-     * Constructor.
-     * @param artworks set of artworks
-     */
-    protected OfferingsData(Set<MutableArtwork> artworks) {
-        this.artworks = new HashSet<>(artworks);
-        this.artworks.forEach((art) -> {
-            art.setChangable(this);
-        });
-    }
-    
-    /**
-     * Constructor.
-     * @param artworks List of artworks
-     */
-    protected OfferingsData(List<MutableArtwork> artworks) {
-        this.artworks = new HashSet<>(artworks);
-        this.artworks.forEach((art) -> {
-            art.setChangable(this);
-        });
+        
+        stepsRemaining = 5;
     }
     
     @Override

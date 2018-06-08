@@ -2,14 +2,20 @@ package edu.hm.bartolov.a08_mvc.view;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import java.util.Iterator;
 import java.util.Observer;
 import java.util.Properties;
 
-
+/**
+ * Viewer abstract class
+ * @author Felix,Eduard
+ */
 public abstract class Viewer implements Observer{
     
     /**
@@ -20,20 +26,20 @@ public abstract class Viewer implements Observer{
      * @return 
      */
     public static Viewer make(String typekey,Offerings offerings,Object... args){
-        PrintWriter pw = new PrintWriter(System.out);
+        final PrintWriter printw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(System.out, UTF_8)));;
         final Viewer viewer;
         switch (typekey) {
             case "dummy":
                 viewer = new Dummy();
                 break;
             case "spectator":
-                viewer = new Spectator(offerings, pw);
+                viewer = new Spectator(offerings, printw);
                 break;
             case "logger":
                 viewer = new Logger(offerings);
                 break;
             default:
-                return null;
+                throw new IllegalArgumentException();
         }
         
         
@@ -74,7 +80,7 @@ public abstract class Viewer implements Observer{
             properties.setProperty("offerings.bid", Integer.toString(offerings.getBid()));
         }
         int artworkIndex = 0;
-        for(Iterator <? extends Artwork > artworkIterator = offerings.getArtworks().iterator(); artworkIterator.hasNext();) {
+        for(final Iterator <? extends Artwork > artworkIterator = offerings.getArtworks().iterator(); artworkIterator.hasNext();) {
             final Artwork artwork = artworkIterator.next();
             final String prefix = "artwork." + artworkIndex + '.';
             properties.setProperty(prefix + "title", artwork.getTitle());
