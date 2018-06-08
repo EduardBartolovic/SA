@@ -23,7 +23,12 @@ public class Spectator extends Viewer{
      */
     private final PrintWriter printer;
     
-    Spectator(Offerings offerings, PrintWriter printw) {
+    /**
+     * Constructor.
+     * @param offerings
+     * @param printw 
+     */
+    protected Spectator(Offerings offerings, PrintWriter printw) {
         
         this.offerings = offerings;
         printer = printw;

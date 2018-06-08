@@ -76,7 +76,8 @@ public abstract class Viewer implements Observer{
             properties.setProperty("offerings.bid", Integer.toString(offerings.getBid()));
         }
         int artworkIndex = 0;
-        for(final Iterator <? extends Artwork > artworkIterator = offerings.getArtworks().iterator(); artworkIterator.hasNext();) {
+        final Iterator <? extends Artwork > artworkIterator = offerings.getArtworks().iterator();
+        while(artworkIterator.hasNext()) {
             final Artwork artwork = artworkIterator.next();
             final String prefix = "artwork." + artworkIndex + '.';
             properties.setProperty(prefix + "title", artwork.getTitle());

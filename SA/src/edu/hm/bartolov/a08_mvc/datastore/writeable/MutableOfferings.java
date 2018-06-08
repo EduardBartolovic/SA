@@ -39,7 +39,9 @@ public abstract class MutableOfferings extends Offerings {
     @Override
     public abstract Stream<MutableArtwork> getArtworks();
 
-    
+    /**
+     * used to comunicate Changes from artwork.
+     */
     public void modified(){
         super.setChanged();
     }

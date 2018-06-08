@@ -32,7 +32,11 @@ public class Logger extends Viewer{
      */
     private final Offerings offer;
     
-    Logger(Offerings offerings) {
+    /**
+     * Construcor.
+     * @param offerings 
+     */
+    protected Logger(Offerings offerings) {
         offer = offerings;
         updates = 0;
     }
