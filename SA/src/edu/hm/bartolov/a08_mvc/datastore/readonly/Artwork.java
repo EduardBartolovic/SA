@@ -2,14 +2,18 @@ package edu.hm.bartolov.a08_mvc.datastore.readonly;
 
 public interface Artwork {
     
-   String getTitle();
+    /**
+     * 
+     * @return 
+     */
+    String getTitle();
    
-   int getInitialPrice();
+    int getInitialPrice();
    
-   boolean isAuctioned();
+    boolean isAuctioned();
    
-   String getBuyer();
+    String getBuyer();
    
-   int getSoldPrice();
+    int getSoldPrice();
     
 }

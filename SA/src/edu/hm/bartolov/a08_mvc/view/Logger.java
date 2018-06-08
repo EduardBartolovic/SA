@@ -17,15 +17,20 @@ import java.util.function.BiConsumer;
  * @author Computer
  */
 public class Logger extends Viewer{
-
-    private static final Map<Integer,BiConsumer<String[], BufferedWriter>> BID = new HashMap<>();
-    
-    private static final Map<Integer,BiConsumer<String[], BufferedWriter>> NOBID = new HashMap<>();
   
+    /**
+     * The target Directory.
+     */
     private static final String DIR = System.getProperty("java.io.tmpdir");
     
+    /**
+     * Error message.
+     */
     private static final String ERROR = "ErrorInLogger";
     
+    /**
+     * Number of updates that have been made. For the file name.
+     */
     private int updates = 0;
     
     Logger(Object arg) {

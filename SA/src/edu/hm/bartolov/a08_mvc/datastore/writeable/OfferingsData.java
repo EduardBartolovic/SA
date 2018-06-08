@@ -9,22 +9,46 @@ import java.util.stream.Stream;
 
 public class OfferingsData extends MutableOfferings{
     
+    /**
+     * All artworks which are offered.
+     */
     private final Set<MutableArtwork> artworks;
     
+    /**
+     * The steps remaining for the momentairy auction.
+     */
     private int stepsRemaining;
     
+    /**
+     * The momentairy bidder of an artwork.
+     */
     private String bidder;
     
+    /**
+     * The momentairy bid on an artwork.
+     */
     private int bid;
 
+    /**
+     * Constructor.
+     * @param artworks a number of artworks
+     */
     protected OfferingsData(MutableArtwork... artworks) {
         this.artworks = new HashSet<>(Arrays.asList(artworks));
     }
     
+    /**
+     * Constructor.
+     * @param artworks set of artworks
+     */
     protected OfferingsData(Set<MutableArtwork> artworks) {
         this.artworks = new HashSet<>(artworks);
     }
     
+    /**
+     * Constructor.
+     * @param artworks List of artworks
+     */
     protected OfferingsData(List<MutableArtwork> artworks) {
         this.artworks = new HashSet<>(artworks);
     }

@@ -6,5 +6,8 @@ package edu.hm.bartolov.a08_mvc.datastore.writeable;
  */
 public interface Changable {
     
+    /**
+     * set if there has been a change.
+     */
     void setChanged();
 }

@@ -6,18 +6,41 @@ import java.util.Objects;
 
 public class ArtworkData extends MutableArtwork implements Changable{
     
+    /**
+     * Title of the artwork.
+     */
     private final String title;
     
+    /**
+     * The Initial price of the artwork.
+     */
     private final int initialPrice;
     
+    /**
+     * Boolean, is true if the artwork has been sold, false otherwise.
+     */
     private boolean auctioned;
     
+    /**
+     * The specific buyer of this artwork.
+     */
     private String buyer;
     
+    /**
+     * The price for which the artwork has been sold.
+     */
     private int soldPrice;
     
+    /**
+     * Changeable.
+     */
     private Changable changable;
 
+    /**
+     * Contructor.
+     * @param title title of the new artwork
+     * @param initialPrice initial prive of the artwork
+     */
     protected ArtworkData(String title, int initialPrice) {
         if(initialPrice < 0 || title == null || "".equals(title)) 
             throw new IllegalArgumentException(); 
