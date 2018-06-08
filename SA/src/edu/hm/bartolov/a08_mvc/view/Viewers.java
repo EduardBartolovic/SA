@@ -1,4 +1,4 @@
-package edu.hm.bartolov.a08_mvc;
+package edu.hm.bartolov.a08_mvc.view;
 
 /* (C) 2018, R. Schiedermeier, rs@cs.hm.edu
  * Oracle Corporation Java 1.8.0_121, Linux i386 4.15.4

@@ -1,12 +1,9 @@
 package edu.hm.bartolov.a08_mvc.view;
 
-import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
-import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
 import java.util.Observable;
 
 /**
@@ -38,26 +35,18 @@ public class Logger extends Viewer{
 
     @Override
     public void update(Observable o, Object arg) {
-        
-        updates++;
-        
+  
         final File file = new File(DIR + "\\auction." + Integer.toString(updates) + ".log");
         
-        try (BufferedWriter bw = Files.newBufferedWriter(file.toPath(), Charset.defaultCharset())) {
+        try (FileOutputStream out = new FileOutputStream(file)) {
             
-            final long count = offer.getArtworks()
-                                        .peek((Artwork art)->{
-                                            try {
-                                                bw.write("Title: "+art.getTitle()+" Sold: "+art.isAuctioned()+" InitialPrice: "+art.getInitialPrice()+" Buyer: "+art.getBuyer()+" SoldPrice: "+art.getSoldPrice());
-                                            } catch (IOException ex ) {
-                                                System.out.println(ERROR);
-                                            }})
-                                        .count();
-            System.out.println(count);
+            printProperties(offer, out);
             
         } catch (IOException ex) {
             System.out.println(ERROR);
         }
+        
+        updates++;
     }
     
 }
