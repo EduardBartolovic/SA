@@ -6,7 +6,7 @@ import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
  *
  * @author Eduard
  */
-public abstract class Controller {
+public abstract class Controller extends Thread{
     
     public static Controller make(String which, Auctioneer auctioneer , String... args){
         if(which==null)
