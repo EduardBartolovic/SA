@@ -13,7 +13,7 @@ import java.util.Properties;
  * Viewer abstract class
  * @author Felix,Eduard
  */
-public abstract class Viewer implements Observer{
+public interface Viewer extends Observer{
     
     /**
      * 
@@ -49,7 +49,7 @@ public abstract class Viewer implements Observer{
      * @param outputStream Ausgabeziel.
      * @throws java.io.IOException
      */
-    protected void printXML(Offerings offerings, OutputStream outputStream) throws IOException {
+    default void printXML(Offerings offerings, OutputStream outputStream) throws IOException {
         toProperties(offerings).storeToXML(outputStream, null);
     }
 
@@ -59,7 +59,7 @@ public abstract class Viewer implements Observer{
      * @param outputStream Ausgabeziel.
      * @throws java.io.IOException
      */
-    protected void printProperties(Offerings offerings, OutputStream outputStream) throws IOException {
+    default void printProperties(Offerings offerings, OutputStream outputStream) throws IOException {
         toProperties(offerings).store(outputStream, null);
     }
 
@@ -68,7 +68,7 @@ public abstract class Viewer implements Observer{
      * @param offerings Datenbasis.
      * @return Properties mit allen Einzelheiten.
      */
-    private Properties toProperties(Offerings offerings) {
+    default Properties toProperties(Offerings offerings) {
         final Properties properties = new Properties();
         properties.setProperty("offerings.stepsRemaining", Integer.toString(offerings.getStepsRemaining()));
         if(offerings.getBidder() != null) {

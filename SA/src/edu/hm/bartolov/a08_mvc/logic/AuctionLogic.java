@@ -1,5 +1,6 @@
 package edu.hm.bartolov.a08_mvc.logic;
 
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 
@@ -12,6 +13,8 @@ public class AuctionLogic implements Auctioneer{
     private static final int DEFAULTDELAY = 1000;
     
     private final MutableOfferings offerings;
+    
+    private boolean wasBid = false;
 
     public AuctionLogic(MutableOfferings offerings) {
         this.offerings = offerings;
@@ -19,7 +22,7 @@ public class AuctionLogic implements Auctioneer{
     
     
     @Override
-    public boolean placebid(String bidder, int amount) {
+    public synchronized boolean placebid(String bidder, int amount) {
         if(bidder==null || "".equals(bidder))
             throw new IllegalArgumentException();
         
@@ -27,6 +30,7 @@ public class AuctionLogic implements Auctioneer{
         if(moreThanLastBid){
             offerings.setBid(amount);
             offerings.setBidder(bidder);
+            wasBid = true;
         }
         
         return moreThanLastBid;
@@ -68,7 +72,14 @@ public class AuctionLogic implements Auctioneer{
         } catch (InterruptedException ex) {
             System.out.println("ERROR");
         }
-        return true;
+        final boolean bidded = wasBid;
+        wasBid = false;
+        return bidded;
+    }
+
+    @Override
+    public Offerings getOfferings() {
+       return offerings;
     }
     
     

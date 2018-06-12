@@ -11,7 +11,7 @@ import java.util.Optional;
  * Oberserver.
  * @author Eduard
  */
-public class Spectator extends Viewer{
+public class Spectator implements Viewer{
    
     /**
      * Offerings is Observable.
