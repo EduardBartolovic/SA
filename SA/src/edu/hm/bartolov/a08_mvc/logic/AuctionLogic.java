@@ -1,5 +1,6 @@
 package edu.hm.bartolov.a08_mvc.logic;
 
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 
@@ -74,6 +75,11 @@ public class AuctionLogic implements Auctioneer{
         final boolean bidded = wasBid;
         wasBid = false;
         return bidded;
+    }
+
+    @Override
+    public Offerings getOfferings() {
+       return offerings;
     }
     
     

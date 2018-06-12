@@ -6,7 +6,7 @@ import java.util.Observable;
  *
  * @author Computer
  */
-public class Dummy extends Viewer{
+public class Dummy implements Viewer{
 
 
     @Override

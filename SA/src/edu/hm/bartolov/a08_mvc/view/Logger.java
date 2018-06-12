@@ -10,7 +10,7 @@ import java.util.Observable;
  *
  * @author Computer
  */
-public class Logger extends Viewer{
+public class Logger implements Viewer{
   
     /**
      * The target Directory.

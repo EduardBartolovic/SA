@@ -1,5 +1,6 @@
 package edu.hm.bartolov.a08_mvc.logic;
 
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 
 /**
@@ -14,5 +15,5 @@ public interface Auctioneer extends Runnable{
     
     boolean placebid(String bidder, int amount);
     
-    
+    Offerings getOfferings();
 }
