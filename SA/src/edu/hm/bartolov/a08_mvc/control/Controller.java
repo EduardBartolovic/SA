@@ -19,6 +19,8 @@ public abstract class Controller extends Thread{
             return new ConsoleController(auctioneer);
         else if("robot-".equals(className.substring(0,6)))
             return new RobotTrader(auctioneer, args);
+        else if("Sheik-".equals(className.substring(0,6)))
+            return new AlgorithmicSheik(auctioneer, args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
         
         throw new IllegalArgumentException();
     }
