@@ -1,20 +1,41 @@
 
 package edu.hm.bartolov.a08_mvc.control;
 
+import edu.hm.bartolov.a08_mvc.logic.AuctionLogic;
+import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 import java.io.IOException;
 
 /**
  *
- * @author Eduard
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class ConsoleController extends Controller{
     
-    private final static int LINE_LENGTH = 10;
+    /**
+     * 
+     */
+    private static final int LINE_LENGTH = 10;
     
-    private final static byte[] EMPTY_INPUT = new byte[]{10};
+    /**
+     * 
+     */
+    private static final byte[] EMPTY_INPUT = new byte[]{10};
     
-    public ConsoleController() {
-        
+    /**
+     * 
+     */
+    private static final int TIMES = 10;
+    
+    /**
+     * 
+     */
+    private final Auctioneer auctioneer;
+    
+    /**
+     * 
+     */
+    public ConsoleController(Auctioneer auctioneer) { 
+        this.auctioneer = auctioneer; 
     } 
     
     @Override
@@ -28,7 +49,6 @@ public class ConsoleController extends Controller{
         while (auctionRunning) {
             try {
             System.in.read(inputBytes);
-        
             } catch (IOException ioe) {
                 
             }
@@ -36,20 +56,16 @@ public class ConsoleController extends Controller{
                 auctionRunning = false;
             
             for (int counter = 0; counter < LINE_LENGTH; counter++) {
-                int times = 10;
                 inputCharacters[counter] = (char) inputBytes[counter];
-//                System.out.println((int)c[counter] - 48);
-//                System.out.println(times);
                 if (((int)inputCharacters[counter] - 48) > 0 &&((int) inputCharacters[counter] - 48) <= 9) {
-//                    System.out.println("here" + c[counter]);
-//                    System.out.println("Integer " + Integer.parseInt("" + c[counter]));
-                    System.out.print(bid + " bid "); bid *= times; System.out.print(bid + " bid after ");
-                    System.out.println(""); 
+//                    System.out.print(bid + " bid "); 
+                    bid *= TIMES; 
+//                    System.out.print(bid + " bid after ");
+//                    System.out.println(""); 
                     bid += Integer.parseInt("" + inputCharacters[counter]); 
-                    System.out.print(bid + " bid "); 
-//                    System.out.println(bid + " bid");
+//                    System.out.print(bid + " bid "); 
                 } else if ((int)inputCharacters[counter]-48 == 0) {
-                    bid *= times;
+                    bid *= TIMES;
                 }
             }
             System.out.println(bid); 

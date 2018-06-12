@@ -16,9 +16,9 @@ public abstract class Controller extends Thread{
         final String className = which.toLowerCase();
         
         if("console".equals(className))
-            return new ConsoleController();
+            return new ConsoleController(auctioneer);
         else if("robot-".equals(className.substring(0,6)))
-            return new RobotTrader(args);
+            return new RobotTrader(auctioneer, args);
         
         throw new IllegalArgumentException();
     }
