@@ -6,7 +6,7 @@ import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
  *
  * @author Eduard
  */
-public interface Auctioneer {
+public interface Auctioneer extends Runnable{
     
     
     public static Auctioneer make(MutableOfferings offerings){

@@ -9,6 +9,8 @@ import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
  */
 public class AuctionLogic implements Auctioneer{
 
+    private static final int DEFAULTDELAY = 1000;
+    
     private final MutableOfferings offerings;
 
     public AuctionLogic(MutableOfferings offerings) {
@@ -25,15 +27,13 @@ public class AuctionLogic implements Auctioneer{
         if(moreThanLastBid){
             offerings.setBid(amount);
             offerings.setBidder(bidder);
-            offerings.setStepsRemaining(5);
         }
-        
-        
         
         return moreThanLastBid;
     }
     
     
+    @Override
     public void run(){
         
       offerings.getArtworks()      
@@ -64,7 +64,7 @@ public class AuctionLogic implements Auctioneer{
     
     private boolean getBidder(){
         try {
-            Thread.sleep(1000);
+            Thread.sleep(DEFAULTDELAY);
         } catch (InterruptedException ex) {
             System.out.println("ERROR");
         }
