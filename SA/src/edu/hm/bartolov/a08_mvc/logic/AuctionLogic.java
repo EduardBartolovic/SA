@@ -40,7 +40,8 @@ public class AuctionLogic implements Auctioneer{
     @Override
     public void run(){
         
-      offerings.getArtworks()      
+      offerings.getArtworks()
+              .filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
               .forEach((MutableArtwork art)-> {
                   offerings.setStepsRemaining(5);
                   while(offerings.getStepsRemaining()>0){ //auction
@@ -61,6 +62,7 @@ public class AuctionLogic implements Auctioneer{
                   
                   offerings.setBidder(null);
                   offerings.setBid(0);
+                  System.out.println("next art");
               });
                 
       offerings.notifyObservers();        

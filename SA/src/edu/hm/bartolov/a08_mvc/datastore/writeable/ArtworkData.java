@@ -151,6 +151,11 @@ public class ArtworkData extends MutableArtwork {
         
         return Objects.equals(this.buyer, other.buyer);
     }
+
+    @Override
+    public String toString() {
+        return "ArtworkData{" + "title=" + title + ", initialPrice=" + initialPrice + ", auctioned=" + auctioned + ", buyer=" + buyer + ", soldPrice=" + soldPrice + ", changable=" + changable + '}';
+    }
     
     
     
