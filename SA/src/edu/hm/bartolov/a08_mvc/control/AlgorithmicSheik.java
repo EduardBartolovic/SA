@@ -47,7 +47,7 @@ public class AlgorithmicSheik extends Controller{
                         .findFirst()                      //get the first you find
                         .get()
                         .getTitle()
-                        .startsWith(name);
+                        .startsWith(name,0);
         
         try{
             final Offerings offerings = auctioneer.getOfferings();

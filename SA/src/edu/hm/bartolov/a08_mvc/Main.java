@@ -39,6 +39,8 @@ public class Main {
         starter.accept(con1);
         final Controller con2 = Controller.make("Sheik-1001", auction, "1","1000","1" );
         starter.accept(con2);
+        //final Controller con3 = Controller.make("Sheik-1501", auction, "1","1500","1" );
+        //starter.accept(con3);
 
         new Thread(auction).start();
     }
