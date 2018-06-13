@@ -4,6 +4,8 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Stream;
 
 /**
@@ -14,6 +16,7 @@ public class AlgorithmicSheik extends Controller{
     
     private final String name;
     
+    private final String sheikName;
     
     private final int max;
     
@@ -29,6 +32,7 @@ public class AlgorithmicSheik extends Controller{
         this.max = max;
         this.gap = gap;
         this.auctioneer = auctioneer;
+        sheikName = "Sheik-"+(max+gap);
     }
     
     
@@ -46,13 +50,15 @@ public class AlgorithmicSheik extends Controller{
         
         try{
             while(search.apply(auctioneer.getOfferings().getArtworks())){
-                
-                
-            
-            
+                Thread.sleep(4000);
+                if(!auctioneer.getOfferings().getBidder().equals(sheikName) && auctioneer.getOfferings().getBid()<max)
+                    auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
+
             } 
         }catch(NoSuchElementException exce){
             
+        } catch (InterruptedException ex) {
+            Logger.getLogger(AlgorithmicSheik.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
