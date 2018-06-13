@@ -1,6 +1,7 @@
 package edu.hm.bartolov.a08_mvc.control;
 
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 import java.util.NoSuchElementException;
 import java.util.function.Function;
@@ -49,9 +50,10 @@ public class AlgorithmicSheik extends Controller{
                         .startsWith(name);
         
         try{
-            while(search.apply(auctioneer.getOfferings().getArtworks())){
+            final Offerings offerings = auctioneer.getOfferings();
+            while(search.apply(offerings.getArtworks())){
                 Thread.sleep(4000);
-                if(!auctioneer.getOfferings().getBidder().equals(sheikName) && auctioneer.getOfferings().getBid()<max)
+                if((offerings.getBidder()==null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max)
                     auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
 
             } 
