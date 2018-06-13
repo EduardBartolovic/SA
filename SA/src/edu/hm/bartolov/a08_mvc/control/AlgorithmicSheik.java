@@ -52,10 +52,11 @@ public class AlgorithmicSheik extends Controller{
         try{
             final Offerings offerings = auctioneer.getOfferings();
             while(search.apply(offerings.getArtworks())){
-                Thread.sleep(4000);
-                if((offerings.getBidder()==null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max)
+                Thread.sleep(2000); // get this true propeties
+                if((offerings.getBidder()==null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max){
                     auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
-
+                }
+                    
             } 
         }catch(NoSuchElementException exce){
             

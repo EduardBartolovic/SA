@@ -32,7 +32,6 @@ public class AuctionLogic implements Auctioneer{
             offerings.setBidder(bidder);
             wasBid = true;
         }
-        
         return moreThanLastBid;
     }
     
@@ -46,7 +45,7 @@ public class AuctionLogic implements Auctioneer{
                   offerings.setStepsRemaining(5);
                   while(offerings.getStepsRemaining()>0){ //auction
                       offerings.notifyObservers();
-                      if(getBidder()){  
+                      if(getBidder()){
                           offerings.setStepsRemaining(5); //reset counter
                       }else{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
@@ -69,10 +68,11 @@ public class AuctionLogic implements Auctioneer{
     }
     
     private boolean getBidder(){
-        try {
-            Thread.sleep(DEFAULTDELAY);
-        } catch (InterruptedException ex) {
-            System.out.println("ERROR");
+        
+        final long currentTime = System.currentTimeMillis();
+        while(currentTime-System.currentTimeMillis()<DEFAULTDELAY){
+            if(wasBid)
+                break;
         }
         final boolean bidded = wasBid;
         wasBid = false;
