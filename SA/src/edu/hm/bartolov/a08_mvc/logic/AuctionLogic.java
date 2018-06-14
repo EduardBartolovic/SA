@@ -32,7 +32,6 @@ public class AuctionLogic implements Auctioneer{
             offerings.setBidder(bidder);
             wasBid = true;
         }
-        
         return moreThanLastBid;
     }
     
@@ -40,12 +39,16 @@ public class AuctionLogic implements Auctioneer{
     @Override
     public void run(){
         
-      offerings.getArtworks()      
+      offerings.getArtworks()
+              .sequential()
               .forEach((MutableArtwork art)-> {
+                  System.out.println("Next Artwork: "+art);
+                  offerings.setBid(art.getInitialPrice());
                   offerings.setStepsRemaining(5);
+                  
                   while(offerings.getStepsRemaining()>0){ //auction
                       offerings.notifyObservers();
-                      if(getBidder()){  
+                      if(getBidder()){
                           offerings.setStepsRemaining(5); //reset counter
                       }else{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
@@ -54,32 +57,46 @@ public class AuctionLogic implements Auctioneer{
                   offerings.notifyObservers();
                   
                   if(offerings.getBidder()!=null){  // artwork sold
-                      art.setAuctioned(true);
                       art.setBuyer(offerings.getBidder());
                       art.setSoldPrice(offerings.getBid());
                   }
+                  art.setAuctioned(true);
                   
                   offerings.setBidder(null);
                   offerings.setBid(0);
               });
                 
-      offerings.notifyObservers();        
+      offerings.notifyObservers();
+      
+      offerings.getArtworks()
+              .peek(System.out::println)
+              .count();
+      
+      System.out.println("Auction is over. see you next time :)");
     }
     
     private boolean getBidder(){
-        try {
-            Thread.sleep(DEFAULTDELAY);
-        } catch (InterruptedException ex) {
-            System.out.println("ERROR");
+        
+        final long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis()-startTime<DEFAULTDELAY){
+            if(wasBid)
+                break;
         }
-        final boolean bidded = wasBid;
+        final boolean bidded = isWasBid();
         wasBid = false;
         return bidded;
     }
+    
+    
+    
 
     @Override
     public Offerings getOfferings() {
        return offerings;
+    }
+
+    private synchronized boolean isWasBid() {
+        return wasBid;
     }
     
     
