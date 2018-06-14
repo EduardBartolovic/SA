@@ -48,7 +48,6 @@ public class AuctionLogic implements Auctioneer{
                   while(offerings.getStepsRemaining()>0){ //auction
                       offerings.notifyObservers();
                       wasbid = getBidder();
-                      System.out.println(wasbid);
                       if(wasbid){
                           offerings.setStepsRemaining(5); //reset counter
                       }else{

@@ -15,7 +15,7 @@ import java.util.stream.Stream;
  */
 public class AlgorithmicSheik extends Controller{
     
-    private static final int DEFAULTDELAY = 5000;
+    private static final int DEFAULTDELAY = 1000;
     
     private final String name;
     
@@ -40,7 +40,7 @@ public class AlgorithmicSheik extends Controller{
     public AlgorithmicSheik( Auctioneer auctioneer, String name, int max, int gap) {
         this.name = name;
         this.max = max;
-        this.gap = gap;
+        this.gap = (DEFAULTDELAY*5)-gap;
         this.auctioneer = auctioneer;
         sheikName = "Sheik-"+(max+gap);
     }
@@ -51,19 +51,18 @@ public class AlgorithmicSheik extends Controller{
     public void run() {
         
         final Function<Stream<? extends Artwork>,Boolean> search = 
-                (Stream<? extends Artwork> t) -> 
-                        t.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+                (Stream<? extends Artwork> t) -> t.filter( art -> art.isAuctioned())  //only get Artworks which arent sold yet
                         .findFirst()                      //get the first you find
-                        .get()
-                        .getTitle()
-                        .substring(0, name.length()-1)
-                        .equals(name);
+                        .get()      
+                        .getTitle()         //get the title
+                        .startsWith(name);      //criteria
         
         try{
             final Offerings offerings = auctioneer.getOfferings();
+            System.out.println("I buy everything!!!HAHA");
             while(search.apply(offerings.getArtworks())){
                 System.out.println("Its mine");
-                Thread.sleep(DEFAULTDELAY-gap);
+                Thread.sleep(gap);
                 if((offerings.getBidder()== null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max){
                     auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
                 }
