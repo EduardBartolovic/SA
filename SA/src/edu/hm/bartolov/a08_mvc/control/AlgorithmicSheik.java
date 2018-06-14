@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 /**
  *
- * @author Edo
+ * @author Eduard
  */
 public class AlgorithmicSheik extends Controller{
     
@@ -59,14 +59,11 @@ public class AlgorithmicSheik extends Controller{
         
         try{
             final Offerings offerings = auctioneer.getOfferings();
-            System.out.println("I buy everything!!!HAHA");
-            while(search.apply(offerings.getArtworks())){
-                System.out.println("Its mine");
+            while(true){//search.apply(offerings.getArtworks())){
                 Thread.sleep(gap);
                 if((offerings.getBidder()== null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max){
                     auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
-                }
-                    
+                }                 
             } 
         }catch(NoSuchElementException exce){
             

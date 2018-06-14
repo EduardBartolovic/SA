@@ -43,11 +43,12 @@ public class AuctionLogic implements Auctioneer{
               .sequential()
               .forEach((MutableArtwork art)-> {
                   System.out.println("Next Artwork: "+art);
+                  offerings.setBid(art.getInitialPrice());
                   offerings.setStepsRemaining(5);
                   boolean wasbid = false; //
                   while(offerings.getStepsRemaining()>0){ //auction
-                      offerings.notifyObservers();
                       wasbid = getBidder();
+                      offerings.notifyObservers();
                       if(wasbid){
                           offerings.setStepsRemaining(5); //reset counter
                       }else{
@@ -67,7 +68,9 @@ public class AuctionLogic implements Auctioneer{
                   offerings.setBid(0);
               });
                 
-      offerings.notifyObservers();        
+      offerings.notifyObservers();
+      
+      System.out.println("Auction is over. see you next time :)");
     }
     
     private boolean getBidder(){
@@ -77,14 +80,21 @@ public class AuctionLogic implements Auctioneer{
             if(wasBid)
                 break;
         }
-        final boolean bidded = wasBid;
+        final boolean bidded = isWasBid();
         wasBid = false;
         return bidded;
     }
+    
+    
+    
 
     @Override
     public Offerings getOfferings() {
        return offerings;
+    }
+
+    private synchronized boolean isWasBid() {
+        return wasBid;
     }
     
     
