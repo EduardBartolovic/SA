@@ -45,11 +45,10 @@ public class AuctionLogic implements Auctioneer{
                   System.out.println("Next Artwork: "+art);
                   offerings.setBid(art.getInitialPrice());
                   offerings.setStepsRemaining(5);
-                  boolean wasbid = false; //
+                  
                   while(offerings.getStepsRemaining()>0){ //auction
-                      wasbid = getBidder();
                       offerings.notifyObservers();
-                      if(wasbid){
+                      if(getBidder()){
                           offerings.setStepsRemaining(5); //reset counter
                       }else{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
@@ -57,10 +56,9 @@ public class AuctionLogic implements Auctioneer{
                   }
                   offerings.notifyObservers();
                   
-                  if(wasbid){  // artwork sold
+                  if(offerings.getBidder()!=null){  // artwork sold
                       art.setBuyer(offerings.getBidder());
                       art.setSoldPrice(offerings.getBid());
-                      System.out.println("Sold to: "+offerings.getBidder());
                   }
                   art.setAuctioned(true);
                   
@@ -69,6 +67,10 @@ public class AuctionLogic implements Auctioneer{
               });
                 
       offerings.notifyObservers();
+      
+      offerings.getArtworks()
+              .peek(System.out::println)
+              .count();
       
       System.out.println("Auction is over. see you next time :)");
     }
