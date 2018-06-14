@@ -40,12 +40,16 @@ public class AuctionLogic implements Auctioneer{
     public void run(){
         
       offerings.getArtworks()
-              .filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+              .sequential()
               .forEach((MutableArtwork art)-> {
+                  System.out.println("Next Artwork: "+art);
                   offerings.setStepsRemaining(5);
+                  boolean wasbid = false; //
                   while(offerings.getStepsRemaining()>0){ //auction
                       offerings.notifyObservers();
-                      if(getBidder()){
+                      wasbid = getBidder();
+                      System.out.println(wasbid);
+                      if(wasbid){
                           offerings.setStepsRemaining(5); //reset counter
                       }else{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
@@ -53,15 +57,15 @@ public class AuctionLogic implements Auctioneer{
                   }
                   offerings.notifyObservers();
                   
-                  if(offerings.getBidder()!=null){  // artwork sold
-                      art.setAuctioned(true);
+                  if(wasbid){  // artwork sold
                       art.setBuyer(offerings.getBidder());
                       art.setSoldPrice(offerings.getBid());
+                      System.out.println("Sold to: "+offerings.getBidder());
                   }
+                  art.setAuctioned(true);
                   
                   offerings.setBidder(null);
                   offerings.setBid(0);
-                  System.out.println("next art");
               });
                 
       offerings.notifyObservers();        
@@ -69,8 +73,8 @@ public class AuctionLogic implements Auctioneer{
     
     private boolean getBidder(){
         
-        final long currentTime = System.currentTimeMillis();
-        while(currentTime-System.currentTimeMillis()<DEFAULTDELAY){
+        final long startTime = System.currentTimeMillis();
+        while(System.currentTimeMillis()-startTime<DEFAULTDELAY){
             if(wasBid)
                 break;
         }

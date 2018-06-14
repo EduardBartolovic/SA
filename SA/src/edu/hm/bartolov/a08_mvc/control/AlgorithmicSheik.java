@@ -15,6 +15,8 @@ import java.util.stream.Stream;
  */
 public class AlgorithmicSheik extends Controller{
     
+    private static final int DEFAULTDELAY = 5000;
+    
     private final String name;
     
     private final String sheikName;
@@ -28,6 +30,13 @@ public class AlgorithmicSheik extends Controller{
      */
     private final Auctioneer auctioneer;
 
+    /**
+     * 
+     * @param auctioneer selfexplaining.
+     * @param name of picture.
+     * @param max amount bid.
+     * @param gap waiting time.
+     */
     public AlgorithmicSheik( Auctioneer auctioneer, String name, int max, int gap) {
         this.name = name;
         this.max = max;
@@ -47,13 +56,15 @@ public class AlgorithmicSheik extends Controller{
                         .findFirst()                      //get the first you find
                         .get()
                         .getTitle()
-                        .startsWith(name,0);
+                        .substring(0, name.length()-1)
+                        .equals(name);
         
         try{
             final Offerings offerings = auctioneer.getOfferings();
             while(search.apply(offerings.getArtworks())){
-                Thread.sleep(2000); // get this true propeties
-                if((offerings.getBidder()==null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max){
+                System.out.println("Its mine");
+                Thread.sleep(DEFAULTDELAY-gap);
+                if((offerings.getBidder()== null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max){
                     auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
                 }
                     
