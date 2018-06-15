@@ -4,6 +4,7 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,7 +16,7 @@ import java.util.stream.Stream;
  */
 public class AlgorithmicSheik extends Controller{
     
-    private static final int DEFAULTDELAY = 1000;
+    private static final String DEFAULTDELAY = "1000";
     
     private final String name;
     
@@ -40,7 +41,10 @@ public class AlgorithmicSheik extends Controller{
     public AlgorithmicSheik( Auctioneer auctioneer, String name, int max, int gap) {
         this.name = name;
         this.max = max;
-        this.gap = (DEFAULTDELAY*5)-gap;
+        //getting the systempropeties
+        final int delay = Integer.parseInt(
+                Optional.ofNullable(System.getProperty("auction.delay")).orElse(DEFAULTDELAY));
+        this.gap = (delay*5)-gap;
         this.auctioneer = auctioneer;
         sheikName = "Sheik-"+(max+gap);
     }
@@ -51,19 +55,27 @@ public class AlgorithmicSheik extends Controller{
     public void run() {
         
         final Function<Stream<? extends Artwork>,Boolean> search = 
-                (Stream<? extends Artwork> t) -> t.filter( art -> art.isAuctioned())  //only get Artworks which arent sold yet
+                (Stream<? extends Artwork> t) -> t.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
                         .findFirst()                      //get the first you find
                         .get()      
                         .getTitle()         //get the title
                         .startsWith(name);      //criteria
         
+        final Function<Stream<? extends Artwork>,Boolean> auctionStillRunning = 
+                (Stream<? extends Artwork> t) -> t.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+                .findAny()
+                .isPresent();
+        
         try{
             final Offerings offerings = auctioneer.getOfferings();
-            while(true){//search.apply(offerings.getArtworks())){
-                Thread.sleep(gap);
-                if((offerings.getBidder()== null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<max){
-                    auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
-                }                 
+            while(auctionStillRunning.apply(offerings.getArtworks())){
+                if(search.apply(offerings.getArtworks())){
+                    Thread.sleep(gap);
+                    if((offerings.getBidder()== null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<=max){
+                        auctioneer.placebid(sheikName, auctioneer.getOfferings().getBid()+1);
+                    }
+                }
+                
             } 
         }catch(NoSuchElementException exce){
             

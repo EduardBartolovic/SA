@@ -3,6 +3,9 @@ package edu.hm.bartolov.a08_mvc.logic;
 import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
+import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -10,13 +13,20 @@ import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
  */
 public class AuctionLogic implements Auctioneer{
 
-    private static final int DEFAULTDELAY = 1000;
+    private static final String DEFAULTDELAY = "1000";
     
     private final MutableOfferings offerings;
     
     private boolean wasBid = false;
+    
+    private final int delay;
 
     public AuctionLogic(MutableOfferings offerings) {
+        
+        //getting the systempropeties
+        delay = Integer.parseInt(
+                Optional.ofNullable(System.getProperty("auction.delay")).orElse(DEFAULTDELAY));
+        
         this.offerings = offerings;
     }
     
@@ -31,6 +41,11 @@ public class AuctionLogic implements Auctioneer{
             offerings.setBid(amount);
             offerings.setBidder(bidder);
             wasBid = true;
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(AuctionLogic.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return moreThanLastBid;
     }
@@ -54,8 +69,7 @@ public class AuctionLogic implements Auctioneer{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
                       }
                   }
-                  offerings.notifyObservers();
-                  
+                  offerings.notifyObservers();                  
                   if(offerings.getBidder()!=null){  // artwork sold
                       art.setBuyer(offerings.getBidder());
                       art.setSoldPrice(offerings.getBid());
@@ -77,10 +91,11 @@ public class AuctionLogic implements Auctioneer{
     
     private boolean getBidder(){
         
-        final long startTime = System.currentTimeMillis();
-        while(System.currentTimeMillis()-startTime<DEFAULTDELAY){
-            if(wasBid)
-                break;
+        final long startTime = System.currentTimeMillis();        
+        while(System.currentTimeMillis()-startTime<delay){
+            if(wasBid){
+               break;
+            }         
         }
         final boolean bidded = isWasBid();
         wasBid = false;
@@ -98,6 +113,13 @@ public class AuctionLogic implements Auctioneer{
     private synchronized boolean isWasBid() {
         return wasBid;
     }
+
+    public void setWasBid(boolean wasBid) {
+        this.wasBid = wasBid;
+    }
+    
+    
+
     
     
     
