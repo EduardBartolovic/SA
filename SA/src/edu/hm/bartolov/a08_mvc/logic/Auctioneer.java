@@ -4,12 +4,17 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 
 /**
- *
+ * abstract Auctioneer.
  * @author Eduard
  */
 public interface Auctioneer extends Runnable{
 
-    public static Auctioneer make(MutableOfferings offerings){
+    /**
+     * Factory.
+     * @param offerings MuatbleOfferings
+     * @return Auctioneer
+     */
+    static Auctioneer make(MutableOfferings offerings){
         return new AuctionLogic(offerings);
     }
     

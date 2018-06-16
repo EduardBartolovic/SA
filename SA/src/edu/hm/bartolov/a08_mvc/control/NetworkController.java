@@ -61,8 +61,31 @@ public class NetworkController extends Controller implements Viewer {
     }
     
     @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void update(Observable observable, Object arg) {
+        
+//        final Optional<? extends Artwork> optArt = auctioneer.getOfferings()
+//                                                    .getArtworks()             //get all Artworks in offerings
+//                                                    .filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+//                                                    .findFirst();                      //get the first you find
+//                
+//        
+//        if(optArt.isPresent()){
+//            final Artwork artwork = optArt.get();
+//            final Callout callout = Callout.values()[auctioneer.getOfferings().getStepsRemaining()];
+            
+            
+//            if(auctioneer.getOfferings().getBidder() == null){
+//                bufWriter.write(artwork.getTitle() + ": " + callout.getFormatNobid() + "\n", artwork.getInitialPrice());
+//            }else{
+//                bufWriter.write(artwork.getTitle() + ": " + callout.getFormatBid() + "\n", auctioneer.getOfferings().getBid());     
+//            }
+//            try {
+//                bufWriter.flush();
+//            } catch (IOException ioExe) {
+//                System.out.println("ERROR IN UPDATE");
+//            }
+//        }
+        throw new UnsupportedOperationException();
     }
     
     @Override
@@ -70,12 +93,10 @@ public class NetworkController extends Controller implements Viewer {
         
         final Offerings offerings = auctioneer.getOfferings();
         final Function<Stream<? extends Artwork>,Boolean> auctionStillRunning = 
-                (Stream<? extends Artwork> t) -> t.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+                (Stream<? extends Artwork> artworks) -> artworks.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
                 .findAny()
                 .isPresent();
         
-        
-
         while(auctionStillRunning.apply(offerings.getArtworks())){
             try{
                   bufWriter.write("Make your Bid:");
@@ -89,8 +110,8 @@ public class NetworkController extends Controller implements Viewer {
                   bufWriter.flush();
               }catch(NumberFormatException exec){
                  System.out.println("Error");
-              } catch (IOException ex) {
-
+              } catch (IOException exec) {
+                 System.out.println("Error");
               }
             
         }

@@ -39,25 +39,25 @@ public class RobotTrader extends Controller{
     
     private void fillMap(String...millis) {
         for (String priceAndTime: millis) {
-            String[] priceAndTimeCut = priceAndTime.split(":");
-            long milliseconds = Long.parseLong(priceAndTimeCut[0]);
-            int bid = Integer.parseInt(priceAndTimeCut[1]);
+            final String[] priceAndTimeCut = priceAndTime.split(":");
+            final long milliseconds = Long.parseLong(priceAndTimeCut[0]);
+            final int bid = Integer.parseInt(priceAndTimeCut[1]);
             millisAndAmount.put(milliseconds, bid);
         }
     }
     
     @Override
     public void run() {
-        long startTime = System.currentTimeMillis();
-        for (Map.Entry<Long, Integer> entry: millisAndAmount.entrySet()) {
+        final long startTime = System.currentTimeMillis();
+        millisAndAmount.entrySet().forEach((entry) -> {
             boolean waitedEnough = false;
             while (!waitedEnough) {
-                long timeWaited = System.currentTimeMillis() - startTime;
+                final long timeWaited = System.currentTimeMillis() - startTime;
                 if (timeWaited >= entry.getKey()) {
                     waitedEnough = true;
                     auctioneer.placeBid(ROBOT_TRADER, entry.getValue());
                 }
             }
-        }
+        });
     }
 }
