@@ -35,7 +35,7 @@ public class AuctionLogic implements Auctioneer{
      * Constructor.
      * @param offerings Datastore.
      */
-    public AuctionLogic(MutableOfferings offerings) {
+    protected AuctionLogic(MutableOfferings offerings) {
         
         //getting the systempropeties
         delay = Integer.parseInt(

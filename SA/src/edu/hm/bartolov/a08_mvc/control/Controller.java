@@ -3,11 +3,18 @@ package edu.hm.bartolov.a08_mvc.control;
 import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 
 /**
- *
+ * Abstract Controller 
  * @author Eduard
  */
 public abstract class Controller extends Thread{
     
+    /**
+     * Factory Methode
+     * @param which String
+     * @param auctioneer Auctionner
+     * @param args more Strings
+     * @return Controller
+     */
     public static Controller make(String which, Auctioneer auctioneer , String... args){
         if(which==null)
             throw new IllegalArgumentException();

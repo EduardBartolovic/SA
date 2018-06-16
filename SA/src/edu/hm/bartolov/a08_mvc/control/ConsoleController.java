@@ -8,7 +8,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 /**
- *
+ * Bidding by Console. 
  * @author Eduard Bartolovic, Felix Peither
  */
 public class ConsoleController extends Controller{
@@ -44,8 +44,8 @@ public class ConsoleController extends Controller{
     private final Auctioneer auctioneer;
     
     /**
-     * 
-     * @param auctioneer 
+     * Constructor.
+     * @param auctioneer Auctioneer
      */
     protected ConsoleController(Auctioneer auctioneer) { 
         this.auctioneer = auctioneer; 
@@ -70,7 +70,7 @@ public class ConsoleController extends Controller{
             }
             
             for (int counter = 0; counter < LINE_LENGTH; counter++) {
-                char number = (char) inputBytes[counter];
+                final char number = (char) inputBytes[counter];
                 if (Character.isDigit(number)) {
                     bid *= TIMES;  
                     bid += Integer.parseInt(Character.toString(number)); 

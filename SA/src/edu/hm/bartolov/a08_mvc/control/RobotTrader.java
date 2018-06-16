@@ -27,11 +27,11 @@ public class RobotTrader extends Controller{
     private final Auctioneer auctioneer;
 
     /**
-     * 
-     * @param auctioneer
-     * @param millis 
+     * Constructor.
+     * @param auctioneer Auctionner
+     * @param millis times
      */
-    public RobotTrader(Auctioneer auctioneer, String... millis) {
+    protected RobotTrader(Auctioneer auctioneer, String... millis) {
         this.auctioneer = auctioneer;
         this.millisAndAmount = new TreeMap<>();
         fillMap(millis);
