@@ -4,23 +4,37 @@ import edu.hm.bartolov.a08_mvc.datastore.readonly.Offerings;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableArtwork;
 import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
- *
+ * Auction Logic.
  * @author Eduard
  */
 public class AuctionLogic implements Auctioneer{
 
+    /**
+     * defaultDelay.
+     */
     private static final String DEFAULTDELAY = "1000";
     
+    /**
+     * Datastore.
+     */
     private final MutableOfferings offerings;
     
-    private boolean wasBid = false;
+    /**
+     * was there a bid.
+     */
+    private boolean wasBid;
     
+    /**
+     * delay between notify.
+     */
     private final int delay;
 
+    /**
+     * Constructor.
+     * @param offerings Datastore.
+     */
     public AuctionLogic(MutableOfferings offerings) {
         
         //getting the systempropeties
@@ -32,7 +46,7 @@ public class AuctionLogic implements Auctioneer{
     
     
     @Override
-    public synchronized boolean placebid(String bidder, int amount) {
+    public synchronized boolean placeBid(String bidder, int amount) {
         if(bidder==null || "".equals(bidder))
             throw new IllegalArgumentException();
         
@@ -41,11 +55,11 @@ public class AuctionLogic implements Auctioneer{
             offerings.setBid(amount);
             offerings.setBidder(bidder);
             wasBid = true;
-            try {
-                Thread.sleep(30);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(AuctionLogic.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Thread.sleep(30);
+//            } catch (InterruptedException ex) {
+//                System.out.println("ERROR in Logic");
+//            }
         }
         return moreThanLastBid;
     }
@@ -114,13 +128,6 @@ public class AuctionLogic implements Auctioneer{
         return wasBid;
     }
 
-    public void setWasBid(boolean wasBid) {
-        this.wasBid = wasBid;
-    }
-    
-    
-
-    
-    
+ 
     
 }

@@ -1,8 +1,11 @@
 
 package edu.hm.bartolov.a08_mvc.control;
 
+import edu.hm.bartolov.a08_mvc.datastore.readonly.Artwork;
 import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 import java.io.IOException;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  *
@@ -44,25 +47,27 @@ public class ConsoleController extends Controller{
      * 
      * @param auctioneer 
      */
-    public ConsoleController(Auctioneer auctioneer) { 
+    protected ConsoleController(Auctioneer auctioneer) { 
         this.auctioneer = auctioneer; 
     } 
     
     @Override
     public void run() {
         
-        boolean auctionRunning = true;
-        byte[] inputBytes = new byte[LINE_LENGTH];
+        final Function<Stream<? extends Artwork>,Boolean> auctionStillRunning = 
+                (Stream<? extends Artwork> artworks) -> artworks.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
+                .findAny()
+                .isPresent();
         
-        while (auctionRunning) {
+        final byte[] inputBytes = new byte[LINE_LENGTH];
+        
+        while (auctionStillRunning.apply(auctioneer.getOfferings().getArtworks())) {
             int bid = 0;
             try {
                 System.in.read(inputBytes);
             } catch (IOException ioe) {
                 
             }
-            if (inputBytes[0] == NEW_LINE_BYTE[0])
-                auctionRunning = false;
             
             for (int counter = 0; counter < LINE_LENGTH; counter++) {
                 char number = (char) inputBytes[counter];
@@ -73,7 +78,7 @@ public class ConsoleController extends Controller{
                     throw new IllegalArgumentException("this is not a number: " + number);
                 }
             }
-            auctioneer.placebid(CONSOLE_CONTROLLER, bid);
+            auctioneer.placeBid(CONSOLE_CONTROLLER, bid);
         }
         
     }

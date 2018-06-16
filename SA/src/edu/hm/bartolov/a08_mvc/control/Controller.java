@@ -21,7 +21,8 @@ public abstract class Controller extends Thread{
             return new RobotTrader(auctioneer, args);
         else if("sheik-".equals(className.substring(0,6)))
             return new AlgorithmicSheik(auctioneer, args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-        
+        else if("Network-".equals(className.substring(0, 8)))
+            return new NetworkController(auctioneer, args[0]);
         throw new IllegalArgumentException();
     }
     

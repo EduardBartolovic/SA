@@ -55,7 +55,7 @@ public class RobotTrader extends Controller{
                 long timeWaited = System.currentTimeMillis() - startTime;
                 if (timeWaited >= entry.getKey()) {
                     waitedEnough = true;
-                    auctioneer.placebid(ROBOT_TRADER, entry.getValue());
+                    auctioneer.placeBid(ROBOT_TRADER, entry.getValue());
                 }
             }
         }

@@ -13,7 +13,7 @@ public interface Auctioneer extends Runnable{
         return new AuctionLogic(offerings);
     }
     
-    boolean placebid(String bidder, int amount);
+    boolean placeBid(String bidder, int amount);
     
     Offerings getOfferings();
 }

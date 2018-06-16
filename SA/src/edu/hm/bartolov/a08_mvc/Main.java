@@ -43,14 +43,14 @@ public class Main {
         // logic
         final Auctioneer auction = Auctioneer.make(offerings);
 
-//        final Controller con1 = Controller.make("console", auction, args);
-//        starter.accept(con1);
+        final Controller con1 = Controller.make("console", auction, args);
+        starter.accept(con1);
         final Controller con2 = Controller.make("Sheik-2020", auction, "","1020","1000");
         starter.accept(con2);
         final Controller con3 = Controller.make("Sheik-2022", auction, "Only","1022","1000");
-        starter.accept(con3);
+//        starter.accept(con3);
         final Controller con4 = Controller.make("Sheik-2500", auction, "O","1500","1000");
-        starter.accept(con4);
+//        starter.accept(con4);
 //        final Controller console = Controller.make("Console", auction);
 //        starter.accept(console);
 //        final Controller robot1 = Controller.make("robot-", auction, "500:2000", "3900:3000");
