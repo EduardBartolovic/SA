@@ -12,17 +12,17 @@ import java.util.TreeMap;
 public class RobotTrader extends Controller{
     
     /**
-     * 
+     * bidder name.
      */
     private static final String ROBOT_TRADER = "RobotTrader";
     
     /**
-     * 
+     * waiting times and bit amounts.
      */
     private final Map<Long, Integer> millisAndAmount;
     
     /**
-     * 
+     * The Auctioneer.
      */
     private final Auctioneer auctioneer;
 
@@ -37,6 +37,10 @@ public class RobotTrader extends Controller{
         fillMap(millis);
     }
     
+    /**
+     * filling map.
+     * @param millis String...
+     */
     private void fillMap(String...millis) {
         for (String priceAndTime: millis) {
             final String[] priceAndTimeCut = priceAndTime.split(":");
@@ -49,7 +53,7 @@ public class RobotTrader extends Controller{
     @Override
     public void run() {
         final long startTime = System.currentTimeMillis();
-        millisAndAmount.entrySet().forEach((entry) -> {
+        millisAndAmount.entrySet().forEach( entry -> {
             boolean waitedEnough = false;
             while (!waitedEnough) {
                 final long timeWaited = System.currentTimeMillis() - startTime;

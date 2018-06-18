@@ -12,6 +12,11 @@ import java.util.Optional;
 public class AuctionLogic implements Auctioneer{
 
     /**
+     * starting steps of auction.
+     */
+    private static final int RESETSTEPS = 5;
+    
+    /**
      * defaultDelay.
      */
     private static final String DEFAULTDELAY = "1000";
@@ -73,12 +78,12 @@ public class AuctionLogic implements Auctioneer{
               .forEach((MutableArtwork art)-> {
                   System.out.println("Next Artwork: "+art);
                   offerings.setBid(art.getInitialPrice());
-                  offerings.setStepsRemaining(5);
+                  offerings.setStepsRemaining(RESETSTEPS);
                   
                   while(offerings.getStepsRemaining()>0){ //auction
                       offerings.notifyObservers();
                       if(getBidder()){
-                          offerings.setStepsRemaining(5); //reset counter
+                          offerings.setStepsRemaining(RESETSTEPS); //reset counter
                       }else{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
                       }
