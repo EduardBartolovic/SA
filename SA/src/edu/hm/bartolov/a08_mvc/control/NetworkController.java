@@ -17,8 +17,9 @@ import java.util.stream.Stream;
 
 
 /**
- *
- * @author Eduard
+ * The Network Controller.
+ * 
+ * @author Eduard Bartolovic, Felix Peither
  */
 public class NetworkController extends Controller implements Viewer {
 

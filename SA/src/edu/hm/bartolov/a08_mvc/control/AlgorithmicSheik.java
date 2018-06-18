@@ -19,6 +19,11 @@ public class AlgorithmicSheik extends Controller{
     private static final String DEFAULTDELAY = "1000";
     
     /**
+     * Contant to multiply the delay with.
+     */
+    private static final int DELAY_TIMES_CONST = 5;
+    
+    /**
      * name of picture targeted.
      */
     private final String name;
@@ -44,6 +49,7 @@ public class AlgorithmicSheik extends Controller{
     private final Auctioneer auctioneer;
 
     /**
+     * Constructor for the sheik.
      * 
      * @param auctioneer selfexplaining.
      * @param name of picture.
@@ -56,7 +62,7 @@ public class AlgorithmicSheik extends Controller{
         //getting the systempropeties
         final int delay = Integer.parseInt(
                 Optional.ofNullable(System.getProperty("auction.delay")).orElse(DEFAULTDELAY));
-        this.gap = delay*5-gap;
+        this.gap = delay*DELAY_TIMES_CONST-gap;
         this.auctioneer = auctioneer;
         sheikName = "Sheik-"+(max+gap);
     }
@@ -90,15 +96,9 @@ public class AlgorithmicSheik extends Controller{
                 
             } 
         }catch(NoSuchElementException exce){
-            
+            exce.printStackTrace();
         } catch (InterruptedException exce) {
-            
-        }
-        
-        
-        
-    }
-    
-    
-    
+            exce.printStackTrace();
+        }  
+    }  
 }

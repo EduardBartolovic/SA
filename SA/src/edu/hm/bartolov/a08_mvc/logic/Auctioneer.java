@@ -5,7 +5,7 @@ import edu.hm.bartolov.a08_mvc.datastore.writeable.MutableOfferings;
 
 /**
  * abstract Auctioneer.
- * @author Eduard
+ * @author Eduard Bartolovic, Felix Peither
  */
 public interface Auctioneer extends Runnable{
 
@@ -18,7 +18,18 @@ public interface Auctioneer extends Runnable{
         return new AuctionLogic(offerings);
     }
     
+    /**
+     * To place a bid.
+     * 
+     * @param bidder the bidder
+     * @param amount the amount of the bid
+     * @return true if the bid is accepted, false otherwise
+     */
     boolean placeBid(String bidder, int amount);
     
+    /**
+     * Get all offerings.
+     * @return offerings
+     */
     Offerings getOfferings();
 }

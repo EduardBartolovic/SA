@@ -76,7 +76,7 @@ public class AuctionLogic implements Auctioneer{
       offerings.getArtworks()
               .sequential()
               .forEach((MutableArtwork art)-> {
-                  System.out.println("Next Artwork: "+art);
+//                  System.out.println("Next Artwork: "+art);
                   offerings.setBid(art.getInitialPrice());
                   offerings.setStepsRemaining(RESETSTEPS);
                   
@@ -101,13 +101,17 @@ public class AuctionLogic implements Auctioneer{
                 
       offerings.notifyObservers();
       
-      offerings.getArtworks()
-              .peek(System.out::println)
-              .count();
+//      offerings.getArtworks()
+//              .peek(System.out::println)
+//              .count();
       
-      System.out.println("Auction is over. see you next time :)");
+//      System.out.println("Auction is over. see you next time :)");
     }
     
+    /**
+     * get the new bid.
+     * @return true if there was a new bid
+     */
     private boolean getBidder(){
         
         final long startTime = System.currentTimeMillis();        

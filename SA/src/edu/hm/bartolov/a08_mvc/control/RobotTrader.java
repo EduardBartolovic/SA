@@ -6,7 +6,8 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**
- *
+ * The Robot Trader.
+ * 
  * @author Eduard Bartolovic, Felix Peither
  */
 public class RobotTrader extends Controller{
