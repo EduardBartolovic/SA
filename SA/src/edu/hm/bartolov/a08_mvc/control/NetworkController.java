@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -52,16 +53,10 @@ class NetworkController extends Controller implements Viewer {
             final Socket socket = new ServerSocket(this.port).accept();
             bufReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),UTF_8));
             bufWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),UTF_8));
+            Viewer.make("spectator", getAuctioneer().getOfferings(), new PrintWriter(bufWriter));
         } catch (IOException exec) {
             throw new IllegalStateException();
         }
-    }
-    
-    @Override
-    public void update(Observable observable, Object arg) {
-        
-        Viewer.make("spectator", getAuctioneer().getOfferings(), bufWriter);
-        
     }
     
     @Override
@@ -96,6 +91,11 @@ class NetworkController extends Controller implements Viewer {
             System.out.println("ERROR");
         }
             
+        
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
         
     }
     
