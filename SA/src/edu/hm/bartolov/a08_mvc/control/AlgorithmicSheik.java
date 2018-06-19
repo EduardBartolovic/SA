@@ -95,10 +95,8 @@ public class AlgorithmicSheik extends Controller{
                 }
                 
             } 
-        }catch(NoSuchElementException exce){
-            exce.printStackTrace();
-        } catch (InterruptedException exce) {
-            exce.printStackTrace();
+        }catch(NoSuchElementException | InterruptedException exce){
+            System.out.println("ERROR");
         }  
     }  
 }

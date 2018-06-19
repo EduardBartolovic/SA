@@ -66,7 +66,7 @@ public class ConsoleController extends Controller{
             try {
                 System.in.read(inputBytes);
             } catch (IOException ioe) {
-                
+                System.out.println("ERROR");
             }
             
             for (int counter = 0; counter < LINE_LENGTH; counter++) {

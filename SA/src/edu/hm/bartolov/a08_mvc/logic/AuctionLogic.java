@@ -114,10 +114,8 @@ public class AuctionLogic implements Auctioneer{
     private boolean getBidder(){
         
         final long startTime = System.currentTimeMillis();        
-        while(System.currentTimeMillis()-startTime<delay){
-            if(wasBid){
-               break;
-            }         
+        while(System.currentTimeMillis()-startTime<delay && !wasBid){
+            
         }
         final boolean bidded = isWasBid();
         wasBid = false;

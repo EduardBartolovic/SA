@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import static java.nio.charset.StandardCharsets.UTF_8;
 import java.util.Observable;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -54,8 +55,8 @@ public class NetworkController extends Controller implements Viewer {
             this.port = Integer.parseInt(port);
             
             final Socket socket = new ServerSocket().accept();
-            bufReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            bufWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+            bufReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),UTF_8));
+            bufWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),UTF_8));
         } catch (IOException exec) {
             throw new IllegalStateException();
         }
