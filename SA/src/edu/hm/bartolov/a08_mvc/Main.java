@@ -59,8 +59,12 @@ public class Main {
 //        starter.accept(robot1);
 //        starter.accept(robot2);
 //        starter.accept(robot3);
-          final Controller network = Controller.make("Network-9000", auction, "20000");
+          final Controller network = Controller.make("Network-9000", auction, "9000");
           starter.accept(network);
+          final Controller network1 = Controller.make("Network-9001", auction, "9001");
+          starter.accept(network1);
+//          final Controller network2 = Controller.make("Network-9002", auction, "9002");
+//          starter.accept(network2);
 
         new Thread(auction).start();
     }

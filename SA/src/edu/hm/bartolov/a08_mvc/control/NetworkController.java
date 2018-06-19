@@ -49,7 +49,7 @@ public class NetworkController extends Controller implements Viewer {
         try {
             this.port = Integer.parseInt(port);
             
-            final Socket socket = new ServerSocket().accept();
+            final Socket socket = new ServerSocket(this.port).accept();
             bufReader = new BufferedReader(new InputStreamReader(socket.getInputStream(),UTF_8));
             bufWriter = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(),UTF_8));
         } catch (IOException exec) {
