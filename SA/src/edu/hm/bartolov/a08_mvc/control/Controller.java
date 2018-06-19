@@ -9,16 +9,6 @@ import edu.hm.bartolov.a08_mvc.logic.Auctioneer;
 public abstract class Controller extends Thread{
     
     /**
-     * used for substring.
-     */
-    private static final int ROBOTSHEIKLENGTH = 6; 
-    
-    /**
-     * used for substring.
-     */
-    private static final int NETWORKLENGTH = 8; 
-    
-    /**
      * The Auctioneer.
      */
     private final Auctioneer auctioneer;
@@ -47,14 +37,13 @@ public abstract class Controller extends Thread{
         
         final String className = which.toLowerCase();
         
-        if("console".equals(className))
+        if(className.startsWith("console"))
             return new ConsoleController(auctioneer);
-        
-        if("robot-".equals(className.substring(0,ROBOTSHEIKLENGTH)))
+        if(className.startsWith("robot"))
             return new RobotTrader(auctioneer, args);
-        if("sheik-".equals(className.substring(0,ROBOTSHEIKLENGTH)))
+        if(className.startsWith("sheik"))
             return new AlgorithmicSheik(auctioneer, args[0], Integer.parseInt(args[1]), Integer.parseInt(args[2]));
-        if("Network-".equals(className.substring(0, NETWORKLENGTH)))
+        if(className.startsWith("network"))
             return new NetworkController(auctioneer, args[0]);
         
         throw new IllegalArgumentException();

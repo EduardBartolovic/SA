@@ -15,7 +15,7 @@ public class RobotTrader extends Controller{
     /**
      * bidder name.
      */
-    private static final String ROBOT_TRADER = "RobotTrader";
+    private final String name ;
     
     /**
      * waiting times and bit amounts.
@@ -32,6 +32,8 @@ public class RobotTrader extends Controller{
         super(auctioneer);
         this.millisAndAmount = new TreeMap<>();
         fillMap(millis);
+        final long sum = millisAndAmount.keySet().stream().reduce(Long::sum).orElse(Long.valueOf(0));
+        name = "Robot-"+sum;
     }
     
     /**
@@ -40,7 +42,7 @@ public class RobotTrader extends Controller{
      */
     private void fillMap(String...millis) {
         for (String priceAndTime: millis) {
-            final String[] priceAndTimeCut = priceAndTime.split(":");
+            final String[] priceAndTimeCut = priceAndTime.split("=");
             final long milliseconds = Long.parseLong(priceAndTimeCut[0]);
             final int bid = Integer.parseInt(priceAndTimeCut[1]);
             millisAndAmount.put(milliseconds, bid);
@@ -56,7 +58,7 @@ public class RobotTrader extends Controller{
                 final long timeWaited = System.currentTimeMillis() - startTime;
                 if (timeWaited >= entry.getKey()) {
                     waitedEnough = true;
-                    getAuctioneer().placeBid(ROBOT_TRADER, entry.getValue());
+                    getAuctioneer().placeBid(name, entry.getValue());
                 }
             }
         });

@@ -53,12 +53,14 @@ public class Main {
 //        starter.accept(con4);
 //        final Controller console = Controller.make("Console", auction);
 //        starter.accept(console);
-        final Controller robot1 = Controller.make("robot-", auction, "500:2000", "2500:3000");
-        final Controller robot2 = Controller.make("robot-", auction, "2500:2500", "10500:2000");
-        final Controller robot3 = Controller.make("robot-", auction, "2500:4000", "13000:5000");
-        starter.accept(robot1);
-        starter.accept(robot2);
-        starter.accept(robot3);
+//        final Controller robot1 = Controller.make("robot-", auction, "500:2000", "2500:3000");
+//        final Controller robot2 = Controller.make("robot-", auction, "2500:2500", "10500:2000");
+//        final Controller robot3 = Controller.make("robot-", auction, "2500:4000", "13000:5000");
+//        starter.accept(robot1);
+//        starter.accept(robot2);
+//        starter.accept(robot3);
+          final Controller network = Controller.make("Network-9000", auction, "20000");
+          starter.accept(network);
 
         new Thread(auction).start();
     }

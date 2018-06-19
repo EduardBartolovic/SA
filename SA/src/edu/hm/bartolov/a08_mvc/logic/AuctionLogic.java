@@ -9,7 +9,7 @@ import java.util.Optional;
  * Auction Logic.
  * @author Eduard
  */
-public class AuctionLogic implements Auctioneer{
+class AuctionLogic implements Auctioneer{
 
     /**
      * starting steps of auction.
@@ -61,11 +61,6 @@ public class AuctionLogic implements Auctioneer{
         offerings.setBid(amount);
         offerings.setBidder(bidder);
         wasBid = true;
-//            try {
-//                Thread.sleep(30);
-//            } catch (InterruptedException ex) {
-//                System.out.println("ERROR in Logic");
-//            }
         
         return true;
     }
@@ -77,13 +72,13 @@ public class AuctionLogic implements Auctioneer{
       offerings.getArtworks()
               .sequential()
               .forEach((MutableArtwork art)-> {
-//                  System.out.println("Next Artwork: "+art);
+//                 System.out.println("Next Artwork: "+art);
                   offerings.setBid(art.getInitialPrice());
                   offerings.setStepsRemaining(RESETSTEPS);
                   
                   while(offerings.getStepsRemaining()>0){ //auction
                       offerings.notifyObservers();
-                      if(getBidder()){
+                      if(isBidder()){
                           offerings.setStepsRemaining(RESETSTEPS); //reset counter
                       }else{
                           offerings.setStepsRemaining(offerings.getStepsRemaining()-1);
@@ -111,7 +106,7 @@ public class AuctionLogic implements Auctioneer{
      * get the new bid.
      * @return true if there was a new bid
      */
-    private boolean getBidder(){
+    private boolean isBidder(){
         
         final long startTime = System.currentTimeMillis();        
         while(System.currentTimeMillis()-startTime<delay && !wasBid){
