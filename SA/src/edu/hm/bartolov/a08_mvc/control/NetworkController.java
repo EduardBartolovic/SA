@@ -60,29 +60,8 @@ public class NetworkController extends Controller implements Viewer {
     @Override
     public void update(Observable observable, Object arg) {
         
-//        final Optional<? extends Artwork> optArt = auctioneer.getOfferings()
-//                                                    .getArtworks()             //get all Artworks in offerings
-//                                                    .filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
-//                                                    .findFirst();                      //get the first you find
-//                
-//        
-//        if(optArt.isPresent()){
-//            final Artwork artwork = optArt.get();
-//            final Callout callout = Callout.values()[auctioneer.getOfferings().getStepsRemaining()];
-            
-            
-//            if(auctioneer.getOfferings().getBidder() == null){
-//                bufWriter.write(artwork.getTitle() + ": " + callout.getFormatNobid() + "\n", artwork.getInitialPrice());
-//            }else{
-//                bufWriter.write(artwork.getTitle() + ": " + callout.getFormatBid() + "\n", auctioneer.getOfferings().getBid());     
-//            }
-//            try {
-//                bufWriter.flush();
-//            } catch (IOException ioExe) {
-//                System.out.println("ERROR IN UPDATE");
-//            }
-//        }
-        throw new UnsupportedOperationException();
+        Viewer.make("spectator", getAuctioneer().getOfferings(), bufWriter);
+        
     }
     
     @Override
