@@ -40,7 +40,7 @@ public class AuctionLogic implements Auctioneer{
      * Constructor.
      * @param offerings Datastore.
      */
-    protected AuctionLogic(MutableOfferings offerings) {
+    AuctionLogic(MutableOfferings offerings) {
         
         //getting the systempropeties
         delay = Integer.parseInt(
@@ -55,18 +55,19 @@ public class AuctionLogic implements Auctioneer{
         if(bidder==null || "".equals(bidder))
             throw new IllegalArgumentException();
         
-        final boolean moreThanLastBid = amount > offerings.getBid();
-        if(moreThanLastBid){
-            offerings.setBid(amount);
-            offerings.setBidder(bidder);
-            wasBid = true;
+        if(offerings.getBid()==0|| amount <= offerings.getBid())
+            return false;
+                    
+        offerings.setBid(amount);
+        offerings.setBidder(bidder);
+        wasBid = true;
 //            try {
 //                Thread.sleep(30);
 //            } catch (InterruptedException ex) {
 //                System.out.println("ERROR in Logic");
 //            }
-        }
-        return moreThanLastBid;
+        
+        return true;
     }
     
     
@@ -101,9 +102,7 @@ public class AuctionLogic implements Auctioneer{
                 
       offerings.notifyObservers();
       
-//      offerings.getArtworks()
-//              .peek(System.out::println)
-//              .count();
+//      offerings.getArtworks().foreach(System.out::println);
       
 //      System.out.println("Auction is over. see you next time :)");
     }

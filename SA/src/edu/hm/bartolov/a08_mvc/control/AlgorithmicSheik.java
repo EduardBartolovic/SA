@@ -56,7 +56,7 @@ public class AlgorithmicSheik extends Controller{
      * @param max amount bid.
      * @param gap waiting time.
      */
-    protected AlgorithmicSheik( Auctioneer auctioneer, String name, int max, int gap) {
+    AlgorithmicSheik( Auctioneer auctioneer, String name, int max, int gap) {
         this.name = name;
         this.max = max;
         //getting the systempropeties

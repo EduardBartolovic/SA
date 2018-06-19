@@ -48,7 +48,7 @@ public class NetworkController extends Controller implements Viewer {
      * @param auctioneer Auctioneer
      * @param port ServerPort
      */
-    protected NetworkController(Auctioneer auctioneer, String port){
+    NetworkController(Auctioneer auctioneer, String port){
         try {
             this.auctioneer = auctioneer;
             this.port = Integer.parseInt(port);

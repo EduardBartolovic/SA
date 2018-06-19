@@ -47,7 +47,7 @@ public class ConsoleController extends Controller{
      * Constructor.
      * @param auctioneer Auctioneer
      */
-    protected ConsoleController(Auctioneer auctioneer) { 
+    ConsoleController(Auctioneer auctioneer) { 
         this.auctioneer = auctioneer; 
     } 
     
