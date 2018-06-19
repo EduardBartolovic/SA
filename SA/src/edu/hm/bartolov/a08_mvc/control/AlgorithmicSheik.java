@@ -42,11 +42,6 @@ public class AlgorithmicSheik extends Controller{
      * waitingTime.
      */
     private final int gap;
-    
-    /**
-     * Auctionner.
-     */
-    private final Auctioneer auctioneer;
 
     /**
      * Constructor for the sheik.
@@ -57,13 +52,13 @@ public class AlgorithmicSheik extends Controller{
      * @param gap waiting time.
      */
     AlgorithmicSheik( Auctioneer auctioneer, String name, int max, int gap) {
+        super(auctioneer);
         this.name = name;
         this.max = max;
         //getting the systempropeties
         final int delay = Integer.parseInt(
                 Optional.ofNullable(System.getProperty("auction.delay")).orElse(DEFAULTDELAY));
         this.gap = delay*DELAY_TIMES_CONST-gap;
-        this.auctioneer = auctioneer;
         sheikName = "Sheik-"+(max+gap);
     }
     
@@ -85,12 +80,12 @@ public class AlgorithmicSheik extends Controller{
                 .isPresent();
         
         try{
-            final Offerings offerings = auctioneer.getOfferings();
+            final Offerings offerings = getAuctioneer().getOfferings();
             while(auctionStillRunning.apply(offerings.getArtworks())){
                 if(search.apply(offerings.getArtworks())){
                     Thread.sleep(gap);
                     if((offerings.getBidder()== null||!offerings.getBidder().equals(sheikName)) && offerings.getBid()<=max){
-                        auctioneer.placeBid(sheikName, auctioneer.getOfferings().getBid()+1);
+                        getAuctioneer().placeBid(sheikName, getAuctioneer().getOfferings().getBid()+1);
                     }
                 }
                 

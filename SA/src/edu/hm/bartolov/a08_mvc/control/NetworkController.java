@@ -23,11 +23,6 @@ import java.util.stream.Stream;
  * @author Eduard Bartolovic, Felix Peither
  */
 public class NetworkController extends Controller implements Viewer {
-
-    /**
-     * Acutioneer.
-     */
-    private final Auctioneer auctioneer;
     
     /**
      * Port of Server.
@@ -50,8 +45,8 @@ public class NetworkController extends Controller implements Viewer {
      * @param port ServerPort
      */
     NetworkController(Auctioneer auctioneer, String port){
+        super(auctioneer);
         try {
-            this.auctioneer = auctioneer;
             this.port = Integer.parseInt(port);
             
             final Socket socket = new ServerSocket().accept();
@@ -93,7 +88,7 @@ public class NetworkController extends Controller implements Viewer {
     @Override
     public void run() {
         
-        final Offerings offerings = auctioneer.getOfferings();
+        final Offerings offerings = getAuctioneer().getOfferings();
         final Function<Stream<? extends Artwork>,Boolean> auctionStillRunning = 
                 (Stream<? extends Artwork> artworks) -> artworks.filter( art -> !art.isAuctioned())  //only get Artworks which arent sold yet
                 .findAny()
@@ -104,15 +99,13 @@ public class NetworkController extends Controller implements Viewer {
                   bufWriter.write("Make your Bid:");
                   bufWriter.flush();  
                   final int bid = Integer.parseInt(bufReader.readLine());
-                  final boolean worked = auctioneer.placeBid("Network-"+port, bid);
+                  final boolean worked = getAuctioneer().placeBid("Network-"+port, bid);
                   if(worked)
                       bufWriter.write("Bid placed");
                   else
                       bufWriter.write("Not enough");
                   bufWriter.flush();
-              }catch(NumberFormatException exec){
-                 System.out.println("Error");
-              } catch (IOException exec) {
+              }catch(NumberFormatException | IOException exec){
                  System.out.println("Error");
               }
             

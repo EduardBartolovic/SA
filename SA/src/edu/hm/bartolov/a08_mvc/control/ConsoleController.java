@@ -38,17 +38,13 @@ public class ConsoleController extends Controller{
      */
     private static final int TIMES = 10;
     
-    /**
-     * the Auctioneer of this controller.
-     */
-    private final Auctioneer auctioneer;
     
     /**
      * Constructor.
      * @param auctioneer Auctioneer
      */
-    ConsoleController(Auctioneer auctioneer) { 
-        this.auctioneer = auctioneer; 
+    ConsoleController(Auctioneer auctioneer) {
+        super(auctioneer);
     } 
     
     @Override
@@ -61,7 +57,7 @@ public class ConsoleController extends Controller{
         
         final byte[] inputBytes = new byte[LINE_LENGTH];
         
-        while (auctionStillRunning.apply(auctioneer.getOfferings().getArtworks())) {
+        while (auctionStillRunning.apply(getAuctioneer().getOfferings().getArtworks())) {
             int bid = 0;
             try {
                 System.in.read(inputBytes);
@@ -78,7 +74,7 @@ public class ConsoleController extends Controller{
                     throw new IllegalArgumentException("this is not a number: " + number);
                 }
             }
-            auctioneer.placeBid(CONSOLE_CONTROLLER, bid);
+            getAuctioneer().placeBid(CONSOLE_CONTROLLER, bid);
         }
         
     }

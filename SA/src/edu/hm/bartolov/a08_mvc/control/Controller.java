@@ -19,6 +19,21 @@ public abstract class Controller extends Thread{
     private static final int NETWORKLENGTH = 8; 
     
     /**
+     * The Auctioneer.
+     */
+    private final Auctioneer auctioneer;
+    
+    /**
+     * Constructor.
+     * to set Deamon true
+     * @param auctioneer Auctioneer
+     */
+    Controller(Auctioneer auctioneer){
+        this.auctioneer = auctioneer;
+        this.setDaemon(true);
+    }
+    
+    /**
      * Factory Methode.
      * @param which String
      * @param auctioneer Auctionner
@@ -44,5 +59,11 @@ public abstract class Controller extends Thread{
         
         throw new IllegalArgumentException();
     }
+
+    Auctioneer getAuctioneer() {
+        return auctioneer;
+    }
+    
+    
     
 }

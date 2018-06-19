@@ -121,9 +121,6 @@ public class AuctionLogic implements Auctioneer{
         wasBid = false;
         return bidded;
     }
-    
-    
-    
 
     @Override
     public Offerings getOfferings() {

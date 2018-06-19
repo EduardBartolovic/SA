@@ -22,10 +22,6 @@ public class RobotTrader extends Controller{
      */
     private final Map<Long, Integer> millisAndAmount;
     
-    /**
-     * The Auctioneer.
-     */
-    private final Auctioneer auctioneer;
 
     /**
      * Constructor.
@@ -33,7 +29,7 @@ public class RobotTrader extends Controller{
      * @param millis times
      */
     RobotTrader(Auctioneer auctioneer, String... millis) {
-        this.auctioneer = auctioneer;
+        super(auctioneer);
         this.millisAndAmount = new TreeMap<>();
         fillMap(millis);
     }
@@ -60,7 +56,7 @@ public class RobotTrader extends Controller{
                 final long timeWaited = System.currentTimeMillis() - startTime;
                 if (timeWaited >= entry.getKey()) {
                     waitedEnough = true;
-                    auctioneer.placeBid(ROBOT_TRADER, entry.getValue());
+                    getAuctioneer().placeBid(ROBOT_TRADER, entry.getValue());
                 }
             }
         });
