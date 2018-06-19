@@ -12,7 +12,7 @@ import java.util.stream.Stream;
  * Sheik.
  * @author Eduard
  */
-public class AlgorithmicSheik extends Controller{
+class AlgorithmicSheik extends Controller{
     /**
      * Default wait time.
      */

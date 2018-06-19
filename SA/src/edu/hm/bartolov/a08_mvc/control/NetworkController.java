@@ -22,7 +22,7 @@ import java.util.stream.Stream;
  * 
  * @author Eduard Bartolovic, Felix Peither
  */
-public class NetworkController extends Controller implements Viewer {
+class NetworkController extends Controller implements Viewer {
     
     /**
      * Port of Server.

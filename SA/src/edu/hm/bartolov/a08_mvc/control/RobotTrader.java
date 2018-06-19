@@ -10,7 +10,7 @@ import java.util.TreeMap;
  * 
  * @author Eduard Bartolovic, Felix Peither
  */
-public class RobotTrader extends Controller{
+class RobotTrader extends Controller{
     
     /**
      * bidder name.

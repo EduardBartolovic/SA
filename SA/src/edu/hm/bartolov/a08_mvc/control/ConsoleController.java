@@ -11,7 +11,7 @@ import java.util.stream.Stream;
  * Bidding by Console. 
  * @author Eduard Bartolovic, Felix Peither
  */
-public class ConsoleController extends Controller{
+class ConsoleController extends Controller{
     
     /**
      * Name of this controller.
